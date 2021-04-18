@@ -41,5 +41,8 @@
 		db 연결여부 : ${ connect2 }<br>
 		
 	</div>
+	<form action="abc.login" method="post">
+		<input type="submit" value="1234">
+	</form>
 </body>
 </html>
