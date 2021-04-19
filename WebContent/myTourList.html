@@ -2,6 +2,8 @@
 <html class="no-js" lang="zxx">
 
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
 	<meta charset="utf-8">
 	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	<title>Barber</title>
@@ -131,23 +133,67 @@
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
+		//샘플 URL
+		var url = "http://api.visitjeju.net/vsjApi/contents/searchList";
 		
-		//위도 변수
+		//샘플 사용자가 담아둔 관광지 목록의 contentID
+		var markerArray = ["CNTS_000000000021622","CNTS_200000000009833","CNTS_000000000022065","CNTS_200000000007536"];
 		
+		//마커를 표시할 위치와 title 객체 배열
+		var positions = [];
+		
+		for(var index in markerArray) {
+			
+			var data = {
+						apiKey: "wuuv42tnk9hazf5h",
+						locale: "kr",
+						cid: markerArray[index]
+					};
+			
+			$.getJSON(url, data, function(response) {
+				
+				/*
+				console.log(response);
+				console.log(response.items[0].title);
+				console.log(response.items[0].latitude);
+				console.log(response.items[0].longitude);
+				*/
+				
+				var marker = {
+								title: response.items[0].title,
+								latlng: new kakao.maps.LatLng(response.items[0].latitude, response.items[0].longitude)
+							}
+				
+				positions.push(marker);
+				
+				//마커 이미지의 이미지 주소입니다
+				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+				    
+				for (var i = 0; i < positions.length; i ++) {
+				    
+				    // 마커 이미지의 이미지 크기 입니다
+				    var imageSize = new kakao.maps.Size(24, 35); 
+				    
+				    // 마커 이미지를 생성합니다    
+				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+				    
+				    // 마커를 생성합니다
+				    var marker = new kakao.maps.Marker({
+				        map: map, // 마커를 표시할 지도
+				        position: positions[i].latlng, // 마커를 표시할 위치
+				        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+				        image : markerImage // 마커 이미지 
+				    });
+				}
+				
+			}); 
+		
+		};
 		
 		// 마커가 표시될 위치입니다 
-		var markerPosition = new kakao.maps.LatLng(33.36159410409114, 126.52920948469817);
+		//var markerPosition = new kakao.maps.LatLng(33.36159410409114, 126.52920948469817);
 
-		// 마커를 생성합니다
-		var marker = new kakao.maps.Marker({
-			position : markerPosition
-		});
-
-		// 마커가 지도 위에 표시되도록 설정합니다
-		marker.setMap(map);
-
-		// 아래 코드는 지도 위의 마커를 제거하는 코드입니다
-		// marker.setMap(null);
+		
 	</script>
 
 
