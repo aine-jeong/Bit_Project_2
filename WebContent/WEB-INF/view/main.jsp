@@ -9,8 +9,8 @@
 </head>
 <body>
 	<%=session.getAttribute("user") %>
-	<form action="abc.login" method="post">
-		<input type="submit" value="1234">
-	</form>
+	<a href="${pageContext.request.contextPath}/tourList.tourlist">tourList.jsp</a>
+	<a href="${pageContext.request.contextPath}/mytourList.tourlist">mytourList.jsp</a>
+	
 </body>
 </html>
