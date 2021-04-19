@@ -44,5 +44,10 @@
 	<form action="abc.login" method="post">
 		<input type="submit" value="1234">
 	</form>
+	
+	<a href="test.MyTourListTest">tourList.jsp</a>
+	<form action="test.MyTourListTest" method="post">
+		<input type="submit" value="제발">
+	</form>
 </body>
 </html>
