@@ -30,150 +30,72 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
    
+   <!-- 폰트 -->
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+   
    <style type="text/css">
-   	.modal {
-        display: none; /*기본적으로 숨겨놓기 위함 (클릭시 나타나도록)*/
-        position: fixed; /* 위치 고정 */
-        z-index: 10; /* 현재 화면 위로 덮어 띄우기 */
-
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-
-        overflow: auto; /* Enavle scroll if needed */
-        background-color: rgb(0,0,0); /* Fallback color */
-        background-color: rgba(0,0,0,0.4);
-    }
-
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 30px;
-        border: 1px solid #888;
-
-        width: 520px;
-        height: 720px;
-
-    }
-
-    /*제목 넣을 영역 div*/
-    .modal-title{
-        width: 208px;
-        height: 197px;
-        /* background-color: #888; */
-        float: right;
-
-        text-align: center;
-        /* line-height: 232px; */
-    }
-
-    .title-text {
-        line-height: 80px;
-        width: 208px;
-        font-size: 20px;
-    }
-
-    .category{
-        /* line-height: 140px; */
-        /* vertical-align: middle; */
-        font-size: 16px;
-    }
-
-    /*설명 넣을 영역 div*/
-    .modal-intro {
-        float: right;
-        width: 100%;
-        height: 170px;
-
-        text-align: center;
-
-        /* background-color: #888; */
-    }
-
-    .intro-text {
-        /* 일정 글자수넘어가면 스크롤박스 나오도록 처리하기 */
-        line-height: 30px;
-        font-size: 18px;
-    }
-
-    .intro-tag{
-        font-size: 16px;
-    }
-
-    .intro-margin {
-        height: 10px;
-    }
-
-    .intro-addr{
-        font-size: 14px;
-    }
-
-    /*지도넣을 영역 div*/
-    .modal-map{
-        float: right;
-        width: 100%;
-        height: 250px;
-
-        /* background-color: rgb(199, 199, 199); */
-    }
-
-    /*담기버튼 넣을 영역 div*/
-    .modal-putBtn{
-        float: right;
-        width: 100%;
-        height: 70px;
-
-       /*  background-color: #888; */
-    }
-
-    .putBtnMargin{
-        height: 10px;
-    }
-
-    .btnSize{
-        width: 200px;
-        height: 50px;
-
-        margin: auto;
-
-        
-    }
-
-    .putBtn {
-        cursor: pointer;
-        border: 0;
-        outline: 0;
-
-        width: 100%;
-        height: 100%;
-        background-color: rgb(255, 196, 0);
-        color: white;
-    }
-
-
-
-    /*창닫기 버튼 span*/
-    .close {
-        color: #aaa;
-        float: right;
-        font-size: 28px;
-        font-weight: bold;
-    }
-
-    .close:hover, .close:focus {
-        color: black;
-        text-decoration: none;
-        cursor: pointer;
-    }
-
-    /*이미지 영역*/
-    #image{
-        width: 309px;
-        height: 232px;
-        float: left;
-    }
-   	
+   		* {
+   			font-family: 'Nanum Gothic', sans-serif;
+   		}
+   		
+	   	img { 
+	   		max-width: 100%; 
+	   		height: auto; 
+	   	}
+	   	
+	   	td:hover {
+	   		cursor: pointer;
+	   		background-color: lightgray;
+	   	}
+	   	
+	   	.modal-body > img {
+	   		max-width: 55%; 
+	   		height: auto; 
+	   		float: left;
+	   	}
+	   	
+	   	.modal-body > p {
+	   		font-family: 'Nanum Gothic', sans-serif;
+	   		font-color: black;
+	   		text-align: center;
+	   	}
+	   	
+	   	p {	
+	   		color: black;
+		  	font-family: 'Nanum Gothic', sans-serif; 
+		}
+	   	
+	   	.modal-title-area {
+	   		font-family: 'Nanum Gothic', sans-serif;
+	   		font-color: black;
+	   		text-align: center;
+	   		max-width: 40%;
+	   		height: 200px;
+	   		float:right;
+	   	}
+	   	
+	   	.modal-body > .categoty {
+	   		font-size: 18px;
+	   		text-align: 80px;
+	   	}
+	   	
+	   	.intro-tag {
+	   		font-size: 16px;
+	   		text-align: 120px;
+	   		font-color: #e68a00;
+	   	}
+	   	
+	   	.modal-intro-area {
+	   		max-width: 100%;
+	   		height: 150px;
+	   		float: left;
+	   	}
+	   	
+	   	#button-insert {
+	   		background-color: #e68a00;
+	   	}
+	   	
    </style>
    
 </head>
@@ -183,21 +105,19 @@
     	<!-- 1차 라벨 선택 -->
     	<div id="div1">
 	    	<div class="container box_1170">
-			    <table class="table table-bordered table-hover">
-			    
+			    <table class="table table-bordered">
 			    	<tbody class="text-center">
 			    		<tr id="division1">
 			    			<td style="background-color: orange; color: white;">전체</td>
 			    		</tr>
 			    	</tbody>
-			    
 			    </table>
 			</div>
 		</div>
 		<!-- 1차 라벨 선택 -->
 		
 		<!-- 2차 라벨 선택 -->
-		<div id="div2"></div>
+		<div id="div2" class=""></div>
 		<!-- 2차 라벨 선택 -->
 		
 		<!-- Room Start -->
@@ -227,10 +147,10 @@
     </main>
     
     
-    <!--모달-->
-    <div id = "myModal" class="modal"></div>
-    
-    
+    <!-- 모달 영역 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
+
+  
 </body>
 		<!-- All JS Custom Plugins Link Here here -->
         <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>

@@ -36,11 +36,11 @@ public class FrontController extends HttpServlet {
 			forward = new TourListService().execute(request, response);
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/tourList.jsp");
-		}
-		//담기버튼 클릭시 카트리스트에 담기 로직
+		} 
+		// 담기버튼 클릭시 카트리스트에 담기 로직
 		else if(url.equals("/insertcartlist.tourlist")) {
 			new InsertCartlistService().execute(request, response);
-		} 
+		}
 		//내 관광지 페이지 제공
 		else if (url.equals("/mytourList.tourlist")) {
 			forward = new MyTourListService().execute(request, response);

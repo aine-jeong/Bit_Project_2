@@ -58,7 +58,7 @@ public class cartlistDAO {
 				result = insertpstmt.executeUpdate();
 			}
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 		
 		return result;
@@ -87,5 +87,4 @@ public class cartlistDAO {
 		
 		return cidList;
 	}
-	
 }

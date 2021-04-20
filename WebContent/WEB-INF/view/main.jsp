@@ -11,6 +11,5 @@
 	<%=session.getAttribute("user") %>
 	<a href="${pageContext.request.contextPath}/tourList.tourlist">tourList.jsp</a>
 	<a href="${pageContext.request.contextPath}/mytourList.tourlist">mytourList.jsp</a>
-	
 </body>
 </html>

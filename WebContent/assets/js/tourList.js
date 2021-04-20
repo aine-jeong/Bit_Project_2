@@ -31,13 +31,13 @@ async function init() {
 	var form_data = {
 		apiKey : API_KEY,
 		locale : LOCALE,
-		page : page
+		page : 100
 	};
 	
 	await getJejuData(form_data);
-	for(var i = 1; i < maxPage; i++) {
+	/*for(var i = 1; i < maxPage; i++) {
 		getJejuData(form_data);
-	}
+	}*/
 	
 	await firstDiv();
 	
@@ -47,7 +47,7 @@ async function init() {
 async function getJejuData(form_data) {
 	return new Promise((resolve, reject) => {
 
-		form_data.page = form_data.page + 1; 
+		/*form_data.page = form_data.page + 1; */
 		
 		$.ajax(
         		{
@@ -55,7 +55,7 @@ async function getJejuData(form_data) {
 					data: form_data,
 					success: (response) => {
 						
-						maxPage = response.pageCount;
+						/*maxPage = response.pageCount;*/
 						
 						totalResult.push(response);
 						
@@ -162,7 +162,7 @@ function setSecondDivision(arr) {
 	
 	var innerValue = ""
 	
-	innerValue += '<div class="container box_1170"><table class="table table-bordered table-hover"><tbody class="text-center">';
+	innerValue += '<div class="container box_1170"><table class="table table-bordered"><tbody class="text-center">';
 	
 	for(var i = 0; i < secondDivision.length; i++) {
 		
@@ -172,7 +172,7 @@ function setSecondDivision(arr) {
 		
 		if(i == 0) {
 			var rowsp = Math.ceil(secondDivision.length / 4) + 1;
-			innerValue += '<td class="text-center" style="background-color: orange; color: white;" rowspan="'+rowsp+'">전체</td>';
+			innerValue += '<td style="vertical-align: center; background-color: orange; color: white;" rowspan="' + rowsp + '">전체</td>';
 			continue;
 		}
 		
@@ -259,12 +259,9 @@ var span = document.getElementsByClassName('close')[0];
 
 
 $(document).on("click", "#myBtn", function(event) {
-	// e.preventDefault() 와 stopPropagation() 의 차이
-	
 	$('#myModal').empty();
 	
 	event.preventDefault();
-    modal.style.display = "block";
 	
 	var contentId = $(event.target).next().val();
 	
@@ -280,32 +277,33 @@ $(document).on("click", "#myBtn", function(event) {
 			data: form_data,
 			success: function(response) {
 				
-				var innerValue = "" + `<div class="modal-content">
-			            <span class="close"> &times; </span>
-			            <img id = "image" src="${response.items[0].repPhoto.photoid.imgpath}">
-			            <div class = "modal-title">
-			                <p class="title-text">${response.items[0].title}</p>
-			                <p class="category">${selectedFirst} > ${selectedSecond}</p>
-			            </div>
-			            <div class = "modal-intro">
-			                <p class="intro-text">${response.items[0].introduction}</p>
-			                <p class="intro-tag">${"#"+(response.items[0].tag).replaceAll(",", " #")}</p>
-			                <p class="intro-addr">${response.items[0].address}</p>
-			            </div>
-			            <div class = "modal-map">
-			            </div>
-			            <div class = "modal-putBtn">
-			                <div class = "putBtnMargin"></div>
-			                <div class = "btnSize">
-			                    <button class="genric-btn warning circle" id="button-insert">담기</button>
-								<input type="hidden" value="${response.items[0].contentsid}">
-			                </div>
-			            </div>
-			        </div>`;
-
+				var innerValue = "" + `<div class="modal-dialog" role="document">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h4 class="modal-title" id="myModalLabel">${response.items[0].title}</h4>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+												</div>
+												<div class="modal-body text-center">
+													<img id = "image" class="" src="${response.items[0].repPhoto.photoid.imgpath}">
+													<div class = "modal-title-area">
+														<p class="category">${selectedFirst} > ${selectedSecond}</p>
+										                <p class="intro-tag">${"#"+(response.items[0].tag).replaceAll(",", " #")}</p>
+									                </div>
+									                <div class = "modal-intro-area">
+										                <p class="intro-text">${response.items[0].introduction}</p>
+										                <p class="intro-addr">${response.items[0].address}</p>
+									                </div>
+												</div>
+												<div class="modal-footer text-center" style="display: block;">
+													<button type="button" class="genric-btn warning circle" id="button-insert">담기</button>
+													<input type="hidden" value="${response.items[0].contentsid}">
+												</div>
+											</div>
+										</div>`;
+				
 				$('#myModal').empty();
 				$('#myModal').html(innerValue);
-
+				$('#myModal').modal('show');
 			}
 		}
 	)
@@ -313,13 +311,13 @@ $(document).on("click", "#myBtn", function(event) {
 });
 
 $(document).on("click", ".close", function(event) {
-	modal.style.display = "none";
+	$('#myModal').modal('hide');
 });
 
 // 모달 창 이외의 곳 클릭시에도 모달창 닫기
 window.onclick = function(event) {
     if(event.target == modal) {
-        modal.style.display = "none";
+        $('#myModal').modal('hide');
     }
 }
 
