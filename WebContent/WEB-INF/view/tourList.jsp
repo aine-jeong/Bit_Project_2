@@ -34,7 +34,35 @@
    <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
    
+   <!-- 맵API -->
+   <script type="text/javascript"
+		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ff92759dc421a0bf0b08eca76214da7f"></script>
+   
    <style type="text/css">
+   		/***로딩이미지***/
+   		.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+		    position: fixed;
+		    left:0;
+		    right:0;
+		    top:0;
+		    bottom:0;
+		    background: rgba(0,0,0,0.2); /*not in ie */
+		    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+		}
+
+   		 .wrap-loading div{ /*로딩 이미지*/
+	        position: fixed;
+	        top:50%;
+	        left:50%;
+	        margin-left: -21px;
+	        margin-top: -21px;
+   		 }
+
+   		 .display-none{ /*감추기*/
+     	   display:none;
+   		 }
+   		/***로딩이미지***/
+   
    		* {
    			font-family: 'Nanum Gothic', sans-serif;
    		}
@@ -49,28 +77,41 @@
 	   		background-color: lightgray;
 	   	}
 	   	
+	   	.table td, .table th {
+    		vertical-align: middle;
+		}
+	   	
+	   	
+	   	/***모달***/
+	   	.modal-content {
+  		  margin-top: 100px;
+		}
+	   	
 	   	.modal-body > img {
 	   		max-width: 55%; 
 	   		height: auto; 
 	   		float: left;
 	   	}
 	   	
-	   	.modal-body > p {
-	   		font-family: 'Nanum Gothic', sans-serif;
-	   		font-color: black;
-	   		text-align: center;
-	   	}
-	   	
 	   	p {	
+	   		text-align: center;
 	   		color: black;
 		  	font-family: 'Nanum Gothic', sans-serif; 
+		  	align-content: center;
+		}
+		
+		p > .category {
+			font-size: 18px;
+		}
+		
+		p > .intro-tag {
+			font-color: #e68a00;
 		}
 	   	
 	   	.modal-title-area {
-	   		font-family: 'Nanum Gothic', sans-serif;
-	   		font-color: black;
+	   		padding-top: 40px;
 	   		text-align: center;
-	   		max-width: 40%;
+	   		max-width: 180px;
 	   		height: 200px;
 	   		float:right;
 	   	}
@@ -91,6 +132,26 @@
 	   		height: 150px;
 	   		float: left;
 	   	}
+	   	
+	   	.intro-text {
+	   		height: 100px;
+	   		overflow: auto;
+	   	}
+	   	
+	   	.intro-addr {
+	   		margin: 0 auto;
+	   	}
+	   	
+	   	.modal-map-area {
+	   		width: 100%;
+	   		height: 180px;
+	   		float: left;
+	   	}
+	   	
+	   	.map{
+		width: 100%;
+		height: 100%;
+		}
 	   	
 	   	#button-insert {
 	   		background-color: #e68a00;
@@ -119,6 +180,9 @@
 		<!-- 2차 라벨 선택 -->
 		<div id="div2" class=""></div>
 		<!-- 2차 라벨 선택 -->
+		
+		<!-- 라벨선택요청이미지 -->
+		<img class="category-choice" src="img/choice.png">
 		
 		<!-- Room Start -->
         <section class="room-area">
@@ -149,8 +213,12 @@
     
     <!-- 모달 영역 -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
-
-  
+	
+	<!-- 로딩이미지용 -->
+  	<div class="wrap-loading display-none">
+   		 <div><img src="img/loading.gif" /></div>
+	</div>  
+	
 </body>
 		<!-- All JS Custom Plugins Link Here here -->
         <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
