@@ -45,10 +45,10 @@ public class MemberLoginService extends HttpServlet {
     	
     	// testUser
     	Member user = new Member();
-    	user.setEmail("testUser");
+    	user.setEmail("bit01@naver.com");
     	user.setPassword("1004");
     	user.setDivision("1");
-    	user.setNickname("테스트유저");
+    	user.setNickname("bit01");
     	session.setAttribute("user", user);
     	/***********테스트 코드***************/
     	

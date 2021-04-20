@@ -52,8 +52,8 @@
         padding: 30px;
         border: 1px solid #888;
 
-        width: 600px;
-        height: 800px;
+        width: 520px;
+        height: 720px;
 
     }
 
@@ -154,14 +154,14 @@
 
 
     /*창닫기 버튼 span*/
-    .modal_closeBtn {
+    .close {
         color: #aaa;
         float: right;
         font-size: 28px;
         font-weight: bold;
     }
 
-    .modal_closeBtn:hover, .modal_closeBtn:focus {
+    .close:hover, .close:focus {
         color: black;
         text-decoration: none;
         cursor: pointer;
@@ -203,24 +203,24 @@
 		<!-- Room Start -->
         <section class="room-area">
             <div class="container">
-                <div class="row justify-content-center">
+                <!-- <div class="row justify-content-center">
                     <div class="col-xl-8">
-                        <!--font-back-tittle  -->
+                        font-back-tittle 
                         <div class="font-back-tittle mb-45">
                             <div class="archivment-front">
                                 <h3>Our Rooms</h3>
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
                 
                 <div id="row" class="row"></div>
                 
-                <div class="row justify-content-center">
+                <!-- <div class="row justify-content-center">
                     <div class="room-btn pt-70">
                         <a href="#" class="btn view-btn1">View more  <i class="ti-angle-right"></i> </a>
                     </div>
-                </div>
+                </div> -->
             </div>
         </section>
         <!-- Room End -->
@@ -228,8 +228,7 @@
     
     
     <!--모달-->
-    <div id = "myModal" class="modal" style="overflow: auto;">
-    </div>
+    <div id = "myModal" class="modal"></div>
     
     
 </body>

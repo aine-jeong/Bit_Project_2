@@ -1,17 +1,39 @@
 package kr.or.bit.cartlist.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
+import kr.or.bit.cartlist.dao.cartlistDAO;
+import kr.or.bit.member.dto.Member;
 
 public class MyTourListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
+		ActionForward forward = null;
+		Member loginUser = (Member) request.getSession().getAttribute("user");
+		String email = loginUser.getEmail();
 		
-		return new ActionForward();
+		cartlistDAO cartdao = new cartlistDAO();
+		List<String> myTourList = cartdao.myTourList(email);
+		
+		try {
+			
+			request.setAttribute("myTourList", myTourList);
+			
+			forward = new ActionForward();
+			forward.setRedirect(false); // forward
+			forward.setPath("WEB-INF/view/myTourList.jsp");
+		
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		return forward;
 	}
 
 }

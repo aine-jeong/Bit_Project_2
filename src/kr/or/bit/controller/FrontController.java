@@ -9,9 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.sun.corba.se.spi.orbutil.fsm.Action;
-
 import kr.or.bit.action.ActionForward;
+import kr.or.bit.cartlist.ajax.InsertCartlistService;
 import kr.or.bit.cartlist.service.MyTourListService;
 import kr.or.bit.cartlist.service.TourListService;
 
@@ -32,11 +31,18 @@ public class FrontController extends HttpServlet {
 
 		ActionForward forward = null;
 
+		//관광지페이지 제공
 		if (url.equals("/tourList.tourlist")) {
 			forward = new TourListService().execute(request, response);
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/tourList.jsp");
-		}else if (url.equals("/mytourList.tourlist")) {
+		}
+		//담기버튼 클릭시 카트리스트에 담기 로직
+		else if(url.equals("/insertcartlist.tourlist")) {
+			new InsertCartlistService().execute(request, response);
+		} 
+		//내 관광지 페이지 제공
+		else if (url.equals("/mytourList.tourlist")) {
 			forward = new MyTourListService().execute(request, response);
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/myTourList.jsp");

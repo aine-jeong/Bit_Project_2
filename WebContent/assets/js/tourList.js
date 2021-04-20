@@ -24,45 +24,7 @@ var selectedSecond = "";
 
 init();
 
-function setDivision1(str) {
-	
-	if(firstDivision.length == 0 || !firstDivisionContainStr(firstDivision, str)) {
-		firstDivision.push(str);
-		document.querySelector('#division1').innerHTML += '<td>' + str + '</td>';
-	}
-}
-
-async function firstDiv() {
-	
-	return new Promise((resolve, reject) => {
-		
-		$.each(totalResult, function(index, item) {
-    		
-    		$.each(item.items, (index2, item2) => {
-				
-    			var str = "";
-    			
-    			
-    			if(item2.region1cd == null) {
-    				// 1차 지역 코드가 없는 경우
-    				fdisNull.push(item2);
-    				return true;
-    			} else {
-    				str = item2.region1cd.label;
-    				notNullTotalResult.push(item2);
-    			}
-    			
-    			setDivision1(str);
-				
-			});
-    	});
-		
-		resolve();
-		
-	})
-	
-}
-
+// 화면 open시 실행
 async function init() {
 	var page = 0;
 	
@@ -79,16 +41,6 @@ async function init() {
 	
 	await firstDiv();
 	
-}
-
-// 배열의 중복값은 받지 않음
-function firstDivisionContainStr(firstDivision, str) {
-	for(var i = 0; i < firstDivision.length; i++){
-		if(str === firstDivision[i]) {
-			return true;
-		}
-	}
-	return false;
 }
 
 // 제주비짓 REST API 데이터 받기
@@ -116,8 +68,60 @@ async function getJejuData(form_data) {
 	
 }
 
+// 1차지역 라벨이 null 값인 경우를 제외하고 전체 목록에 담는다. 
+async function firstDiv() {
+	
+	return new Promise((resolve, reject) => {
+		
+		$.each(totalResult, function(index, item) {
+    		
+    		$.each(item.items, (index2, item2) => {
+				
+    			var str = "";
+    			
+    			
+    			if(item2.region1cd == null) {
+    				// 1차 지역 코드가 없는 경우
+    				// fdisNull.push(item2);
+    				return true;
+    			} else {
+    				str = item2.region1cd.label;
+    				notNullTotalResult.push(item2);
+    			}
+    			
+    			setDivision1(str);
+				
+			});
+    	});
+		
+		resolve();
+		
+	});
+	
+}
+
+// 중복 값을 제외한 1차 라벨 화면에 셋팅
+function setDivision1(str) {
+	if(firstDivision.length == 0 || !firstDivisionContainStr(firstDivision, str)) {
+		firstDivision.push(str);
+		document.querySelector('#division1').innerHTML += '<td>' + str + '</td>';
+	}
+}
+
+// 라벨 중복 값은 true, 조회 완료후에 중복값이 없다면 false 반환
+function firstDivisionContainStr(firstDivision, str) {
+	for(var i = 0; i < firstDivision.length; i++){
+		if(str === firstDivision[i]) {
+			return true;
+		}
+	}
+	return false;
+}
+
 // 1차 지역 클릭 이벤트 동적 할당
 $(document).on("click", "#division1 > td", function(event) {
+	// 카드 지역 초기화
+	$('#row').empty();
 	
 	var targetValue = $(event.target).text();
 	
@@ -141,38 +145,12 @@ $(document).on("click", "#division1 > td", function(event) {
 		setSecondDivision(arr);
 		
 	}
-	
-	
-	
-	
-});
-
-$(document).on("click", "#div2 > div > table > tbody > tr > td", function(event) {
-	
-	var targetValue = $(event.target).text();
-	
-	if(targetValue === "전체") {
-		return;
-	} else {
-		selectedSecond = targetValue;
-		
-		var arr = [];
-		
-		$.each(notNullTotalResult, function(index, item){
-			if(item.region1cd.label === selectedFirst && item.region2cd.label === selectedSecond) {
-				arr.push(item);
-			}
-		});
-		
-	}
-	
-	setCard(arr);
-	
 });
 
 // 2차 지역 라벨 만들기
 function setSecondDivision(arr) {
 	
+	// 라벨 중복 값 제거
 	$.each(arr, function(index, item) {
 		
 		var str = item.region2cd.label;
@@ -217,6 +195,31 @@ function setSecondDivision(arr) {
 	$('#div2').html(innerValue);
 }
 
+// 2차 지역 라벨 클릭 시 이벤트 동적 생성
+$(document).on("click", "#div2 > div > table > tbody > tr > td", function(event) {
+	
+	var targetValue = $(event.target).text();
+	
+	if(targetValue === "전체") {
+		return;
+	} else {
+		selectedSecond = targetValue;
+		
+		var arr = [];
+		
+		$.each(notNullTotalResult, function(index, item){
+			if(item.region1cd.label === selectedFirst && item.region2cd.label === selectedSecond) {
+				arr.push(item);
+			}
+		});
+		
+	}
+	
+	setCard(arr);
+	
+});
+
+// 카드 생성
 function setCard(arr) {
 	
 	var innerValue = "";
@@ -234,22 +237,21 @@ function setCard(arr) {
                             <div class="room-caption text-center">
                                 <h3><a href="#" id="myBtn">${item.repPhoto.descseo}</a><input type="hidden" value="${item.contentsid}"></h3>
 								<div>${selectedFirst} > ${selectedSecond}</div>
-								<div>${"#"+(item.alltag).replaceAll(",", " #")}</div>
-								<div class="mt-3"><a href="insertcartlist.tourlist?contentId=${item.contentsid}" class="genric-btn warning circle">담기</a></div>
-
+								<div>${"#"+(item.tag).replaceAll(",", " #")}</div>
+								<div class="mt-3">
+									<button class="genric-btn warning circle" id="button-insert">담기</button>
+									<input type="hidden" value="${item.contentsid}">
+								</div>
                             </div>
                         </div>
                        </div>`;
 	});
 	
-	console.log(innerValue);
-	
 	$('#row').empty();
 	$('#row').html(innerValue);
-
 }
 
-
+// 모달 부분
 var modal = document.getElementById('myModal');
 var btn = document.getElementById('myBtn');
 
@@ -265,7 +267,7 @@ $(document).on("click", "#myBtn", function(event) {
     modal.style.display = "block";
 	
 	var contentId = $(event.target).next().val();
-	console.log(contentId);
+	
 	var form_data = {
 		apiKey: API_KEY,
 		locale: LOCALE,
@@ -279,7 +281,7 @@ $(document).on("click", "#myBtn", function(event) {
 			success: function(response) {
 				
 				var innerValue = "" + `<div class="modal-content">
-			            <span class="modal_closeBtn"> &times; </span>
+			            <span class="close"> &times; </span>
 			            <img id = "image" src="${response.items[0].repPhoto.photoid.imgpath}">
 			            <div class = "modal-title">
 			                <p class="title-text">${response.items[0].title}</p>
@@ -287,7 +289,7 @@ $(document).on("click", "#myBtn", function(event) {
 			            </div>
 			            <div class = "modal-intro">
 			                <p class="intro-text">${response.items[0].introduction}</p>
-			                <p class="intro-tag">${"#"+(response.items[0].alltag).replaceAll(",", " #")}</p>
+			                <p class="intro-tag">${"#"+(response.items[0].tag).replaceAll(",", " #")}</p>
 			                <p class="intro-addr">${response.items[0].address}</p>
 			            </div>
 			            <div class = "modal-map">
@@ -295,7 +297,8 @@ $(document).on("click", "#myBtn", function(event) {
 			            <div class = "modal-putBtn">
 			                <div class = "putBtnMargin"></div>
 			                <div class = "btnSize">
-			                    <button class="putBtn">담기</button>
+			                    <button class="genric-btn warning circle" id="button-insert">담기</button>
+								<input type="hidden" value="${response.items[0].contentsid}">
 			                </div>
 			            </div>
 			        </div>`;
@@ -320,6 +323,21 @@ window.onclick = function(event) {
     }
 }
 
-
-
-
+// 찜목록 담기 비동기 처리
+$(document).on("click", "#button-insert", function(event) {
+	const targetValue = $(event.target).next().val();
+	const url = "insertcartlist.tourlist";
+	const form_data = {
+		contentId: targetValue
+	}
+	
+	$.ajax(
+		{
+			url: url,
+			data: form_data,
+			success: function(response) {
+				alert(response);		
+			}
+		}
+	)
+});

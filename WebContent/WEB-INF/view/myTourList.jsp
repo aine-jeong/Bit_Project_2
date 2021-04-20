@@ -1,4 +1,9 @@
+<%@page import="java.util.ArrayList"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!doctype html>
 <html class="no-js" lang="zxx">
 
@@ -55,6 +60,9 @@
 </style>
 
 <body>
+<!-- DB에서 가져온 cid 처리하려고 hidden으로 받아둠 -->
+<input id="myTourList" type="hidden" value="<%=request.getAttribute("myTourList") %>">
+
 	<header>
         <!-- Header Start -->
        <div class="header-area header-sticky">
@@ -122,23 +130,39 @@
 	</div>
 
 
+	
+	
+	
+	
+	
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ff92759dc421a0bf0b08eca76214da7f"></script>
 	<script>
 		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 		mapOption = {
 			center : new kakao.maps.LatLng(33.36159410409114, 126.52920948469817), // 지도의 중심좌표
+			// 지도의 확대 레벨
 			level : 10
-		// 지도의 확대 레벨
 		};
 
 		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
 
-		//샘플 URL
+		//관광지 API URL
 		var url = "http://api.visitjeju.net/vsjApi/contents/searchList";
 		
+		/*
+		//로그인한 유저가 담아둔 관광지 contentID 목록
+		List<String> myTourList = (ArrayList<String>)request.getAttribute("myTourList");
+		
+		System.out.print(myTourList);
+		
+		*/
+		//<c:set var="myTourList" value="${requestScope.myTourList}"></c:set>
+		
+		
 		//샘플 사용자가 담아둔 관광지 목록의 contentID
-		var markerArray = ["CNTS_000000000021622","CNTS_200000000009833","CNTS_000000000022065","CNTS_200000000007536"];
+		//var markerArray = ["CNTS_000000000021622","CNTS_200000000009833","CNTS_000000000022065","CNTS_200000000007536"];
+		var markerArray = $('#myTourList').val().replaceAll("[","").replaceAll("]","").split(", ");
 		
 		//마커를 표시할 위치와 title 객체 배열
 		var positions = [];
