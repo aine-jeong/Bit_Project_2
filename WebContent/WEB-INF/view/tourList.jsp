@@ -39,7 +39,7 @@
    <!-- sweetalert -->
    <script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    <!-- TourList CSS 가져오기 -->
-   <link rel="stylesheet" href="assets/css/TourList.css">
+   <link rel="stylesheet" href="css/TourList.css">
    
    <style type="text/css">
    		/***로딩이미지***/
@@ -65,12 +65,25 @@
      	   display:none;
    		 }
    		/***로딩이미지***/
+   		
+   		.card-image{
+			width: 100%;
+			height: 300px;
+		  	object-fit: cover;
+		  	border: thick;
+		}
    </style>
    
 </head>
 <body>
     <jsp:include page="header.jsp" />
     <main>
+    	<div class="font-back-tittle mb-45">
+			<div class="archivment-front">
+				<h3>TourList</h3>
+			</div>
+			<h3 class="archivment-back">TourList</h3>
+		</div>
     	
     	<!-- 1차 라벨 선택 -->
     	<div id="div1">
@@ -96,27 +109,16 @@
 		<!-- Room Start -->
         <section class="room-area">
             <div class="container">
-                <!-- <div class="row justify-content-center">
-                    <div class="col-xl-8">
-                        font-back-tittle 
-                        <div class="font-back-tittle mb-45">
-                            <div class="archivment-front">
-                                <h3>Our Rooms</h3>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
+                
                 
                 <div id="row" class="row"></div>
                 
-                <!-- <div class="row justify-content-center">
-                    <div class="room-btn pt-70">
-                        <a href="#" class="btn view-btn1">View more  <i class="ti-angle-right"></i> </a>
-                    </div>
-                </div> -->
+                
             </div>
         </section>
         <!-- Room End -->
+        
+        <div id="paging" class="text-center"></div>
     </main>
     
     
@@ -126,6 +128,16 @@
 	<!-- 로딩이미지용 -->
   	<div class="wrap-loading display-none">
    		 <div><img src="img/loading.gif" /></div>
+   		 <!-- <div id="preloader-active">
+		     <div class="preloader d-flex align-items-center justify-content-center">
+		         <div class="preloader-inner position-relative">
+		             <div class="preloader-circle"></div>
+		             <div class="preloader-img pere-text">
+		                 <strong>JYP</b>
+		             </div>
+		         </div>
+		     </div>
+ 		</div> -->
 	</div>  
 	
 </body>
@@ -166,6 +178,6 @@
         <script src="./assets/js/main.js"></script>
         
         
-        <script src="./assets/js/tourList.js?ver=1"></script>
+        <script src="js/tourList.js?ver=1"></script>
         
 </html>

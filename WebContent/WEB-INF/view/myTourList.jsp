@@ -34,6 +34,18 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   
+   
+   
+   <!-- 폰트 -->
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+   
+   <link rel="stylesheet" href="css/TourList.css">
+   
+   <!-- sweetalert -->
+   <script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   
 </head>
 
 
@@ -63,64 +75,16 @@
 <!-- DB에서 가져온 cid 처리하려고 hidden으로 받아둠 -->
 <input id="myTourList" type="hidden" value="<%=request.getAttribute("myTourList") %>">
 
-	<header>
-        <!-- Header Start -->
-       <div class="header-area header-sticky">
-            <div class="main-header ">
-                <div class="container">
-                    <div class="row align-items-center">
-                        <!-- logo -->
-                        <div class="col-xl-2 col-lg-2">
-                            <div class="logo">
-                               <a href="index.html"><img src="assets/img/logo/logo.png" alt=""></a>
-                            </div>
-                        </div>
-                    <div class="col-xl-8 col-lg-8">
-                            <!-- main-menu -->
-                            <div class="main-menu f-right d-none d-lg-block">
-                                <nav>
-                                    <ul id="navigation">                                                                                                                                     
-                                        <li><a href="index.html">Home</a></li>
-                                        <li><a href="about.html">About</a></li>
-                                        <li><a href="services.html">Service</a></li>
-                                        <li><a href="blog.html">Blog</a>
-                                            <ul class="submenu">
-                                                <li><a href="blog.html">Blog</a></li>
-                                                <li><a href="single-blog.html">Blog Details</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Pages</a>
-                                            <ul class="submenu">
-                                                <li><a href="rooms.html">Rooms</a>
-                                                <li><a href="elements.html">Element</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="contact.html">Contact</a></li>
-                                    </ul>
-                                </nav>
-                            </div>
-                        </div>             
-                        <div class="col-xl-2 col-lg-2">
-                            <!-- header-btn -->
-                            <div class="header-btn">
-                                <a href="#" class="btn btn1 d-none d-lg-block ">Book Online</a>
-                            </div>
-                        </div>
-                        <!-- Mobile Menu -->
-                        <div class="col-12">
-                            <div class="mobile_menu d-block d-lg-none"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-       </div>
-        <!-- Header End -->
-    </header>
+	<jsp:include page="header.jsp" />
     
 	<!-- 요기부터 -->
 	<!-- 내가 담은 관광지 (헤더) -->
-	<div class="container box_1170 myTour_name">
-	
+	<div class="mylist-header-margin"></div>
+	<div class="font-back-tittle mb-45">
+		<div class="archivment-front">
+			<h3>My TourList</h3>
+		</div>
+			<h3 class="archivment-back">My TourList</h3>
 	</div>
 	
 	<div class="container box_1170 mapArea">
@@ -128,101 +92,33 @@
 		
 		</div>
 	</div>
-
-
 	
+	<!-- Room Start -->
+	<div class="container box_1170 text-center mt-5">
+	    <section class="room-area">
+	        <div class="container">
+	            
+	            <div id="row" class="row"></div>
+	            
+	        </div>
+    </section>
+    </div>
+    
+	<div class="container box_1170 text-center mt-5">
+		<a href="javascript:void(0)" id="test" class="genric-btn primary-border radius">모두 보기</a>
+	</div>
 	
+	<div id="paging" class="text-center"></div>
 	
-	
+	<!-- 모달 영역 -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 	
 	<script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ff92759dc421a0bf0b08eca76214da7f"></script>
-	<script>
-		var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
-		mapOption = {
-			center : new kakao.maps.LatLng(33.36159410409114, 126.52920948469817), // 지도의 중심좌표
-			// 지도의 확대 레벨
-			level : 10
-		};
-
-		var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
-
-		//관광지 API URL
-		var url = "http://api.visitjeju.net/vsjApi/contents/searchList";
-		
-		/*
-		//로그인한 유저가 담아둔 관광지 contentID 목록
-		List<String> myTourList = (ArrayList<String>)request.getAttribute("myTourList");
-		
-		System.out.print(myTourList);
-		
-		*/
-		//<c:set var="myTourList" value="${requestScope.myTourList}"></c:set>
-		
-		
-		//샘플 사용자가 담아둔 관광지 목록의 contentID
-		//var markerArray = ["CNTS_000000000021622","CNTS_200000000009833","CNTS_000000000022065","CNTS_200000000007536"];
-		var markerArray = $('#myTourList').val().replaceAll("[","").replaceAll("]","").split(", ");
-		
-		//마커를 표시할 위치와 title 객체 배열
-		var positions = [];
-		
-		for(var index in markerArray) {
-			
-			var data = {
-						apiKey: "wuuv42tnk9hazf5h",
-						locale: "kr",
-						cid: markerArray[index]
-					};
-			
-			$.getJSON(url, data, function(response) {
-				
-				/*
-				console.log(response);
-				console.log(response.items[0].title);
-				console.log(response.items[0].latitude);
-				console.log(response.items[0].longitude);
-				*/
-				
-				var marker = {
-								title: response.items[0].title,
-								latlng: new kakao.maps.LatLng(response.items[0].latitude, response.items[0].longitude)
-							}
-				
-				positions.push(marker);
-				
-				//마커 이미지의 이미지 주소입니다
-				var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-				    
-				for (var i = 0; i < positions.length; i ++) {
-				    
-				    // 마커 이미지의 이미지 크기 입니다
-				    var imageSize = new kakao.maps.Size(24, 35); 
-				    
-				    // 마커 이미지를 생성합니다    
-				    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
-				    
-				    // 마커를 생성합니다
-				    var marker = new kakao.maps.Marker({
-				        map: map, // 마커를 표시할 지도
-				        position: positions[i].latlng, // 마커를 표시할 위치
-				        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
-				        image : markerImage // 마커 이미지 
-				    });
-				}
-				
-			}); 
-		
-		};
-		
-		// 마커가 표시될 위치입니다 
-		//var markerPosition = new kakao.maps.LatLng(33.36159410409114, 126.52920948469817);
-
-		
-	</script>
-
 
 	<!-- 요기까지 -->
+	
+	
 	
 <!-- JS here -->
 	
@@ -262,24 +158,8 @@
         <script src="./assets/js/plugins.js"></script>
         <script src="./assets/js/main.js"></script>
         
-    <script>
-        $('#datepicker').datepicker({
-            iconsLibrary: 'fontawesome',
-            disableDaysOfWeek: [0, 0],
-        //     icons: {
-        //      rightIcon: '<span class="fa fa-caret-down"></span>'
-        //  }
-        });
-        $('#datepicker2').datepicker({
-            iconsLibrary: 'fontawesome',
-            icons: {
-             rightIcon: '<span class="fa fa-caret-down"></span>'
-         }
-
-        });
-        var timepicker = $('#timepicker').timepicker({
-         format: 'HH.MM'
-     });
-    </script>
+        <script src="js/myTourList.js"></script>
+        
+    	
 </body>
 </html>
