@@ -120,7 +120,7 @@
 	
 	<!-- 로딩이미지용 -->
   	<div class="wrap-loading display-none">
-   		 <div><img src="img/loading.gif" /></div>
+   		 <div><img src="img/Bean Eater-1s-200px (2).svg" /></div>
    		 <!-- <div id="preloader-active">
 		     <div class="preloader d-flex align-items-center justify-content-center">
 		         <div class="preloader-inner position-relative">

@@ -35,8 +35,6 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
    
-   
-   
    <!-- 폰트 -->
    <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
@@ -48,8 +46,6 @@
    
 </head>
 
-
-<!-- 냠냠 -->
 <style>
 	.myTour_name{
 		background: #e6e6e6;
