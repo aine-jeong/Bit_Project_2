@@ -146,7 +146,9 @@ $(document).on("click", "#division1 > td", function(event) {
 		});
 
 		setSecondDivision(arr);
-
+		document.querySelector('#paging').style.display = "none";
+		$('.category-choice').removeClass('display-none');
+		
 	}
 });
 
@@ -226,6 +228,8 @@ $(document).on("click", "#div2 > div > table > tbody > tr > td", function(event)
 	
 	totalPage = cardarr.length;
 	pager(totalPage, currentPage, pageSize);
+	
+	document.querySelector('#paging').style.display = "block";
 	
 });
 

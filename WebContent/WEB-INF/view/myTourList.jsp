@@ -108,6 +108,7 @@
 		<a href="javascript:void(0)" id="test" class="genric-btn primary-border radius">모두 보기</a>
 	</div>
 	
+	<!-- 페이지 영역 -->
 	<div id="paging" class="text-center"></div>
 	
 	<!-- 모달 영역 -->

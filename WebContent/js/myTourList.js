@@ -28,7 +28,8 @@ init();
 
 function init() {
 	
-	if(markerArray[0] === "") {
+	if(markerArray.length == 0 || markerArray[0] === "") {
+		document.querySelector('#test').style.display = "none";
 		return;
 	}
 		
@@ -172,6 +173,9 @@ function pager(total, currentPage, pageSize) {
 			
 			if(i == currentPage) {
 				innerValue += `<span class="genric-btn success radius">${i}</span>`;
+				if(maxPage == i) {
+					break;
+				}
 			} else if(maxPage == i){
 				innerValue += `<a class="genric-btn success-border radius" href="javascript:void(0)">${i}</a>`
 				break;
@@ -367,8 +371,6 @@ $(document).on("click", "#button-delete", function(event) {
 				swal(response);
 				$.each(myTourList, function(index, item) {
 					
-					console.log(index);
-					
 					if(item.items[0].contentsid === targetValue) {
 						myTourList.splice(index, 1);
 						return false;
@@ -376,11 +378,69 @@ $(document).on("click", "#button-delete", function(event) {
 				});
 				
 				var total = myTourList.length;
+				currentPage = 1;
 				$('#row').empty();
 				pager(total, 1, pageSize);
 				$('#myModal').modal('hide');
+				
+				// 맵을 다시 생성해서 마커 재배치
+				setMap();		
+				
+				if(myTourList.length == 0 || myTourList[0] === "") {
+					document.querySelector('#test').style.display = "none";
+					document.querySelector('#paging').style.display = "none";
+					return;
+				}
 				
 			}
 		}
 	)
 });
+
+function setMap() {
+	
+	$('#map').empty();
+				
+	mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+	mapOption = {
+		center : new kakao.maps.LatLng(33.36159410409114, 126.52920948469817), // 지도의 중심좌표
+		// 지도의 확대 레벨
+		level : 10
+	};
+	
+	map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+	
+	positions = [];
+	
+	$.each(myTourList, function(index, response) {
+		var marker = {
+				title: response.items[0].title,
+				latlng: new kakao.maps.LatLng(response.items[0].latitude, response.items[0].longitude)
+			}
+
+		positions.push(marker);	
+	});
+	
+	
+	//마커 이미지의 이미지 주소입니다
+	var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+	    
+	for (var i = 0; i < positions.length; i ++) {
+	    
+	    // 마커 이미지의 이미지 크기 입니다
+	    var imageSize = new kakao.maps.Size(24, 35); 
+	    
+	    // 마커 이미지를 생성합니다    
+	    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
+	    
+	    // 마커를 생성합니다
+	    var marker = new kakao.maps.Marker({
+	        map: map, // 마커를 표시할 지도
+	        position: positions[i].latlng, // 마커를 표시할 위치
+	        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+	        image : markerImage // 마커 이미지 
+	    });
+	}
+	
+	
+}

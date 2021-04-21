@@ -65,13 +65,6 @@
      	   display:none;
    		 }
    		/***로딩이미지***/
-   		
-   		.card-image{
-			width: 100%;
-			height: 300px;
-		  	object-fit: cover;
-		  	border: thick;
-		}
    </style>
    
 </head>
