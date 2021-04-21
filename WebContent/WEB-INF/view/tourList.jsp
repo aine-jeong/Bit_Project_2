@@ -33,10 +33,13 @@
    <!-- 폰트 -->
    <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
-   
    <!-- 맵API -->
    <script type="text/javascript"
 		src="//dapi.kakao.com/v2/maps/sdk.js?appkey=ff92759dc421a0bf0b08eca76214da7f"></script>
+   <!-- sweetalert -->
+   <script src="http://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+   <!-- TourList CSS 가져오기 -->
+   <link rel="stylesheet" href="assets/css/TourList.css">
    
    <style type="text/css">
    		/***로딩이미지***/
@@ -62,107 +65,13 @@
      	   display:none;
    		 }
    		/***로딩이미지***/
-   
-   		* {
-   			font-family: 'Nanum Gothic', sans-serif;
-   		}
-   		
-	   	img { 
-	   		max-width: 100%; 
-	   		height: auto; 
-	   	}
-	   	
-	   	td:hover {
-	   		cursor: pointer;
-	   		background-color: lightgray;
-	   	}
-	   	
-	   	.table td, .table th {
-    		vertical-align: middle;
-		}
-	   	
-	   	
-	   	/***모달***/
-	   	.modal-content {
-  		  margin-top: 100px;
-		}
-	   	
-	   	.modal-body > img {
-	   		max-width: 55%; 
-	   		height: auto; 
-	   		float: left;
-	   	}
-	   	
-	   	p {	
-	   		text-align: center;
-	   		color: black;
-		  	font-family: 'Nanum Gothic', sans-serif; 
-		  	align-content: center;
-		}
-		
-		p > .category {
-			font-size: 18px;
-		}
-		
-		p > .intro-tag {
-			font-color: #e68a00;
-		}
-	   	
-	   	.modal-title-area {
-	   		padding-top: 40px;
-	   		text-align: center;
-	   		max-width: 180px;
-	   		height: 200px;
-	   		float:right;
-	   	}
-	   	
-	   	.modal-body > .categoty {
-	   		font-size: 18px;
-	   		text-align: 80px;
-	   	}
-	   	
-	   	.intro-tag {
-	   		font-size: 16px;
-	   		text-align: 120px;
-	   		font-color: #e68a00;
-	   	}
-	   	
-	   	.modal-intro-area {
-	   		max-width: 100%;
-	   		height: 150px;
-	   		float: left;
-	   	}
-	   	
-	   	.intro-text {
-	   		height: 100px;
-	   		overflow: auto;
-	   	}
-	   	
-	   	.intro-addr {
-	   		margin: 0 auto;
-	   	}
-	   	
-	   	.modal-map-area {
-	   		width: 100%;
-	   		height: 180px;
-	   		float: left;
-	   	}
-	   	
-	   	.map{
-		width: 100%;
-		height: 100%;
-		}
-	   	
-	   	#button-insert {
-	   		background-color: #e68a00;
-	   	}
-	   	
    </style>
    
 </head>
 <body>
     <jsp:include page="header.jsp" />
     <main>
+    	
     	<!-- 1차 라벨 선택 -->
     	<div id="div1">
 	    	<div class="container box_1170">
@@ -257,6 +166,6 @@
         <script src="./assets/js/main.js"></script>
         
         
-        <script src="./assets/js/tourList.js"></script>
+        <script src="./assets/js/tourList.js?ver=1"></script>
         
 </html>

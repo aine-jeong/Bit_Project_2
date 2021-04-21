@@ -219,7 +219,8 @@ $(document).on("click", "#div2 > div > table > tbody > tr > td", function(event)
 		});
 
 	}
-
+	
+	$('.category-choice').addClass('display-none');
 	setCard(arr);
 
 });
@@ -255,7 +256,6 @@ function setCard(arr) {
 	$('#row').empty();
 	$('#row').html(innerValue);
 	
-	$('.category-choice').addClass('display-none');
 }
 
 // 모달 부분
@@ -296,7 +296,8 @@ $(document).on("click", "#myBtn", function(event) {
 									                </div>
 									                <div class = "modal-intro-area">
 										                <p class="intro-text" align="center" style="font-size: 16px;">${response.items[0].introduction}</p>
-										                <p class="intro-addr" align="center" style="font-size: 12px;">주소: ${response.items[0].address}</p>
+										                <button type="button" class="genric-btn primary-border radius" onclick="createMap(${response.items[0].latitude}, ${response.items[0].longitude})">위치보기</button>
+														<p class="intro-addr" align="center" style="font-size: 12px;">주소: ${response.items[0].address}</p>
 									                </div>
 									                <div class = "modal-map-area">
 									                	<div id="map" class="map"></div>
@@ -313,8 +314,10 @@ $(document).on("click", "#myBtn", function(event) {
 				$('#myModal').html(innerValue);
 				$('#myModal').modal('show');
 				
+				//createMap(response.items[0].latitude, response.items[0].longitude);
+				
 				/******모달 내부 map*******/
-				var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+				/*var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 					mapOption = {
 						center: new kakao.maps.LatLng(response.items[0].latitude, response.items[0].longitude), // 지도의 중심좌표
 						level: 9 // 지도의 확대 레벨
@@ -330,13 +333,35 @@ $(document).on("click", "#myBtn", function(event) {
 				});
 
 				// 마커가 지도 위에 표시되도록 설정합니다
-				marker.setMap(map);
+				marker.setMap(map);*/
 
 			}
 		}
 	)
 
 });
+
+function createMap(lat,lon) {
+	$('.intro-addr').empty();
+	
+	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					mapOption = {
+						center: new kakao.maps.LatLng(lat, lon), // 지도의 중심좌표
+						level: 6 // 지도의 확대 레벨
+					};
+				var map = new kakao.maps.Map(mapContainer, mapOption); // 지도를 생성합니다
+
+				// 마커가 표시될 위치입니다 
+				var markerPosition = new kakao.maps.LatLng(lat, lon);
+
+				// 마커를 생성합니다
+				var marker = new kakao.maps.Marker({
+					position: markerPosition
+				});
+
+				// 마커가 지도 위에 표시되도록 설정합니다
+				marker.setMap(map);
+}
 
 
 $(document).on("click", ".close", function(event) {
@@ -363,7 +388,26 @@ $(document).on("click", "#button-insert", function(event) {
 			url: url,
 			data: form_data,
 			success: function(response) {
-				alert(response);
+				swal(response);
+			}
+		}
+	)
+});
+
+//테스트해볼게여 delete
+$(document).on("click", "#button-delete", function(event) {
+	const targetValue = $(event.target).next().val();
+	const url = "deletecartlist.tourlist";
+	const form_data = {
+		contentId: targetValue
+	}
+
+	$.ajax(
+		{
+			url: url,
+			data: form_data,
+			success: function(response) {
+				swal(response);
 			}
 		}
 	)

@@ -11,7 +11,7 @@ import kr.or.bit.cartlist.dao.cartlistDAO;
 import kr.or.bit.cartlist.dto.CartList;
 import kr.or.bit.member.dto.Member;
 
-public class InsertCartlistService implements Action {
+public class deleteCartlistService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
@@ -29,12 +29,6 @@ public class InsertCartlistService implements Action {
 			e.printStackTrace();
 		}
 		
-		if(loginUser == null) {
-			out.print("로그아웃되어 찜목록 추가에 실패하였습니다.\n");
-			out.print("로그인하고 다시 시도 해주세요");
-			return null;
-		}
-		
 		String email = loginUser.getEmail();
 		
 		CartList cartlist = new CartList();
@@ -42,14 +36,14 @@ public class InsertCartlistService implements Action {
 		cartlist.setContentId(contentId);
 		
 		cartlistDAO cartdao = new cartlistDAO();
-		int result = cartdao.insertCartlist(cartlist);
+		int result = cartdao.deleteCartlist(cartlist);
 		
 		
 		
 		if(result > 0) {
-			out.print("✨ 찜목록에 추가 되었습니다 ✨");
+			out.print("찜목록에서 삭제되었습니다 😎");
 		} else {
-			out.print("이미 추가된 관광지입니다 😊");
+			out.print("정상적으로 처리되지 않았습니다 😥");
 		}
 		
 		return null;

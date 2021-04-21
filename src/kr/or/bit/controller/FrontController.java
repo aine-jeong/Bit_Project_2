@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.cartlist.ajax.InsertCartlistService;
+import kr.or.bit.cartlist.ajax.deleteCartlistService;
 import kr.or.bit.cartlist.service.MyTourListService;
 import kr.or.bit.cartlist.service.TourListService;
 
@@ -40,6 +41,10 @@ public class FrontController extends HttpServlet {
 		// 담기버튼 클릭시 카트리스트에 담기 로직
 		else if(url.equals("/insertcartlist.tourlist")) {
 			new InsertCartlistService().execute(request, response);
+		}
+		// 취소버튼 클릭시 카트리스트에 담기 로직
+		else if(url.equals("/deletecartlist.tourlist")) {
+			new deleteCartlistService().execute(request, response);
 		}
 		//내 관광지 페이지 제공
 		else if (url.equals("/mytourList.tourlist")) {
