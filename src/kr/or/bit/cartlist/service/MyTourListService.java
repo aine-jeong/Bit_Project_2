@@ -8,14 +8,20 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.cartlist.dao.cartlistDAO;
-import kr.or.bit.member.dto.Member;
+import kr.or.bit.member.dto.MemberDto;
 
 public class MyTourListService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		ActionForward forward = null;
-		Member loginUser = (Member) request.getSession().getAttribute("user");
+		MemberDto loginUser = (MemberDto) request.getSession().getAttribute("user");
+		
+		if(loginUser == null) {
+			return null;
+		}
+		
+		
 		String email = loginUser.getEmail();
 		
 		cartlistDAO cartdao = new cartlistDAO();

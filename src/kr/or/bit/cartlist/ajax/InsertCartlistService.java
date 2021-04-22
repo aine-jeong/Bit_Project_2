@@ -9,7 +9,7 @@ import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.cartlist.dao.cartlistDAO;
 import kr.or.bit.cartlist.dto.CartList;
-import kr.or.bit.member.dto.Member;
+import kr.or.bit.member.dto.MemberDto;
 
 public class InsertCartlistService implements Action {
 
@@ -18,7 +18,7 @@ public class InsertCartlistService implements Action {
 
 		String contentId = request.getParameter("contentId");
 		
-		Member loginUser = (Member) request.getSession().getAttribute("user");
+		MemberDto loginUser = (MemberDto) request.getSession().getAttribute("user");
 		
 		PrintWriter out = null;
 		

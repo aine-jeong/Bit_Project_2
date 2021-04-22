@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.annotation.WebInitParam;
 
 /**
- * Servlet Filter implementation class Encoding
+ * Servlet Filter implementation  class Encoding
  */
 @WebFilter(
 		urlPatterns = { "/*" }, 
