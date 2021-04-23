@@ -48,6 +48,8 @@ public class AinBoardListService implements Action {
 			//전체목록 가져오기
 			List<AinBoard> list = dao.list(cpage, pagesize);
 			
+			System.out.println("list: "+list);
+			
 			int pagersize = 3;
 			ThePager pager = new ThePager(totalboardcount,cpage,pagesize,pagersize,"boardList.ain");
 			

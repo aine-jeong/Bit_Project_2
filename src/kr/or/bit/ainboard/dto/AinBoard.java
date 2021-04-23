@@ -13,7 +13,48 @@ public class AinBoard {
 	private int step;
 	private int viewcount;
 	private String email;
+	private String filerealname;
+	private long filesize;
 	
+	private String nickname;
+	
+	public AinBoard() {
+	};
+
+	//닉네임 있는버전
+	public AinBoard(int cNumber, String title, String content, Date writedate, String filename, int refer, int depth,
+			int step, int viewcount, String email, String nickname, String filerealname, int filesize) {
+		super();
+		this.cNumber = cNumber;
+		this.title = title;
+		this.content = content;
+		this.writedate = writedate;
+		this.filename = filename;
+		this.refer = refer;
+		this.depth = depth;
+		this.step = step;
+		this.viewcount = viewcount;
+		this.email = email;
+		this.nickname = nickname;
+		this.filerealname = filerealname;
+		this.filesize = filesize;
+	}
+
+	//닉네임없는버전
+	public AinBoard(int cNumber, String title, String content, Date writedate, String filename, int refer, int depth,
+			int step, int viewcount, String email) {
+		super();
+		this.cNumber = cNumber;
+		this.title = title;
+		this.content = content;
+		this.writedate = writedate;
+		this.filename = filename;
+		this.refer = refer;
+		this.depth = depth;
+		this.step = step;
+		this.viewcount = viewcount;
+		this.email = email;
+	}
 	public int getcNumber() {
 		return cNumber;
 	}
@@ -74,7 +115,28 @@ public class AinBoard {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	public String getFilerealname() {
+		return filerealname;
+	}
+
+	public void setFilerealname(String filerealname) {
+		this.filerealname = filerealname;
+	}
+
+	public long getFilesize() {
+		return filesize;
+	}
+
+	public void setFilesize(long filesize) {
+		this.filesize = filesize;
+	}
+
 	@Override
 	public String toString() {
 		return "AinBoard [cNumber=" + cNumber + ", title=" + title + ", content=" + content + ", writedate=" + writedate

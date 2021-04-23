@@ -9,6 +9,31 @@ public class AinReply {
 	private String email;
 	private int cNumber;
 	
+	private String nickname;
+	
+	public AinReply() {}
+	
+	//닉네임 없는 버전
+	public AinReply(int crNumber, String content, Date writedate, String email, int cNumber) {
+		super();
+		this.crNumber = crNumber;
+		this.content = content;
+		this.writedate = writedate;
+		this.email = email;
+		this.cNumber = cNumber;
+	}
+	
+	//닉네임 유버전
+	public AinReply(int crNumber, String content, Date writedate, String email, int cNumber, String nickname) {
+		super();
+		this.crNumber = crNumber;
+		this.content = content;
+		this.writedate = writedate;
+		this.email = email;
+		this.cNumber = cNumber;
+		this.nickname = nickname;
+	}
+	
 	public int getCrNumber() {
 		return crNumber;
 	}
@@ -39,6 +64,13 @@ public class AinReply {
 	public void setcNumber(int cNumber) {
 		this.cNumber = cNumber;
 	}
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
 	@Override
 	public String toString() {
 		return "AinReply [crNumber=" + crNumber + ", content=" + content + ", writedate=" + writedate + ", email="

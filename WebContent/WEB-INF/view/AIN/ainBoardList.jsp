@@ -3,7 +3,7 @@
 
 <%@page import="java.util.List"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
 	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -29,16 +29,21 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
 
-
-
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
+
+<!-- 폰트 -->
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+
+<style type="text/css">
+ * {
+ 	font-family: 'Nanum Gothic', sans-serif;
+ }
+</style>
 
 </head>
 <body>
 	<c:import url="/include/header.jsp" />
-	
-	게시판 목록
-	<br>
 
 	<c:set var="pagesize" value="${requestScope.pagesize}" />
 	<c:set var="cpage" value="${requestScope.cpage}" />
@@ -88,74 +93,40 @@
 				<!-- forEach()  목록 출력하기  -->
 				<c:forEach var="board" items="${list}">
 					<tr onmouseover="this.style.backgroundColor='gray'" onmouseout="this.style.backgroundColor='white'">
-						<td align="center">${board.idx}</td>
+						<td align="center">${board.cNumber}</td>
 						<td align="left">
 							<c:forEach var="i" begin="1" end="${board.depth}" step="1">
 								&nbsp;&nbsp;&nbsp;
 							</c:forEach>
 							<c:if test="${board.depth > 0}">
-								<img src="${pageContext.request.contextPath}/images/re.gif">
+								<img src="${pageContext.request.contextPath}/image/ain/re.gif">
 							</c:if>
-							<a href="BoardContent.do?idx=${board.idx}&cp=${cpage}&ps=${pagesize}">
+							<a href="boardContent.ain?cNumber=${board.cNumber}&cp=${cpage}&ps=${pagesize}">
 								<c:choose>
-									<c:when test="${board.subject != null && fn:length(board.subject) > 10}">
-										${fn:substring(board.subject,0,10)}...
+									<c:when test="${board.title != null && fn:length(board.title) > 10}">
+										${fn:substring(board.title,0,10)}...
 									</c:when>
 									<c:otherwise>
-										${board.subject}
+										${board.title}
 									</c:otherwise>
 								</c:choose>
 							</a>
 						</td>
-						<td align="center">${board.writer}</td>
+						<td align="center">${board.nickname}</td>
 						<td align="center">${board.writedate}</td>
-						<td align="center">${board.readnum}</td>
+						<td align="center">${board.viewcount}</td>
 					</tr>
 				</c:forEach>
 				<!-- forEach()  -->
+				
 				<tr>
 					<td colspan="5" align="center">
-						<hr width="100%" color="red">
+						<a href="boardWrite.ain">글쓰기</a>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="3" align="center">
-					<!--  
-					원칙적인 방법 아래 처럼 구현
-					[1][2][3][다음]
-					[이전][4][5][6][다음]
-					[이전][7][8][9][다음]
-					[이전][10][11]
-					
-					현재 아래 코드 [][][][][][][]...
-					-->
-					
-						<!--이전 링크 --> 
-						<c:if test="${cpage > 1}">
-							<a href="BoardList.do?cp=${cpage-1}&ps=${pagesize}">이전</a>
-						</c:if>
-						<!-- page 목록 나열하기 -->
-						<c:forEach var="i" begin="1" end="${pagecount}" step="1">
-							<c:choose>
-								<c:when test="${cpage==i}">
-										<font color="red" >[${i}]</font>
-								</c:when>
-								<c:otherwise>
-									<a href="BoardList.do?cp=${i}&ps=${pagesize}">[${i}]</a>
-								</c:otherwise>
-							</c:choose>
-						</c:forEach>
-						<!--다음 링크 --> 
-						<c:if test="${cpage < pagecount}">
-							<a href="BoardList.do?cp=${cpage+1}&ps=${pagesize}">다음</a>
-						</c:if>
-					</td>
-					<td colspan="2" align="center">총 게시물 수 : ${totalboardcount}
-					</td>
-				</tr>
+				
 				<tr>
 					<td colspan="5" align="center">
-
 					${pager}
 					</td>
 			</table>
