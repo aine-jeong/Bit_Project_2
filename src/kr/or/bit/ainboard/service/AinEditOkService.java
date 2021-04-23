@@ -37,8 +37,6 @@ public class AinEditOkService implements Action {
 							
 			int result = dao.boardEdit(multi);
 			
-			System.out.println("수정됐는데 왜 안넘어가");
-			
 			if (result > 0) {
 				msg = "수정 성공";
 				url = "boardList.ain";

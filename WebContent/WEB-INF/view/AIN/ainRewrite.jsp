@@ -8,45 +8,48 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-<!-- CSS here -->
-<link rel="stylesheet" href="assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-<link rel="stylesheet" href="assets/css/gijgo.css">
-<link rel="stylesheet" href="assets/css/slicknav.css">
-<link rel="stylesheet" href="assets/css/animate.min.css">
-<link rel="stylesheet" href="assets/css/magnific-popup.css">
-<link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/css/themify-icons.css">
-<link rel="stylesheet" href="assets/css/slick.css">
-<link rel="stylesheet" href="assets/css/nice-select.css">
-<link rel="stylesheet" href="assets/css/style.css">
-<link rel="stylesheet" href="assets/css/responsive.css">
+	<!-- CSS here -->
+   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+   <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+   <link rel="stylesheet" href="assets/css/gijgo.css">
+   <link rel="stylesheet" href="assets/css/slicknav.css">
+   <link rel="stylesheet" href="assets/css/animate.min.css">
+   <link rel="stylesheet" href="assets/css/magnific-popup.css">
+   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+   <link rel="stylesheet" href="assets/css/themify-icons.css">
+   <link rel="stylesheet" href="assets/css/slick.css">
+   <link rel="stylesheet" href="assets/css/nice-select.css">
+   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/css/responsive.css">
 
 <!-- 폰트 -->
-<link rel="preconnect" href="https://fonts.gstatic.com">
-<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+   <link rel="preconnect" href="https://fonts.gstatic.com">
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
 <style type="text/css">
-* {
-	font-family: 'Nanum Gothic', sans-serif;
-}
+ * {
+ 	font-family: 'Nanum Gothic', sans-serif;
+ }
 </style>
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
-<script>
+	<%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
+	
+	<!-- include libraries(jQuery, bootstrap) -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+	<script>
     $(document).ready(function() {
         $('#summernote').summernote();
     });
-</script>
+  </script>
 
 <title>답글쓰기페이지(아인)</title>
-<link rel="shortcut icon" type="image/x-icon" href="/assets/img/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon.png">
 
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 
@@ -54,7 +57,7 @@
 		function check(){
 		    if(!bbs.title.value){
 		        alert("제목을 입력하세요");
-		        bbs.subject.focus();
+		        bbs.title.focus();
 		        return false;
 		    }
 		    if(!bbs.content.value){            
@@ -76,7 +79,7 @@
 
 	<div id="pageContainer">
 		<div style="padding-top: 25px; text-align: center">
-			<form name="bbs" action="AinRewriteOk.do" method="POST">
+			<form name="bbs" action="boardReWriteOk.ain" method="POST" enctype="multipart/form-data">
 
 				<input type="hidden" name="cp" value="${cpage}" /> 
 				<input type="hidden" name="ps" value="${pagesize}" /> 
@@ -86,7 +89,7 @@
 					<tr>
 						<td width="20%" align="center">제목</td>
 						<td width="80%" align="left">
-						<input type="text" name="subject" size="40" value="RE_${title}"></td>
+						<input type="text" name="title" size="40" value="RE_${title}"></td>
 					</tr>
 					<tr>
                         <td width="20%" align="center">글내용</td>

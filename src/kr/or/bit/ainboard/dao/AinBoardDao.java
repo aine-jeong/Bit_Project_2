@@ -278,18 +278,6 @@ public class AinBoardDao {
 		String cNumber= boarddata.getParameter("cNumber");
 		String title= boarddata.getParameter("title");
 		String content= boarddata.getParameter("content");
-		String writedate= boarddata.getParameter("writedate");
-		String filename= boarddata.getParameter("filename");
-		String viewcount= boarddata.getParameter("viewcount");
-		String email= boarddata.getParameter("email");
-		
-		String nickname= boarddata.getParameter("nickname");
-		String filerealname= boarddata.getParameter("filerealname");
-		String filesize= boarddata.getParameter("filesize");
-		
-		String refer= boarddata.getParameter("refer");
-		String step= boarddata.getParameter("step");
-		String depth= boarddata.getParameter("depth");
 		
 		String sql_cnumber = "select c_number from ain_board where c_number=?";
 		String sql_udpate = "update ain_board set title=? , content=? where c_number=?";
@@ -318,4 +306,93 @@ public class AinBoardDao {
 		
 		return row;
 	}
+	
+	//답글쓰기 처리
+	@SuppressWarnings("resource")
+	public int reWriteok(AinBoard board) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int result = 0;
+
+		try {
+			conn = ds.getConnection();
+			
+			int cNumber = board.getcNumber(); 
+			String title = board.getTitle();
+			String filename = board.getFilename();
+			long filesize = board.getFilesize();
+			String filerealname = board.getFilerealname();
+			String content = board.getContent();
+			String email = board.getEmail();
+			
+			System.out.println("cNumber: " + cNumber);
+			
+			//1. 답글 
+			//현재 내가 읽은 글의 refer , depth , step (원본글 ,답글)
+			String refer_depth_step_sal ="select refer , depth , step from ain_board where c_Number=?";
+			
+			//2. 위치
+			//step (순서) : 나중에 쓴 답글이 위로 올라오게 하겠다
+			//내가 읽은 글의 step 보다 큰 값은 +1 해서 증가 시켜 놓는다
+			String step_update_sql = "update ain_board set step=step+1 where step > ? and refer =? ";
+			
+			//3. 답글 insert
+			String rewrite_sql = "insert into ain_board(c_Number, title, filename, filesize, "
+								+ "filerealname, content, writedate, refer, depth, step, email)"
+								+ " values(ainsequence.NEXTVAL,?,?,?,?,?,sysdate,?,?,?,?)";
+			
+			pstmt = conn.prepareStatement(refer_depth_step_sal);
+			pstmt.setInt(1, cNumber);
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) { //데이터가 있다면 ... 원본글의  refer , step , depth 존재
+				int refer = rs.getInt("refer");
+				int step = rs.getInt("step");
+				int depth = rs.getInt("depth");
+				
+				pstmt = conn.prepareStatement(step_update_sql); //컴파일
+				//기존 step + 1 >> update 구문 실행
+				pstmt.setInt(1, step);
+				pstmt.setInt(2, refer);
+				pstmt.executeUpdate();
+				
+				//filename,filesize,refer,depth,step
+				pstmt = conn.prepareStatement(rewrite_sql); //컴파일 
+				pstmt.setString(1, title);
+				pstmt.setString(2, filename);
+				pstmt.setLong(3, filesize);
+				pstmt.setString(4, filerealname);
+				pstmt.setString(5, content);
+				
+				//답변
+				pstmt.setInt(6, refer);
+				pstmt.setInt(7, depth+1); // 규칙 현재 읽은 글에 depth + 1
+				pstmt.setInt(8, step+1); // 순서 update 통해서  자리 확보 + 1
+				
+				pstmt.setString(9, email);
+				
+				int row = pstmt.executeUpdate();
+				if(row > 0) {
+					result = row;
+				}else {
+					result = -1;
+				}
+
+			}
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				rs.close();
+				conn.close();//반환
+			}catch (Exception e) {
+				
+			}
+		}
+		
+		return result;
+		}
 }

@@ -14,6 +14,7 @@ import kr.or.bit.action.ActionForward;
 import kr.or.bit.ainboard.service.AinContentService;
 import kr.or.bit.ainboard.service.AinEditOkService;
 import kr.or.bit.ainboard.service.AinEditService;
+import kr.or.bit.ainboard.service.AinRewriteOkService;
 import kr.or.bit.ainboard.service.AinRewriteService;
 import kr.or.bit.ainboard.service.AinBoardListService;
 import kr.or.bit.ainboard.service.AinWriteService;
@@ -70,12 +71,17 @@ public class AinController extends HttpServlet {
     		action = new AinRewriteService();
     		forward = action.execute(request, response);
     	}
+    	//답글쓰기처리
+    	else if(url_Command.equals("/boardReWriteOk.ain")) {
+    		action = new AinRewriteOkService();
+    		forward = action.execute(request, response);
+    	}
     	
     	
     	if(forward != null) {
     		if(forward.isRedirect()) { //true 
     			response.sendRedirect(forward.getPath());
-    		}else { //false (모든 자원 ) 사용
+    		}else { //false (모든 자원) 사용
     			//UI
     			//UI + 로직
     			//forward url 주소 변환 없어 View 내용을 받을 수 있다
