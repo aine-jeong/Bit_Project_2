@@ -30,6 +30,14 @@
  * {
  	font-family: 'Nanum Gothic', sans-serif;
  }
+ 
+ .genric-btn.success {
+	background: #EAAF24;
+}
+
+.btn i {
+    color: black;
+    }
 </style>
 	<%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 	
@@ -43,12 +51,17 @@
 	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	
 	<script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			height: 450,
+			minHeight: 300,             // set minimum height of editor
+			maxHeight: 600,       
+		    lang: 'ko-KR' // default: 'en-US'
+		  });
+		});
   </script>
 
-<title>답글쓰기페이지(아인)</title>
+<title>답글쓰기페이지</title>
 <link rel="shortcut icon" type="image/x-icon" href="./assets/img/favicon.png">
 
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
@@ -76,8 +89,15 @@
 	<c:set var="cpage" value="${requestScope.cp}" />
 	<c:set var="pagesize" value="${requestScope.ps}" />
 	<c:set var="title" value="${requestScope.title}" />
+	
+	<div class="font-back-tittle mb-50">
+		<div class="archivment-front">
+			<h3>  🌈 ReWrite 🌈 </h3>
+		</div>
+		<h3 class="archivment-back">AinBoard</h3>
+	</div>
 
-	<div id="pageContainer">
+	<div id="pagecontainer" style="margin-bottom: 200px;">
 		<div style="padding-top: 25px; text-align: center">
 			<form name="bbs" action="boardReWriteOk.ain" method="POST" enctype="multipart/form-data">
 
@@ -102,15 +122,15 @@
                         <td width="80%" align="left"><input type="file" name="filename"></td>
                     </tr>
 					<tr>
-						<td colspan="2" align="center">
-							<input type="button" value="글쓰기" onclick="check();" /> 
-							<input type="reset" value="다시쓰기" /> 
+						<td colspan="2" align="center" style="padding-top: 20px; padding-bottom: 20px;">
+							<input type="button" value="글쓰기" class="genric-btn success medium" onclick="check();" /> 
 						</td>
 					</tr>
 				</table>
 			</form>
 		</div>
 	</div>
+	<jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
 </html>
 

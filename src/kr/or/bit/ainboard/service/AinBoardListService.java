@@ -28,7 +28,7 @@ public class AinBoardListService implements Action {
 			
 			//List페이지 처음 호출시 기본적으로 페이지크기 5개, 현재페이지 1페이지로 설정
 			if(ps==null || ps.trim().equals("")) {
-				ps = "5";
+				ps = "10";
 			}
 			if(cp==null || cp.trim().equals("")) {
 				cp = "1";

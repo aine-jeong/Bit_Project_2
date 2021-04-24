@@ -50,8 +50,6 @@ public class AinRewriteOkService implements Action {
 		board.setFilerealname(realFilename);
 		board.setFilename(filename);
 		board.setFilesize(filesize);
-		
-		System.out.println("답글쓰기ok서비스 50번째줄 까지는 오고있다");
 
 		int result = boardDao.reWriteok(board);
 

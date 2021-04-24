@@ -2,7 +2,7 @@
 <%@page import="java.util.List"%>
 <%@page import="kr.or.bit.ainboard.dto.AinBoard"%>
 
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" trimDirectiveWhitespaces="true"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 	
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
@@ -35,6 +35,28 @@
  * {
  	font-family: 'Nanum Gothic', sans-serif;
  }
+ 
+ .font-back-tittle .archivment-front h3 {
+ 	color: #587D4E;
+ }
+
+/* 테이블 */
+table.aintable {
+    border: 5px solid white;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+ .genric-btn.success {
+	background: #EAAF24;
+}
+
+.genric-btn.success-border {
+    color: #EAAF24;
+    border: 1px solid #EAAF24;
+    background: #fff;
+}
+
 </style>
 
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
@@ -51,16 +73,24 @@
 
 	<c:import url="/include/header.jsp" />
 	
-	<div id="pageContainer">
+	<div class="font-back-tittle mb-50">
+		<div class="archivment-front">
+			<h3> content </h3>
+		</div>
+		<h3 class="archivment-back">AinBoard</h3>
+	</div>
+	
+	<div id="pageContainer" style="margin-bottom: 200px;">
 		<div style="padding-top: 30px; text-align: center">
 			<center>
-				<b>게시판 글내용</b>
-				<table width="80%" border="1">
+				<table width="80%" border="1" class="aintable" style="margin-bottom: 20px;">
 					<tr>
-						<td width="20%" align="center"><b>글번호</b></td>
-						<td width="30%">${cNumber}</td>
-						<td width="20%" align="center"><b>작성일</b></td>
-						<td>${board.writedate}</td>
+						<td colspan="4" align="right">
+						<a href="boardList.ain?cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">목록가기</a>
+						</td>
+					</tr>
+					<tr style="font-size: 25px">
+						<td colspan="4" style="padding-left: 60px; height: 54px;">${board.title}</td>
 					</tr>
 					<tr>
 						<td width="20%" align="center"><b>글쓴이</b></td>
@@ -68,73 +98,77 @@
 						<td width="20%" align="center"><b>조회수</b></td>
 						<td>${board.viewcount}</td>
 					</tr>
+				
 					<tr>
+						<td width="20%" align="center"><b>작성일</b></td>
+						<td>${board.writedate}</td>
 						<td width="20%" align="center"><b>첨부파일</b></td>
-						<td><a href="file.do?file_name=${board.filename}">${board.filename}</a></td>
+						<td><a href="file.ain?file_name=${board.filerealname}">${board.filename}</a></td>
 					</tr>
-					<tr>
-						<td width="20%" align="center"><b>제목</b></td>
-						<td colspan="3">${board.title}</td>
-					</tr>
+					
+					
 					<tr height="100">
 						<td width="20%" align="center"><b>글내용</b></td>
-						<td colspan="3">${fn:replace(board.content, newLineChar,"<br>")}</td>
+						<td colspan="3" style="height: 400px;">${fn:replace(board.content, newLineChar,"<br>")}</td>
 					</tr>
 					<tr>
-						<td colspan="4" align="center">
-							<a href="boardList.ain?cp=${cpage}&ps=${pagesize}">목록가기</a> |
-							<a href="boardEdit.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}">편집</a> |
-							<a href="BoardDelete.do?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}">삭제</a> |
-							<a href="boardReWrite.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}&title=${board.title}">답글</a>
+						<td colspan="2" align="left">
+							<%-- <a href="boardList.ain?cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">목록가기</a> --%>
+							<a href="boardReWrite.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}&title=${board.title}" class="genric-btn success medium">답글</a>
+						</td>
+						<td colspan="2" align="right">
+							<a href="boardEdit.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">수정</a>
+							<button type="button" class="genric-btn success medium" id="boardDelete">
+								삭제
+							</button>
 						</td>
 					</tr>
 				</table>
+				
+				
+				
+				
+				
 				<!--  댓글 달기 테이블 -->
-				<form name="reply" action="ainReplyOk.do" method="POST">
+				<form name="reply" action="replyOk.ain" method="POST">
 						<!-- hidden 태그  값을 숨겨서 처리  -->
 						<input type="hidden" name="cNumber" value="${cNumber}"> 
 						
-						<table width="80%" border="1">
+						<table width="80%" border="1" class="aintable">
 							<tr>
-								<th colspan="2">덧글 쓰기</th>
-							</tr>
-							<tr>
-								<td align="left">작성자 : 
-								 	 
-								 	내&nbsp;&nbsp;용 : 
-								 	<textarea name="reply_content" rows="2" cols="50"></textarea>
+								<td width="20%" align="center"> 댓글쓰기 </td>
+								<td width="60%" align="left">
+								 	<textarea id="replyContent" name="reply_content" rows="2" style="width:100%;" placeholder="댓글을 입력하세요"></textarea>
 								</td>
-								<td align="left">
-									비밀번호:
-									<input type="password" name="reply_pwd" size="4"> 
-									<input type="button" value="등록" onclick="reply_check()">
+								<td width="20%" align="center">
+									<input type="button" value="등록" class="genric-btn success-border medium" onclick="reply_check()">
 								</td>
 							</tr>
 						</table>
 				</form>
 				<!-- 유효성 체크	 -->
-				<%-- <script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js"></script> --%>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js?ver=1"></script>
 				<br>
 				
-				<!-- 꼬리글 목록 테이블 -->
+				<!-- 댓글 목록 테이블 -->
 				<span id="span-reply">
 				<c:if test="${not empty replyList}">
 					<c:forEach var="reply" items="${replyList}">
-						<table width="80%" border="1">
+						<table width="80%" border="1" class="aintable">
 							<tr>
 								<th colspan="2">REPLY LIST</th>
 							</tr>
 							<tr align="left">
 								<td width="80%">
 								[${reply.nickname}] : ${reply.content}
-								<br> 작성일:${reply.writedate}
+								<br> 
+								작성일:${reply.writedate}
 								</td>
-								<td width="20%">
+								<td width="20%" align="right">
 								<form action="ReplyDeleteOk.do" method="POST" name="replyDel">
-									<input type="hidden" name="no" value="${reply.crNumber}"> 
-									<input type="hidden" name="cNumber" value="${cNumber}"> 
-									password :<input type="password" name="delPwd" size="4"> 
-									<input type="button" value="삭제" onclick="reply_del(this.form)">
+									<input type="hidden" name="crNumber" value="${reply.crNumber}"> 
+									<input type="hidden" name="cNumber" value="${reply.cNumber}"> 
+									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del(this.form)">
 								</form>
 								</td>
 							</tr>
@@ -145,5 +179,16 @@
 			</center>
 		</div>
 	</div>
+	
+	<jsp:include page="/include/footer.jsp"></jsp:include>
+	
 </body>
+<script type="text/javascript">
+	$("#boardDelete").click(function(){
+		var result = confirm("정말 삭제하시겠습니까?😥 \n해당 글에 작성된 답글과 댓글도 함께 삭제되며, \n삭제된 글은 복구할 수 없습니다.");
+		if(result) {
+			location.href = 'boardDelete.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}';
+		}
+	})
+</script>
 </html>

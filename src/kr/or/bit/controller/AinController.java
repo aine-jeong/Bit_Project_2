@@ -12,12 +12,16 @@ import javax.servlet.http.HttpServletResponse;
 import kr.or.bit.action.Action;
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.ainboard.service.AinContentService;
+import kr.or.bit.ainboard.service.AinDeleteService;
 import kr.or.bit.ainboard.service.AinEditOkService;
 import kr.or.bit.ainboard.service.AinEditService;
+import kr.or.bit.ainboard.service.AinReplyAddService;
+import kr.or.bit.ainboard.service.AinReplyDeleteService;
 import kr.or.bit.ainboard.service.AinRewriteOkService;
 import kr.or.bit.ainboard.service.AinRewriteService;
 import kr.or.bit.ainboard.service.AinBoardListService;
 import kr.or.bit.ainboard.service.AinWriteService;
+import kr.or.bit.ainboard.service.AinFileDownload;
 
 @WebServlet("*.ain")
 public class AinController extends HttpServlet {
@@ -75,6 +79,26 @@ public class AinController extends HttpServlet {
     	else if(url_Command.equals("/boardReWriteOk.ain")) {
     		action = new AinRewriteOkService();
     		forward = action.execute(request, response);
+    	}
+    	//글 삭제처리
+    	else if(url_Command.equals("/boardDelete.ain")) {
+    		action = new AinDeleteService();
+    		forward = action.execute(request, response);
+    	}
+    	//댓글쓰기
+    	else if(url_Command.equals("/replyOk.ain")) {
+    		action = new AinReplyAddService();
+    		forward = action.execute(request, response);
+    	}
+    	//댓글삭제
+    	else if(url_Command.equals("/replyDelete.ain")) {
+    		action = new AinReplyDeleteService();
+    		forward = action.execute(request, response);
+    	}
+    	//파일 다운로드
+    	else if(url_Command.equals("/file.ain")) {
+    		action = new AinFileDownload();
+    		action.execute(request, response);
     	}
     	
     	

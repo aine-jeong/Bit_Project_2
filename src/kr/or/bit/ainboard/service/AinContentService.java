@@ -50,7 +50,7 @@ public class AinContentService implements Action {
 		
 			if(pagesize == null || pagesize.trim().equals("")){
 				//default 값 설정
-				pagesize = "5"; 
+				pagesize = "10"; 
 			}
 			
 			isread = dao.getReadNum(cNumber);

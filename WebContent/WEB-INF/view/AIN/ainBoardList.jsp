@@ -39,6 +39,32 @@
  * {
  	font-family: 'Nanum Gothic', sans-serif;
  }
+ 
+ .ainboard-margin {
+ 	width: 100%;
+ 	height: 50px;
+ }
+ 
+ .font-back-tittle .archivment-front h3 {
+ 	color: #587D4E;
+ }
+
+/* 테이블 */
+table.aintable {
+    border: 5px solid white;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+/* 
+tr:nth-child(even) {
+	background-color: #FAECCC;
+} */
+
+
+.genric-btn.success {
+	background: #EAAF24;
+}
+
 </style>
 
 </head>
@@ -51,12 +77,21 @@
 	<c:set var="list" value="${requestScope.list}" />
 	<c:set var="totalboardcount" value="${requestScope.totalboardcount}" />
 	<c:set var="pager" value="${requestScope.pager}" />
-	
-	<div id="pagecontainer">
+
+	<div class="ainboard-margin"></div>
+
+	<div class="font-back-tittle mb-50">
+		<div class="archivment-front">
+			<h3>Ain-Board</h3>
+		</div>
+		<h3 class="archivment-back">AinBoard</h3>
+	</div>
+
+	<div id="pagecontainer" style="margin-bottom: 200px;">
 		<div style="padding-top: 30px; text-align: cetner">
-			<table width="80%" border="1" cellspacing="0" align="center">
+			<table width="80%" border="1" cellspacing="0" align="center" class="aintable">
 				<tr>
-					<td colspan="5">
+					<td colspan="5" style="text-align: right;">
 						<!--  
 							form 태그 action 전송 주소(목적지) >> submit()
 							>> form name="list" ... action 없다면.. 
@@ -81,7 +116,7 @@
 						</form>
 					</td>
 				</tr>
-				<tr>
+				<tr style="text-align: center; background: #F2CF7C;">
 					<th width="10%">순번</th>
 					<th width="40%">제목</th>
 					<th width="20%">글쓴이</th>
@@ -92,7 +127,7 @@
 
 				<!-- forEach()  목록 출력하기  -->
 				<c:forEach var="board" items="${list}">
-					<tr onmouseover="this.style.backgroundColor='gray'" onmouseout="this.style.backgroundColor='white'">
+					<tr onmouseover="this.style.backgroundColor='#FAECCC'" onmouseout="this.style.backgroundColor='white'">
 						<td align="center">${board.cNumber}</td>
 						<td align="left">
 							<c:forEach var="i" begin="1" end="${board.depth}" step="1">
@@ -103,14 +138,15 @@
 							</c:if>
 							<a href="boardContent.ain?cNumber=${board.cNumber}&cp=${cpage}&ps=${pagesize}">
 								<c:choose>
-									<c:when test="${board.title != null && fn:length(board.title) > 10}">
-										${fn:substring(board.title,0,10)}...
+									<c:when test="${board.title != null && fn:length(board.title) > 15}">
+										${fn:substring(board.title,0,15)}...
 									</c:when>
 									<c:otherwise>
 										${board.title}
 									</c:otherwise>
 								</c:choose>
 							</a>
+							
 						</td>
 						<td align="center">${board.nickname}</td>
 						<td align="center">${board.writedate}</td>
@@ -118,19 +154,23 @@
 					</tr>
 				</c:forEach>
 				<!-- forEach()  -->
-				
 				<tr>
-					<td colspan="5" align="center">
-						<a href="boardWrite.ain">글쓰기</a>
+					<td colspan="5" style="text-align: left;">
+						<a href="boardWrite.ain" class="genric-btn success medium">글쓰기</a>
 					</td>
 				</tr>
-				
 				<tr>
 					<td colspan="5" align="center">
 					${pager}
 					</td>
+				</tr>
+				
 			</table>
 		</div>
 	</div>
+	
+	<div class="ainboard-margin"></div>
+	
+	<jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
 </html>

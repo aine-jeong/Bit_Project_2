@@ -29,7 +29,22 @@
 <style type="text/css">
 * {
 	font-family: 'Nanum Gothic', sans-serif;
+	
 }
+
+.genric-btn.success {
+	background: #EAAF24;
+}
+
+.genric-btn::hover {
+	background: white;
+	color: #EAAF24;
+}
+
+.btn i {
+    color: black;
+    }
+
 </style>
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 
@@ -49,9 +64,14 @@
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 
 <script>
-    $(document).ready(function() {
-        $('#summernote').summernote();
-    });
+$(document).ready(function() {
+	  $('#summernote').summernote({
+		height: 450,
+		minHeight: 300,             // set minimum height of editor
+		maxHeight: 600,       
+	    lang: 'ko-KR' // default: 'en-US'
+	  });
+	});
   	</script>
 
 <SCRIPT type="text/javascript">
@@ -74,30 +94,30 @@
 </head>
 <body>
 	<c:import url="/include/header.jsp" />
+	
+	<div class="font-back-tittle mb-50">
+		<div class="archivment-front">
+			<h3>  🌈 Edit 🌈 </h3>
+		</div>
+		<h3 class="archivment-back">AinBoard</h3>
+	</div>
 
 	<c:set var="cNumber" value="${requestScope.cNumber}" />
 	<c:set var="board" value="${requestScope.board}" />
 
-	<div id="pageContainer">
+	<div id="pageContainer" style="margin-bottom: 200px;">
 		<div style="padding-top: 25px; text-align: center">
 			<!-- form 시작 ---------->
-			<form name="edit" action="boardEditOk.ain" method="POST"
-				enctype="multipart/form-data">
+			<form name="edit" action="boardEditOk.ain" method="POST" enctype="multipart/form-data">
 				<table width="95%" border="2" align="center">
 					<tr>
-						<td width="20%" align="center"><b> 글번호 </b></td>
-						<td width="30%">${cNumber} 
-						<input type="hidden" name="cNumber" value="${cNumber}"></td>
-					</tr>
-					<tr>
 						<td width="20%" align="center"><b>글쓴이</b></td>
-						<td width="30%">
-							<input type="text" name="nickname" value="${board.nickname}" readonly>
-						</td>
+						<td width="30%" style="text-align: left">${board.nickname}
+						<input type="hidden" name="nickname" value="${board.nickname}"></td>
 					<tr>
 						<td width="20%" align="center">제목</td>
 						<td width="80%" align="left">
-							<input type="text" name="title" size="40" value="${board.title}">
+							<input type="text" name="title" size="100%" style="height: 36px;" value="${board.title}">
 						</td>
 					</tr>
 					<tr>
@@ -106,15 +126,10 @@
 						<textarea rows="10" cols="60" name="content" id="summernote" > ${board.content} </textarea></td>
 					</tr>
 					<tr>
-						<td width="20%" align="center">첨부파일</td>
-						<td width="80%" align="left">
-							<input type="text" name="filename" value="${board.filename}" readonly>
-						</td>
-					</tr>
-					<tr>
-						<td colspan="2" align="center">
-							<input type="button" value="수정하기" onclick="editCheck();" /> 
-							<input type="reset" value="다시쓰기" />
+						<td colspan="2" align="center" style="padding-top: 20px; padding-bottom: 20px;">
+							<input type="hidden" name="filename" value="${board.filename}">
+							<input type="hidden" name="cNumber" value="${cNumber}">
+							<input type="button" value="수정하기" class="genric-btn success medium" onclick="editCheck();" /> 
 						</td>
 					</tr>
 				</table>
@@ -122,5 +137,6 @@
 
 		</div>
 	</div>
+	<jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
 </html>

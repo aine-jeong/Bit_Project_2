@@ -395,4 +395,86 @@ public class AinBoardDao {
 		
 		return result;
 		}
+	
+	//게시글 삭제하기
+	public int boardDelete(String cNumber) {
+		System.out.println("dao-delete 진입");
+		
+		int result = 0;
+		
+		//해당 게시글의 댓글 삭제하기
+		String replyDel_sql = "delete from ain_reply_board where c_Number=?";
+		
+		//해당 게시글 삭제하기
+		String boardDel_sql = "delete from ain_board where c_Number=?";
+		
+		try(Connection conn = ds.getConnection();
+				PreparedStatement replypstmt = conn.prepareStatement(replyDel_sql);
+				PreparedStatement boardpstmt = conn.prepareStatement(boardDel_sql);) {
+				
+				replypstmt.setString(1, cNumber);
+				
+				boardpstmt.setString(1, cNumber);
+			
+				//댓글삭제
+				replypstmt.executeUpdate();
+				
+				//게시글삭제(원본글, 답글)
+				result = boardpstmt.executeUpdate();
+					
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+		
+		return result;
+	}
+	
+	//댓글쓰기
+	public int replyAdd(int c_Number, String email, String content) {
+		int result = 0;
+		
+		
+		String sql = "insert into ain_reply_board (cr_number, content, writedate, email, c_number)"
+				+ "VALUES (ainReplyseq.NEXTVAL, ?, sysdate, ?, ?)";
+		
+		try(Connection conn = ds.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+			pstmt.setString(1, content);
+			pstmt.setString(2, email);
+			pstmt.setInt(3, c_Number);
+			
+			result = pstmt.executeUpdate();
+					
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		return result;
+	}
+	
+	//댓글삭제
+	public int replyDelete(String crNumber) {
+		int row = 0;
+		
+		String sql = "delete from ain_reply_board where cr_Number=?";
+		
+		try(Connection conn = ds.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+			pstmt.setString(1, crNumber);
+				
+			row = pstmt.executeUpdate();
+						
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		return row;
+	}
+	
+	
+	
+	
 }
