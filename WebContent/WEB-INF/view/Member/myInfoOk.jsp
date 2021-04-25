@@ -27,7 +27,7 @@
 					<h1>개인정보수정</h1>
 				</div>
 				
-				<form class="form-horizontal" action="InfoEdit.do" method="post">
+				<form class="form-horizontal" action="InfoEditOk.do" method="post">
 					<c:if test="${not empty errorMessage}">
 					<div class="control-group">
 						<label class="error">${errorMessage}</label>
@@ -37,7 +37,7 @@
 					<div class="control-group">
 						<label class="control-label" for="email">이메일 계정</label>
 						<div class="controls">
-							<input type="hidden" name="email" value="${email}" readonly/>
+							<input type="text" name="email" value="${dto.email}" readonly />
 						</div>
 					</div>
 					<div class="control-group">

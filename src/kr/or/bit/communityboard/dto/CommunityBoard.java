@@ -13,6 +13,24 @@ public class CommunityBoard {
 	private int cStep;
 	private int cViewcount;
 	private String email;
+	
+	
+	public CommunityBoard() {}
+
+	public CommunityBoard(int cNumber, String cTitle, String cContent, Date cWritedate, String cFilename, int cRefer,
+			int cDepth, int cStep, int cViewcount, String email) {
+		super();
+		this.cNumber = cNumber;
+		this.cTitle = cTitle;
+		this.cContent = cContent;
+		this.cWritedate = cWritedate;
+		this.cFilename = cFilename;
+		this.cRefer = cRefer;
+		this.cDepth = cDepth;
+		this.cStep = cStep;
+		this.cViewcount = cViewcount;
+		this.email = email;
+	}
 
 	public int getcNumber() {
 		return cNumber;
@@ -52,30 +70,6 @@ public class CommunityBoard {
 
 	public void setcFilename(String cFilename) {
 		this.cFilename = cFilename;
-	}
-
-	public int getcRefer() {
-		return cRefer;
-	}
-
-	public void setcRefer(int cRefer) {
-		this.cRefer = cRefer;
-	}
-
-	public int getcDepth() {
-		return cDepth;
-	}
-
-	public void setcDepth(int cDepth) {
-		this.cDepth = cDepth;
-	}
-
-	public int getcStep() {
-		return cStep;
-	}
-
-	public void setcStep(int cStep) {
-		this.cStep = cStep;
 	}
 
 	public int getcViewcount() {

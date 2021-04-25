@@ -2324,8 +2324,11 @@ label {
       .service-experience h3 {
         font-size: 23px; } }
 
+.btn i .note-editable{
+  color: black;
+}
+
 .btn i {
-  color: #ffffff;
   font-size: 12px;
   -webkit-transition: all 0.4s ease-out 0s;
   -moz-transition: all 0.4s ease-out 0s;

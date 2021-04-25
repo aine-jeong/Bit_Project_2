@@ -1,5 +1,6 @@
 package kr.or.bit.action;
 
+
 import java.io.IOException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,5 +13,5 @@ public interface Action {
     //당신이 만약 Action interface를 구현한다면
     //강제사항 : execute 함수를 반드시 구현해야 함
 	//execute() { return new ActionForward();}
-	ActionForward execute(HttpServletRequest request, HttpServletResponse response);
+	public ActionForward execute(HttpServletRequest request, HttpServletResponse response);
 }

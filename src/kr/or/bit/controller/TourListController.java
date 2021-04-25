@@ -50,7 +50,6 @@ public class TourListController extends HttpServlet {
 		else if (url.equals("/mytourList.tourlist")) {
 			forward = new MyTourListService().execute(request, response);
 			forward.setRedirect(false);
-			forward.setPath("WEB-INF/view/tourList/myTourList.jsp");
 		}
 
 		if (forward != null) {

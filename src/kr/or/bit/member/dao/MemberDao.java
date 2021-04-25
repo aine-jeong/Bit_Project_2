@@ -83,6 +83,7 @@ public class MemberDao {
 					user = new MemberDto();
 					//일치
 					user.setEmail(rs.getString("email"));
+					user.setPassword(rs.getString("password"));
 					user.setDivision(rs.getString("division"));
 					user.setNickname(rs.getString("nickname"));
 					
@@ -117,8 +118,8 @@ public class MemberDao {
 			conn = ds.getConnection();
 			String sql = "select password from member where email = ? ";
 			
-			pstmt.setString(1, email);
 			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, email);
 			
 			rs = pstmt.executeQuery();
 			if(rs.next()) {
@@ -143,24 +144,55 @@ public class MemberDao {
 		
 	}
 	
-	//개인정보수정
-	public boolean editInfo(MemberDto memberdto){
+	/*
+	 * //개인정보수정 public boolean editInfo(MemberDto memberdto){
+	 * 
+	 * Connection conn = null; PreparedStatement pstmt = null; boolean result =
+	 * false;
+	 * 
+	 * try { conn = ds.getConnection(); String sql =
+	 * "select email,password,nickname from member where email=?"; //String sql =
+	 * "UPDATE member SET nickname=?, password=?, where email=?";
+	 * 
+	 * pstmt = conn.prepareStatement(sql); pstmt.setString(1, memberdto.getEmail());
+	 * 
+	 * pstmt.executeQuery();
+	 * 
+	 * System.out.println("memberDao 156번째줄");
+	 * 
+	 * } catch (Exception e) { e.printStackTrace();
+	 * System.out.println("개인정보수정 에러(memberDao 159번째줄) : " + e.getMessage()); }
+	 * finally { try { pstmt.close(); conn.close(); } catch (SQLException e) {
+	 * e.printStackTrace(); } } return result;
+	 * 
+	 * }
+	 */
+	
+	public int editInfoOk(MemberDto memberdto){
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		boolean result = false;
+		
+		int result = 0;
 		
 		try {
 			conn = ds.getConnection();
-			String sql = "select email,password,nickname from member where email=?";
-			//String sql = "UPDATE member SET nickname=?, password=?, where email=?";
+			//String sql = "select email,password,nickname from member where email=?";
+			String sql = "UPDATE member SET division = ?, nickname=?, password=?"
+					+ 		"where email=?";
 			
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, memberdto.getEmail());
-
-			pstmt.executeQuery();
 			
-			System.out.println("memberDao 156번째줄");
+			pstmt.setString(1, memberdto.setDivision("1"));
+			pstmt.setString(2, memberdto.getNickname());
+			pstmt.setString(3, memberdto.getPassword());
+			pstmt.setString(4, memberdto.getEmail());
+
+			result = pstmt.executeUpdate();
+			
+			System.out.println("업데이트된 result 값 : " +result);
+			
+			
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -175,47 +207,5 @@ public class MemberDao {
 		}
 		return result;
 		
-	}
-	
-	public boolean editInfoOk(MemberDto memberdto){
-		
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		int result = 0;
-		
-		try {
-			conn = ds.getConnection();
-			//String sql = "select email,password,nickname from member where email=?";
-			String sql = "UPDATE member SET nickname=?, password=?, where email=?";
-			
-			pstmt = conn.prepareStatement(sql);
-			
-			pstmt.setString(1, memberdto.getNickname());
-			pstmt.setString(2, memberdto.getPassword());
-			pstmt.setString(3, memberdto.getEmail());
-
-			result = pstmt.executeUpdate();
-			
-			System.out.println("memberDao 192번째줄");
-			
-			if(result > 0){
-				
-			}
-			
-			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("개인정보수정 에러(memberDao 159번째줄) : " + e.getMessage());
-		} finally {
-			try {
-				pstmt.close();
-				conn.close(); 
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		return false;
-	
 	}
 }

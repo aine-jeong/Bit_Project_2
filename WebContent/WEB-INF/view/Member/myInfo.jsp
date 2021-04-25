@@ -35,31 +35,34 @@
 					<div class="control-group">
 						<label class="control-label" for="email">이메일 계정</label>
 						<div class="controls">
-							<input type="hidden" name="email" value="${email}" readonly/>
+							<input type="text" name="email" value="${email}" style="border:none" readonly/>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="nickname">닉네임</label>
 						<div class="controls">
-							<input type="text" id="nickname" name="nickname" value="${nickname}" readonly>
+							<input type="text" id="nickname" name="nickname" placeholder="닉네임 입력">
+							<div class="tdnn"></div>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="password">비밀번호</label>
 						<div class="controls">
-							<input type="password" id="password" name="password" value="${password}" readonly>
+							<input type="password" id="password" name="password" placeholder="비밀번호 입력">
+							<div class="tdpw"></div>
 						</div>
 					</div>
 					<div class="control-group">
 						<label class="control-label" for="password">비밀번호 확인</label>
 						<div class="controls">
-							<input type="password" id="password2" name="password" value="${password}" readonly>
+							<input type="password" id="password2" name="password" placeholder="비밀번호 확인">
+							<div class="tdpwch"></div>
 						</div>
 					</div>
 					<div class="control-group">
 						<div class="controls">
 							<button type="submit" class="btn btn-primary">개인정보 수정하기</button>
-							<button type="submit" class="btn btn-primary" onclick="location.href='index2.jsp'">취소</button>
+							<button type="button" class="btn btn-primary" onclick="location.href='bopage.jsp'">취소</button>
 						</div>
 					</div>
 				</form>
@@ -67,4 +70,5 @@
 		</div>
 	</div>
 </body>
+<script src="js/reqReg.js"></script>
 </html>

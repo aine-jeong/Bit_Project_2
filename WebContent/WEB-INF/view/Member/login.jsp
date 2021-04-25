@@ -33,8 +33,8 @@
 <!-- <link href="shp/bootstrap-responsive.css" rel="stylesheet"> -->
 <!-- <link href="shp/docs.css" rel="stylesheet"> -->
 <!-- <link href="shp/main.css" rel="stylesheet"> -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script src="js/reqReg.js"></script>
+
+<link href="css/reqReg.css" rel="stylesheet">
 </head>
 <body>
 <header>
@@ -49,8 +49,6 @@
 				<div class="page-header">
 					<h1>로그인</h1>
 				</div>
-				System.out.println(<%=(String) session.getAttribute("email") %>);
-				System.out.println(<%=(String) session.getAttribute("password") %>);
 				<form class="form-horizontal" action="LoginOk.do" method="post">
 					<c:if test="${not empty errorMessage}">
 					<div class="control-group">
@@ -67,12 +65,14 @@
 						<label class="control-label" for="password">비밀번호</label>
 						<div class="controls">
 							<input type="password" id="password" name="password" placeholder="비밀번호 입력">
+							<div class="loginch"></div>
 						</div>
 					</div>
+					<div class="tdlogin"></div>
 					<div class="control-group">
 						<div class="controls">
 							<button type="submit" class="btn btn-primary">로그인</button>
-							<a type="button" href="Register.do" class="btn btn-primary">회원가입</a>
+							<a type="button" href="access_terms.do" class="btn btn-primary">회원가입</a>
 						</div>
 					</div>
 				</form>
@@ -81,8 +81,10 @@
 	</div>
 		<div class="dining-area dining-padding-top">
 		</div>
+		
 	<footer>
 	<jsp:include page="/include/footer.jsp"></jsp:include>
 	</footer>
 </body>
+<script src="js/reqReg.js"></script>
 </html>

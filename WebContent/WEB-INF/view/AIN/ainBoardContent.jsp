@@ -178,7 +178,7 @@ table.aintable {
 						</c:if>
 				</form>
 				<!-- 유효성 체크	 -->
-				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js?ver=1"></script>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/ainTest.js?ver=1"></script>
 				<br>
 				
 				<table width="80%" border="1" class="aintable" id="replyListStart">

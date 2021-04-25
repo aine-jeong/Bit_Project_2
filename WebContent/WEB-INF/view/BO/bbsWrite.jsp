@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="manifest" href="site.webmanifest">
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
@@ -25,7 +25,6 @@
 	<link rel="stylesheet" href="assets/css/nice-select.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/responsive.css">
-	<link rel="stylesheet" href="boCss/bopage.css">
 	
 		<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -38,31 +37,19 @@
 	<SCRIPT type="text/javascript">
 	
 function check(){
-    if(!bbs.subject.value){
+    if(!bbs.N_TITLE.value){
         alert("제목을 입력하세요");
-        bbs.subject.focus();
+        bbs.N_TITLE.focus();
         return false;
-    }
-    if(!bbs.writer.value){
-        
-        alert("이름을 입력하세요");
-        bbs.writer.focus();
-        return false;
-    }
-   /*  if(!bbs.content.value){            
+    } else if(!bbs.N_CONTENT.value){            
         alert("글 내용을 입력하세요");
-        bbs.content.focus();
+        bbs.N_CONTENT.focus();
         return false;
-    } */
-    if(!bbs.pwd.value){            
-        alert("비밀번호를 입력하세요");
-        bbs.pwd.focus();
-        return false;
+    }else{
+    	document.bbs.submit();
     }
- 
-    document.bbs.submit();
- 
 }
+
 </SCRIPT>
 
 <!-- include summernote css/js -->
@@ -79,6 +66,46 @@ function check(){
   -o-transition: all 0.4s ease-out 0s;
   transition: all 0.4s ease-out 0s;
   }
+  
+  .font-back-tittle .archivment-front h3{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+	
+	.font-back-tittle h3.archivment-back{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+	
+	.note-editor.note-airframe, .note-editor.note-frame{
+	width: 95%
+	}
+	
+	[class^="ti-"], [class*=" ti-"] {
+	line-height:inherit;
+	}
+	
+	.preview {
+	border-color: black;
+	border-radius: 10px;
+	}
+	
+	.preview p{
+	font-family: 'Nanum Gothic', sans-serif;
+	color: #587D4E;
+	}
+	
+	#image_uploads{
+	float: left;
+	}
+	
+	
+	/* 
+	.writeBtn{
+	padding: 25px 0px;
+    padding-top: 25px;
+    padding-right: 0px;
+    padding-bottom: 25px;
+    padding-left: 0px;
+	} */
 </style>
 </head>
 <body>
@@ -90,42 +117,46 @@ function check(){
     <div id="pageContainer">
         <div style="padding-top: 25px; text-align: center">
             <!-- form 시작 ---------->
-            <form name="bbs" action="board_writeok.jsp" method="POST">
+            <form name="bbs" action="boardWriteOk.bo" method="POST" enctype="multipart/form-data">
             <div class="font-back-tittle mb-50">
 								<div class="archivment-front">
-									<h3>Community 👀</h3>
+									<h3 style="color: #EAAF24">공지사항 📣</h3>
 								</div>
-								<h3 class="archivment-back">커뮤니티</h3>
+								<h3 class="archivment-back">공지사항</h3>
 							</div>
                 <table width="95%" border="0" align="center">
                     <tr>
-                        <td width="10%" align="center">제목</td>
-                        <td width="100%" align="center"><input type="text" style="width:inherit;" name="subject" size="40"></td>
+                        <td width="10%" align="center"></td>
+                        <td width="95%" align="left"><input type="text" style="width:inherit;" name="N_TITLE" size="40" value="제목을 입력해주세요."></td>
                     </tr>
                     <tr>
-                        <td width="10%" align="center">글내용</td>
-                        <td style="padding-top: 25px;" width="100%" align="left"><textarea id ="summernote" rows="40" cols="60" style="width:inherit;" name="content" class="ckeditor"></textarea></td>
+                        <td width="10%" align="center"></td>
+                        <td style="padding-top: 25px;" width="95%" align="left"><textarea style="width=95%" id ="summernote" rows="40" cols="60" style="width:inherit;" name="N_CONTENT" class="ckeditor" ></textarea></td>
                     </tr>
                     <tr>
-                        <td width="10%" align="center">첨부파일</td>
-                        <td width="80%" align="left"><input type="file" name="filename"></td>
+                        <td width="10%" align="center"></td>
+                        <td width="80%" align="left">
+                         <label for="image_uploads" style="color: #587D4E; font-family: 'Nanum Gothic';"><img src="image/upload.png">(gif,png,jpg,jpeg의 형식만 업로드 가능합니다.)</label>
+                         <input height="1px" name="image_uploads" id="image_uploads" type="file">
+                         <div class="preview">
+						    <p>아직 업로드 된 파일이 없습니다.</p>
+						 </div>
+                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" align="center">
-                        	<input type="button" value="목록" onclick="check();" />
-                            <input type="button" value="글쓰기" onclick="check();" /> 
-                            <input type="reset"  value="다시쓰기" />
+                        <td style="padding-top: 30px;" colspan="2" align="center">
+                        	<input class="btn" type="button" value="목록" onclick="location.href = 'boardList.bo'" />
+                            <input class="btn" type="button" value="글쓰기" onclick="check()" />
                         </td>
                     </tr>
                 </table>
               </form>
         </div>
     </div>
-    <div class="dining-area dining-padding-top">
+    <div style="padding-top: 50px">
 		</div>
     <footer>
 		<jsp:include page="/include/footer.jsp"></jsp:include>
-		<!-- Footer End-->
 	</footer>
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
@@ -165,12 +196,20 @@ function check(){
 	<script type="text/javascript">
 	$(document).ready(function() {
 		  $('#summernote').summernote({
-			height: 450,
+			height: 300,
 			minHeight: 300,             // set minimum height of editor
 			maxHeight: 600,       
 		    lang: 'ko-KR' // default: 'en-US'
 		  });
-		});
+		  var input = document.querySelector('#image_uploads');
+		  var preview = document.querySelector('.preview');
+		  input.style.opacity = 0.0;
+		  input.style.float = "right";
+		  input.addEventListener("change", function(event) {
+			  $('.preview').empty();
+			  $('.preview').append("<p>"+event.target.value+"<p>");
+		  })
+	});
 	</script>	
 	
 </body>

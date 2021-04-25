@@ -8,6 +8,18 @@ public class CommunityReplyBoard {
 	private Date crWritedate;
 	private String email;
 	private int cNumber;
+	
+	public CommunityReplyBoard() {}
+
+
+	public CommunityReplyBoard(int crNumber, String crContent, Date crWritedate, String email, int cNumber) {
+		super();
+		this.crNumber = crNumber;
+		this.crContent = crContent;
+		this.crWritedate = crWritedate;
+		this.email = email;
+		this.cNumber = cNumber;
+	}
 
 	public int getCrNumber() {
 		return crNumber;

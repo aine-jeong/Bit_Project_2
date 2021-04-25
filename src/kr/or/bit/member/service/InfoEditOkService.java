@@ -25,27 +25,37 @@ public class InfoEditOkService implements Action {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String nickname = request.getParameter("nickname");
+		
+		int result = 0;
+		
 		MemberDto memberdto = new MemberDto(email, password, nickname);
+		
 		System.out.println("회원수정 여기까지 오나?(InfoEditOkService 43번째줄)");
+		
 		try {
 			MemberDao memberdao = new MemberDao();
-			boolean result = memberdao.editInfo(memberdto);
-			String msg = "";
-			String url = "";
-			if(result == true){
-				url = "/InfoEditOk.do";
-				HttpSession session =  request.getSession();
-				session.setAttribute("nickname", nickname);
-				session.setAttribute("password", password);
-				session.setAttribute("email", email);
+			
+			result = memberdao.editInfoOk(memberdto);
+			
+			String msg="";
+			String url="";
+			
+			
+			if(result > 0) {
+				msg="정보수정 완료";
+				url="/JYP_PROJECT/bopage.jsp";
+				
 			}else {
-				msg = "회원이 아닙니다. 로그인 해주세요.";
-				url = "/Login.do";
+				msg="정보수정 실패";
+				url="/InfoEdit.do";
+
 			}
-			request.setAttribute("msg", msg);
-			request.setAttribute("url", url);
-			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/myInfoOk.jsp");
+			
+			request.setAttribute("board_msg", msg);
+			request.setAttribute("board_url", url);
+			
+			forward.setPath("/WEB-INF/view/SH/redirect.jsp");
+			
 		} catch (Exception e) {
 			System.out.println("정보수정 에러 : "+ e.getMessage());
 		}

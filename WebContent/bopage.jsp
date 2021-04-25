@@ -24,7 +24,7 @@
 <link rel="stylesheet" href="assets/css/animate.min.css">
 <link rel="stylesheet" href="assets/css/magnific-popup.css">
 <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/css/themify-icons.css">
+<link rel="stylesheet" href="assets	/css/themify-icons.css">
 <link rel="stylesheet" href="assets/css/slick.css">
 <link rel="stylesheet" href="assets/css/nice-select.css">
 <link rel="stylesheet" href="assets/css/style.css">
@@ -34,7 +34,7 @@
 </head>
 
 <body>
-
+				
 	<!-- Preloader Start -->
 	<div id="preloader-active">
 		<div
@@ -42,6 +42,7 @@
 			<div class="preloader-inner position-relative">
 				<div class="preloader-circle"></div>
 				<div class="preloader-img pere-text">
+				
 					<strong>J Y P</b>
 				</div>
 			</div>

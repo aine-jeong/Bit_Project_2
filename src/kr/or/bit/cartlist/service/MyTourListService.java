@@ -18,7 +18,11 @@ public class MyTourListService implements Action {
 		MemberDto loginUser = (MemberDto) request.getSession().getAttribute("user");
 		
 		if(loginUser == null) {
-			return null;
+			forward = new ActionForward();
+			forward.setPath("WEB-INF/view/redirect.jsp");
+			request.setAttribute("url", request.getContextPath() + "/Login.do");
+			request.setAttribute("msg", "로그인 해주세요.");
+			return forward;
 		}
 		
 		
@@ -33,7 +37,7 @@ public class MyTourListService implements Action {
 			
 			forward = new ActionForward();
 			forward.setRedirect(false); // forward
-			forward.setPath("WEB-INF/view/myTourList.jsp");
+			forward.setPath("WEB-INF/view/tourList/myTourList.jsp");
 		
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

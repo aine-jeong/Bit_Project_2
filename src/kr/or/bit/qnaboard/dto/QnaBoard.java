@@ -1,19 +1,62 @@
 package kr.or.bit.qnaboard.dto;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class QnaBoard {
+	
 	private int qnaNumber;
 	private String qnaTitle;
 	private String qnaFilename;
-	private int qnaFilesize;
+	private long qnaFilesize;
 	private String qnaRealFilename;
+	private String qnaContent;
+	
 	private Date qnaWritedate;
 	private int qnaRefer;
 	private int qnaDepth;
 	private int qnaStep;
 	private int qnaViewcount;
 	private String email;
+	private String qnaPassword;
+	private int qnaStatus;
+	
+	// member join
+	private String division;
+	private String nickname;
+
+	
+	
+	public String getDivision() {
+		return division;
+	}
+
+	public void setDivision(String division) {
+		this.division = division;
+	}
+
+	public String getNickname() {
+		return nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public int getQnaStatus() {
+		return qnaStatus;
+	}
+
+	public void setQnaStatus(int qnaStatus) {
+		this.qnaStatus = qnaStatus;
+	}
+
+	public String getQnaContent() {
+		return qnaContent;
+	}
+
+	public void setQnaContent(String qnaContent) {
+		this.qnaContent = qnaContent;
+	}
 
 	public int getQnaNumber() {
 		return qnaNumber;
@@ -39,11 +82,11 @@ public class QnaBoard {
 		this.qnaFilename = qnaFilename;
 	}
 
-	public int getQnaFilesize() {
+	public long getQnaFilesize() {
 		return qnaFilesize;
 	}
 
-	public void setQnaFilesize(int qnaFilesize) {
+	public void setQnaFilesize(long qnaFilesize) {
 		this.qnaFilesize = qnaFilesize;
 	}
 
@@ -102,13 +145,21 @@ public class QnaBoard {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	
+	public String getQnaPassword() {
+		return qnaPassword;
+	}
+
+	public void setQnaPassword(String qnaPassword) {
+		this.qnaPassword = qnaPassword;
+	}
 
 	@Override
 	public String toString() {
 		return "QnaBoard [qnaNumber=" + qnaNumber + ", qnaTitle=" + qnaTitle + ", qnaFilename=" + qnaFilename
 				+ ", qnaFilesize=" + qnaFilesize + ", qnaRealFilename=" + qnaRealFilename + ", qnaWritedate="
 				+ qnaWritedate + ", qnaRefer=" + qnaRefer + ", qnaDepth=" + qnaDepth + ", qnaStep=" + qnaStep
-				+ ", qnaViewcount=" + qnaViewcount + ", email=" + email + "]";
+				+ ", qnaViewcount=" + qnaViewcount + ", email=" + email + ", qnaPassword=" + qnaPassword + "]";
 	}
 
 }

@@ -6,6 +6,7 @@
 		2. 공백없이
 		3. 영문 + 숫자 + 특수문자 포함
 	*/
+	window.onload = function() {
 	/* 비밀번호 유효성체크 */
 	function check_pwd(){
 		let password = $('#password').val();
@@ -34,7 +35,7 @@
 	/* 비밀번호 일치 체크 */
 	function check_pwd2(){
 		let check = $('#password2').val();
-		let pwd = $('#userPass').val();
+		let pwd = $('#password').val();
 		if(!(check===pwd)){
 			$('.tdpwch').text("비밀번호가 일치하지 않습니다");
 			return false;
@@ -52,7 +53,7 @@
 	 
  	//이메일 유효성 체크
  	function check_email(){
- 		let userEmail = $('#userEmail').val();
+ 		let userEmail = $('#email').val();
  		let regExp = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
  		if(!regExp.test(userEmail)) {
         	$('.tdmail').text('이메일 주소가 올바르지 않습니다');
@@ -73,10 +74,14 @@
  	/* 닉네임 유효성체크 */
 	function check_nickname(){
 		let nickname = $('#nickname').val();
-		let regExp = /[가-힣]{3,6}/;
+		let regExp = /[가-힣]{3,6}/gm;
 		
 		//1. 3자리 ~5자리
-		if(nickname.length < 3 || nickname.length > 5){
+		
+		if(!regExp.test(nickname)) {
+        	$('.tdnn').text('3-5자리 이내로 입력하세요(한글만 가능)');
+        	return false;
+        } else if(nickname.length < 3 || nickname.length > 5){
 			$('.tdnn').text("3-5자리 이내로 입력하세요(한글만 가능)");
 			return false;
 		} else if (nickname.search(/\s/)!=-1){
@@ -90,6 +95,9 @@
 			alert('닉네임을 입력하세요');
 		}
 	}
+	
+	$('#nickname').on('keyup', check_nickname);
+	
  	$('#submit').click(function(){
  		if(check_pwd() == false) return false; //비밀번호
  		if(check_pwd2() == false) return false; //비밀번호 확인
@@ -101,5 +109,6 @@
  	
  	//reset
  	$("#reset").click(function() {  
-         $("#signForm")[0].reset();    
+         $(".form-horizontal")[0].reset();    
 });
+};

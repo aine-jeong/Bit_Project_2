@@ -26,6 +26,7 @@ var cardarr = [];
 init();
 
 // 화면 open시 실행
+
 async function init() {
 	var page = 0;
 
@@ -499,6 +500,7 @@ $(document).on("click", "#button-insert", function(event) {
 			url: url,
 			data: form_data,
 			success: function(response) {
+				$('#myModal').modal("hide");
 				swal(response);
 			}
 		}

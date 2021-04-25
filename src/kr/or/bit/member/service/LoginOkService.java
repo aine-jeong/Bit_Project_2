@@ -34,6 +34,7 @@ public class LoginOkService implements Action {
 			
 			result = memberdao.loginMember(memberdto);
 			request.getSession().setAttribute("user", result);
+			
 			String msg = "";
 			String url = "";
 			
@@ -43,10 +44,16 @@ public class LoginOkService implements Action {
 				url = "/JYP_PROJECT/bopage.jsp";
 				
 				HttpSession session =  request.getSession();
-				session.setAttribute("email", email);
+				session.setAttribute("email", result.getEmail());
+				session.setAttribute("password", result.getPassword());
+				session.setAttribute("nickname", result.getNickname());
+				
+				System.out.println(session.getAttribute("email"));
+				System.out.println(session.getAttribute("password"));
+				System.out.println(session.getAttribute("nickname"));
 				
 			}else {
-				msg = "로그인 실패, 다시 시도해주세요.";
+				msg = "가입하지 않은 아이디이거나, 잘못된 비밀번호입니다.";
 				url = "/JYP_PROJECT/Login.do";
 			}
 			

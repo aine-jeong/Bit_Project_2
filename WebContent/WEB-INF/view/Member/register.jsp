@@ -6,15 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
-<!--  
-<link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
-<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
--->
-<!-- <link href="shp/bootstrap.css" rel="stylesheet">
-<link href="shp/bootstrap-responsive.css" rel="stylesheet">
-<link href="shp/docs.css" rel="stylesheet">
-<link href="shp/main.css" rel="stylesheet">
-<script src="shp/reqReg.js"></script> -->
+ 
+<!-- <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/sign-in/">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+ -->
+<link href="css/reqReg.css" rel="stylesheet">
 </head>
 <body>
 
@@ -65,6 +61,7 @@
 					<div class="control-group">
 						<div class="controls">
 							<button type="submit" class="btn btn-primary">회원가입</button>
+							<button type="button" class="btn btn-primary" onclick="location.href='bopage.jsp';">취소</button>
 						</div>
 					</div>
 				</form>
@@ -72,4 +69,5 @@
 		</div>
 	</div>
 </body>
+<script src="js/reqReg.js"></script>
 </html>
