@@ -1,8 +1,13 @@
 package kr.or.bit.ainboard.utils;
 
 import java.lang.reflect.Field;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 public class StringUtils {
 	//제목 글자수 자르기
@@ -86,6 +91,50 @@ public class StringUtils {
        
        return parsedString.toString();
    }
+   
+   public <T extends Object> JSONArray listParseToJsonArray(List<T> list, T object) {
+		// 객체 변수명 문자열로 담기
+	       List<String> fieldNames = new ArrayList<String>();
+	       
+	       for(Field field : object.getClass().getDeclaredFields()) {
+	           String str = field.toString();
+	           fieldNames.add(str.substring(str.lastIndexOf('.') + 1));
+	       }
+	       
+	       // 파싱?
+	       
+	       JSONArray jsonArr = new JSONArray();
+	       
+	       try {
+	           
+	           for(int i = 0; i < list.size(); i++) {
+	        	   JSONObject jsonObj = new JSONObject();
+	               for(int j = 0; j < fieldNames.size(); j++) {
+	                   Field obj = list.get(i).getClass().getDeclaredField(fieldNames.get(j));
+	                   obj.setAccessible(true);
+	                   String key = obj.getName();
+	                   Object value = obj.get(list.get(i));
+	                   
+	                   if(value instanceof Date) {
+	                	   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	                	   sdf.format(value);
+	                	   value = value.toString();
+	                   }
+	                   
+	                   jsonObj.put(key, value);
+	                   
+	               } // j for end
+	               jsonArr.add(jsonObj);
+	               
+	           }// i for end
+	       
+	       } catch(Exception e) {
+	           e.printStackTrace();
+	       }
+	       
+	       
+	       return jsonArr;
+	}
    
    
 }

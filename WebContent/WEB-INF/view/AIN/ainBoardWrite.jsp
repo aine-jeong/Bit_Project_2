@@ -35,6 +35,12 @@
 .btn i {
     color: black;
     }
+    
+table.aintable, th, td {
+    border: 5px solid white;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
 </style>
 	<%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 	
@@ -52,9 +58,10 @@
 	$(document).ready(function() {
 		  $('#summernote').summernote({
 			height: 450,
-			minHeight: 300,             // set minimum height of editor
+			minHeight: 300,             
 			maxHeight: 600,       
-		    lang: 'ko-KR' // default: 'en-US'
+		    lang: 'ko-KR',
+		    placeholder: ' 내용을 입력해주세요.'
 		  });
 		});
   	</script>
@@ -92,16 +99,14 @@
         <div style="padding-top: 25px; text-align: center; margin-bottom: 200px;">
             <!-- form 시작 ---------->
             <form name="bbs" action="boardWriteOk.ain" method="POST" enctype="multipart/form-data">
-                <table width="95%" border="2" align="center">
+                <table class="aintable" width="80%" border="0" align="center">
                     <tr>
-                        <td width="10%" align="center">제목</td>
-                        <td width="90%" align="left">
-                        	<input type="text" name="title" size="100%">
+                        <td colspan="2" align="left">
+                        	<input type="text" name="title" placeholder=" 제목을 입력해 주세요." size="100%" style="height: 35px; border: 1px solid #cccccc;">
                         </td>
                     </tr>
                     <tr>
-                        <td width="10%" align="center">글내용</td>
-                        <td width="90%" align="left">
+                        <td colspan="2" align="left">
                         	<textarea rows="10" cols="60" name="content" id="summernote"></textarea>
                         </td>
                     </tr>

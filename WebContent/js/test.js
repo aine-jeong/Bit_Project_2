@@ -14,6 +14,14 @@ function reply_check() {
 	
 }
 
+function reply_del_check(frm) {
+	var result = confirm("댓글을 삭제하시겠습니까?😥");
+		
+		if(result) {
+			reply_del(frm);
+		}
+}
+
 function reply_del(frm) {
 
 	var formData = {
@@ -54,9 +62,6 @@ function runAjax(url, formData) {
 
 function setReply(reply) {
 	return `<table width="80%" border="1" class="aintable">
-							<tr>
-								<th colspan="2">REPLY LIST</th>
-							</tr>
 							<tr align="left">
 								<td width="80%">
 								[${reply.nickname}] : ${reply.content}
@@ -67,7 +72,7 @@ function setReply(reply) {
 								<form action="ReplyDeleteOk.do" method="POST" name="replyDel">
 									<input type="hidden" name="crNumber" value="${reply.crNumber}"> 
 									<input type="hidden" name="cNumber" value="${reply.cNumber}"> 
-									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del(this.form)">
+									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">
 								</form>
 								</td>
 							</tr>

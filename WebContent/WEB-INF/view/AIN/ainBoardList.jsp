@@ -35,6 +35,11 @@
    <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
+<!-- sweet alert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
+
 <style type="text/css">
  * {
  	font-family: 'Nanum Gothic', sans-serif;
@@ -48,6 +53,11 @@
  .font-back-tittle .archivment-front h3 {
  	color: #587D4E;
  }
+ 
+ .a, button {
+    color: #587D4E;
+    outline: medium none;
+}
 
 /* 테이블 */
 table.aintable {
@@ -82,7 +92,7 @@ tr:nth-child(even) {
 
 	<div class="font-back-tittle mb-50">
 		<div class="archivment-front">
-			<h3>Ain-Board</h3>
+			<h3>🍊 Ain-Board 🍊 </h3>
 		</div>
 		<h3 class="archivment-back">AinBoard</h3>
 	</div>
@@ -100,15 +110,14 @@ tr:nth-child(even) {
 							>>http://192.168.0.169:8090/WebServlet_5_Board_Model1_Sample/board/board_list.jsp?ps=10					
 						-->
 						<form name="list" >
-						 PageSize설정: 
 							<select name="ps" onchange="submit()">
 							   <c:forEach var="i" begin="5" end="20" step="5">
 							   		<c:choose>
 							   			<c:when test="${pagesize == i}">
-							   				<option value="${i}" selected>${i}건</option>
+							   				<option value="${i}" selected>${i}개씩</option>
 							   			</c:when>
 						   				<c:otherwise>
-						   					<option value="${i}">${i}건 </option>
+						   					<option value="${i}">${i}개씩</option>
 						   				</c:otherwise>
 							   		</c:choose>
 							   </c:forEach>
@@ -155,9 +164,11 @@ tr:nth-child(even) {
 				</c:forEach>
 				<!-- forEach()  -->
 				<tr>
+					<c:if test="${sessionScope.email != null}">
 					<td colspan="5" style="text-align: left;">
 						<a href="boardWrite.ain" class="genric-btn success medium">글쓰기</a>
 					</td>
+					</c:if>
 				</tr>
 				<tr>
 					<td colspan="5" align="center">

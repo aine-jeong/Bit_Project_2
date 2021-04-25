@@ -31,6 +31,10 @@
    <link rel="preconnect" href="https://fonts.gstatic.com">
    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
+<!-- sweet alert -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
+<link rel="stylesheet"href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css" />
+
 <style type="text/css">
  * {
  	font-family: 'Nanum Gothic', sans-serif;
@@ -57,6 +61,12 @@ table.aintable {
     background: #fff;
 }
 
+#replyListStart {
+	font-size: 20px;
+    border-top-width: 5px;
+    border-bottom-width: 5px;
+}
+
 </style>
 
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
@@ -70,7 +80,7 @@ table.aintable {
 	<c:set var="cpage" value="${requestScope.cp}" />
 	<c:set var="pagesize" value="${requestScope.ps}" />
 	<c:set var="replyList" value="${requestScope.replyList}" />
-
+	
 	<c:import url="/include/header.jsp" />
 	
 	<div class="font-back-tittle mb-50">
@@ -113,15 +123,23 @@ table.aintable {
 					</tr>
 					<tr>
 						<td colspan="2" align="left">
-							<%-- <a href="boardList.ain?cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">목록가기</a> --%>
+						<c:if test="${sessionScope.email != null}">
 							<a href="boardReWrite.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}&title=${board.title}" class="genric-btn success medium">답글</a>
+						</c:if>
 						</td>
+						<c:if test="${sessionScope.email == board.email}">
 						<td colspan="2" align="right">
 							<a href="boardEdit.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">수정</a>
 							<button type="button" class="genric-btn success medium" id="boardDelete">
 								삭제
 							</button>
 						</td>
+						</c:if>
+						<c:if test="${sessionScope.email != board.email}">
+						<td colspan="2">
+						</td>
+						</c:if>
+						
 					</tr>
 				</table>
 				
@@ -133,31 +151,46 @@ table.aintable {
 				<form name="reply" action="replyOk.ain" method="POST">
 						<!-- hidden 태그  값을 숨겨서 처리  -->
 						<input type="hidden" name="cNumber" value="${cNumber}"> 
-						
-						<table width="80%" border="1" class="aintable">
+						<c:if test="${sessionScope.email != null}">
+							<table width="80%" border="1" class="aintable">
+								<tr>
+									<td width="20%" align="center"> 댓글쓰기 </td>
+									<td width="60%" align="left">
+									 	<textarea id="replyContent" name="reply_content" rows="2" style="width:100%;" placeholder="댓글을 입력하세요"></textarea>
+									</td>
+									<td width="20%" align="center">
+										<input type="button" value="등록" class="genric-btn success-border medium" onclick="reply_check()">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="3" align="right" style="color: #cccccc">
+										이메일: ${sessionScope.email}
+									</td>
+								</tr>
+							</table>
+						</c:if>
+						<c:if test="${sessionScope.email == null}">
+							<table width="80%" border="1" class="aintable">
 							<tr>
-								<td width="20%" align="center"> 댓글쓰기 </td>
-								<td width="60%" align="left">
-								 	<textarea id="replyContent" name="reply_content" rows="2" style="width:100%;" placeholder="댓글을 입력하세요"></textarea>
-								</td>
-								<td width="20%" align="center">
-									<input type="button" value="등록" class="genric-btn success-border medium" onclick="reply_check()">
-								</td>
+								<td align="center">댓글을 작성하시려면 로그인해주세요 😊</td>
 							</tr>
-						</table>
+							</table>
+						</c:if>
 				</form>
 				<!-- 유효성 체크	 -->
 				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js?ver=1"></script>
 				<br>
 				
+				<table width="80%" border="1" class="aintable" id="replyListStart">
+						<tr>
+							<td align="center">  🍊 댓글 목록 🍊 </td>
+						</tr>
+						</table>
 				<!-- 댓글 목록 테이블 -->
 				<span id="span-reply">
 				<c:if test="${not empty replyList}">
 					<c:forEach var="reply" items="${replyList}">
 						<table width="80%" border="1" class="aintable">
-							<tr>
-								<th colspan="2">REPLY LIST</th>
-							</tr>
 							<tr align="left">
 								<td width="80%">
 								[${reply.nickname}] : ${reply.content}
@@ -168,7 +201,7 @@ table.aintable {
 								<form action="ReplyDeleteOk.do" method="POST" name="replyDel">
 									<input type="hidden" name="crNumber" value="${reply.crNumber}"> 
 									<input type="hidden" name="cNumber" value="${reply.cNumber}"> 
-									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del(this.form)">
+									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">
 								</form>
 								</td>
 							</tr>
@@ -186,6 +219,7 @@ table.aintable {
 <script type="text/javascript">
 	$("#boardDelete").click(function(){
 		var result = confirm("정말 삭제하시겠습니까?😥 \n해당 글에 작성된 답글과 댓글도 함께 삭제되며, \n삭제된 글은 복구할 수 없습니다.");
+		
 		if(result) {
 			location.href = 'boardDelete.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}';
 		}

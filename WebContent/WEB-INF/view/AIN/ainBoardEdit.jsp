@@ -45,6 +45,12 @@
     color: black;
     }
 
+table.aintable, th, td {
+    border: 5px solid white;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
 </style>
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 
@@ -67,9 +73,10 @@
 $(document).ready(function() {
 	  $('#summernote').summernote({
 		height: 450,
-		minHeight: 300,             // set minimum height of editor
+		minHeight: 300,             
 		maxHeight: 600,       
-	    lang: 'ko-KR' // default: 'en-US'
+	    lang: 'ko-KR',
+	    placeholder: ' 내용을 입력해주세요.'
 	  });
 	});
   	</script>
@@ -109,22 +116,21 @@ $(document).ready(function() {
 		<div style="padding-top: 25px; text-align: center">
 			<!-- form 시작 ---------->
 			<form name="edit" action="boardEditOk.ain" method="POST" enctype="multipart/form-data">
-				<table width="95%" border="2" align="center">
+				<table class="aintable" width="80%" border="0" align="center">
 					<tr>
-						<td width="20%" align="center"><b>글쓴이</b></td>
-						<td width="30%" style="text-align: left">${board.nickname}
+					<td>
 						<input type="hidden" name="nickname" value="${board.nickname}"></td>
+					</tr>
 					<tr>
-						<td width="20%" align="center">제목</td>
-						<td width="80%" align="left">
-							<input type="text" name="title" size="100%" style="height: 36px;" value="${board.title}">
+						<td colspan="2" align="left">
+							<input type="text" name="title" placeholder=" 제목을 입력해 주세요." size="100%" style="height: 35px; border: 1px solid #cccccc;">
 						</td>
 					</tr>
 					<tr>
-						<td width="20%" align="center">글내용</td>
-						<td width="80%" align="left">
-						<textarea rows="10" cols="60" name="content" id="summernote" > ${board.content} </textarea></td>
-					</tr>
+                        <td colspan="2" align="left">
+                        	<textarea rows="10" cols="60" name="content" id="summernote"></textarea>
+                        </td>
+                    </tr>
 					<tr>
 						<td colspan="2" align="center" style="padding-top: 20px; padding-bottom: 20px;">
 							<input type="hidden" name="filename" value="${board.filename}">

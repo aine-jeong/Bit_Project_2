@@ -12,6 +12,7 @@ import kr.or.bit.ainboard.dao.AinBoardDao;
 import kr.or.bit.ainboard.dto.AinReply;
 import kr.or.bit.ainboard.utils.StringUtils;
 import kr.or.bit.member.dto.MemberDto;
+import net.sf.json.JSONArray;
 
 public class AinReplyAddService implements Action {
 
@@ -42,7 +43,7 @@ public class AinReplyAddService implements Action {
 				replyList = dao.replylist(cNumber);
 				
 				StringUtils utils = new StringUtils();
-				String parsed = utils.listParseToJavascriptArray(replyList, new AinReply());
+				JSONArray parsed = utils.listParseToJsonArray(replyList, new AinReply());
 				
 				response.setCharacterEncoding("UTF-8");
 				
