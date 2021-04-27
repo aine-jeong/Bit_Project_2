@@ -61,7 +61,10 @@ function runAjax(url, formData) {
 
 
 function setReply(reply) {
-	return `<table width="80%" border="1" class="aintable">
+	 
+	var innerValue = "";
+	
+	innerValue += `<table width="80%" border="1" class="aintable">
 							<tr align="left">
 								<td width="80%">
 								[${reply.nickname}] : ${reply.content}
@@ -71,10 +74,15 @@ function setReply(reply) {
 								<td width="20%" align="right">
 								<form action="ReplyDeleteOk.do" method="POST" name="replyDel">
 									<input type="hidden" name="crNumber" value="${reply.crNumber}"> 
-									<input type="hidden" name="cNumber" value="${reply.cNumber}"> 
-									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">
-								</form>
+									<input type="hidden" name="cNumber" value="${reply.cNumber}">`; 
+									if(document.querySelector('#hidden-email').value === reply.email) {
+										innerValue += `<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">`;
+									}
+									
+	innerValue +=				`</form>
 								</td>
 							</tr>
 						</table>`;
+						
+	return innerValue;
 }

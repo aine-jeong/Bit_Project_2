@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.naming.Context;
@@ -16,6 +17,8 @@ import javax.sql.DataSource;
 import com.oreilly.servlet.MultipartRequest;
 
 import kr.or.bit.noticeboard.dto.NoticeBoard;
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 
 //CRUD 함수 > ConnectionPool > 함수단위 연결 ,받환 
@@ -542,5 +545,86 @@ public class NoticeDao {
 		}
 	
 		return row;
+	}
+	
+	// DB에서 정보불러오기
+	public JSONArray searchTopThree() {
+		JSONArray chartList = new JSONArray();
+		StringBuilder sqlbuilder = new StringBuilder();
+		sqlbuilder
+		.append("	select * from 		")
+		.append("	        (SELECT rownum as rn, c.*		")
+		.append("	                FROM (select b.cnt, m.email, m.nickname, m.division		")
+		.append("	                        from  (select email, count(*) as cnt		")
+		.append("	                              from (select email from ain_board		")
+		.append("	                                union all		")
+		.append("	                                select email from community_board		")
+		.append("	                                union all		")
+		.append("	                                select email from ain_reply_board		")
+		.append("	                                union all		")
+		.append("	                                select email from sh_reply_board		")
+		.append("	                                union all		")
+		.append("	                                select email from sh_board 		")
+		.append("	                                ) a		")
+		.append("	                            group by email		")
+		.append("	                            ) b		")
+		.append("	                join member m		")
+		.append("	                on m.email = b.email		")
+		.append("	                where m.division not in(0)		")
+		.append("	                order BY b.cnt DESC		")
+		.append("	                ) c) d		")
+		.append("	where rn between 1 and 3		");
+		
+		String sql = sqlbuilder.toString();
+		try (Connection conn = ds.getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(sql);	
+			 ResultSet rs = pstmt.executeQuery();){
+			while(rs.next()) {
+				JSONObject map = new JSONObject();
+				map.put("ranking", rs.getInt("rn"));
+				map.put("count", rs.getInt("cnt"));
+				map.put("email", rs.getString("email"));
+				map.put("nickname", rs.getString("nickname"));
+				chartList.add(map);
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return chartList;
+	}
+	
+	public JSONArray searchTourListTopThree() {
+		
+		JSONArray jsonarr = new JSONArray();
+		
+		StringBuilder sqlbuilder = new StringBuilder()
+		.append("	select *															")
+		.append("	from    (   select rownum as rn, a.*								")
+		.append("	            from        ( select      content_id, count(*) as cnt 	")
+		.append("	                      from        cartlist 							")
+		.append("	                      group by    content_id 						")
+		.append("	                      order by    cnt           ) a					")
+		.append("	                                                        ) b 		")
+		.append("	where rn between 1 and 3											");
+		
+		String sql = sqlbuilder.toString();
+		
+		try(Connection conn = ds.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);
+			ResultSet rs = pstmt.executeQuery();) {
+			
+			while(rs.next()) {
+				JSONObject jsonObj = new JSONObject();
+				jsonObj.put("ranking", rs.getInt("rn"));
+				jsonObj.put("count", rs.getInt("cnt"));
+				jsonObj.put("cid", rs.getString("content_id"));
+				jsonarr.add(jsonObj);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return jsonarr;
 	}
 }

@@ -115,6 +115,7 @@
 			</form>
 		</div>
 	</div>
+	<div id="emptyspace" style="margin-bottom: 180px;"></div>
 	<%
 		pageContext.include("/include/footer.jsp");
 	%>

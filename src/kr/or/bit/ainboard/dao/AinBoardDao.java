@@ -3,6 +3,7 @@ package kr.or.bit.ainboard.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import com.oreilly.servlet.MultipartRequest;
 
 import kr.or.bit.ainboard.dto.AinBoard;
 import kr.or.bit.ainboard.dto.AinReply;
+import kr.or.bit.member.dto.MemberDto;
 
 public class AinBoardDao {
 	DataSource ds = null;
@@ -398,36 +400,129 @@ public class AinBoardDao {
 	
 	//게시글 삭제하기
 	public int boardDelete(String cNumber) {
-		System.out.println("dao-delete 진입");
 		
-		int result = 0;
+		/*
+		 * int result = 0; //해당 게시글의 댓글 삭제하기 
+		 * String replyDel_sql = "delete from ain_reply_board where c_Number=?";
+		 * 
+		 * //해당 게시글 삭제하기 String boardDel_sql = "delete from ain_board where c_Number=?";
+		 * 
+		 * try(Connection conn = ds.getConnection(); PreparedStatement replypstmt =
+		 * conn.prepareStatement(replyDel_sql); PreparedStatement boardpstmt =
+		 * conn.prepareStatement(boardDel_sql);) {
+		 * 
+		 * replypstmt.setString(1, cNumber);
+		 * 
+		 * boardpstmt.setString(1, cNumber);
+		 * 
+		 * //댓글삭제 replypstmt.executeUpdate();
+		 * 
+		 * //게시글삭제(원본글, 답글) result = boardpstmt.executeUpdate();
+		 * 
+		 * }catch (Exception e) { e.printStackTrace(); }
+		 * 
+		 * 
+		 * return result;
+		 */
 		
-		//해당 게시글의 댓글 삭제하기
-		String replyDel_sql = "delete from ain_reply_board where c_Number=?";
+		String sql1 = "select c_number, refer, depth, step from ain_board where c_number = ?";
 		
-		//해당 게시글 삭제하기
-		String boardDel_sql = "delete from ain_board where c_Number=?";
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
 		
-		try(Connection conn = ds.getConnection();
-				PreparedStatement replypstmt = conn.prepareStatement(replyDel_sql);
-				PreparedStatement boardpstmt = conn.prepareStatement(boardDel_sql);) {
-				
-				replypstmt.setString(1, cNumber);
-				
-				boardpstmt.setString(1, cNumber);
+		try {
 			
-				//댓글삭제
-				replypstmt.executeUpdate();
+			int c_number = Integer.parseInt(cNumber);
+			
+			conn = ds.getConnection();
+			pstmt = conn.prepareStatement(sql1);
+			pstmt.setInt(1, c_number);
+			
+			conn.setAutoCommit(false);
+			
+			rs = pstmt.executeQuery();
+			
+			int beforeDepth = 0;
+			int afterDepth = 0;
+			int step = 0;
+			int refer = 0;
+			
+			if(rs.next()) {
+				beforeDepth = rs.getInt("depth");
+				afterDepth = rs.getInt("depth");
+				step = rs.getInt("step") + 1;
 				
-				//게시글삭제(원본글, 답글)
-				result = boardpstmt.executeUpdate();
-					
-			}catch (Exception e) {
-				e.printStackTrace();
+				refer = rs.getInt("refer");
+				
+				
+				
+				//해당 글(원본글) 댓글 삭제
+				String replyDel_sql = "delete from ain_reply_board where c_Number = "+ rs.getInt("c_number");
+				PreparedStatement deleteReply = conn.prepareStatement(replyDel_sql);
+				deleteReply.executeQuery();
+				
+				//해당글 삭제
+				String deletesql = " delete from ain_board where c_number = " + rs.getInt("c_number");
+				PreparedStatement delete = conn.prepareStatement(deletesql);
+				delete.executeUpdate();
 			}
 			
+			do {
+				String sql2 = " select depth, step, c_number, refer from ain_board where step = ? and refer = ?";
+				
+				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
+				
+				pstmt2.setInt(1, step);
+				pstmt2.setInt(2, refer);
+				
+				rs = pstmt2.executeQuery();
+				
+				if(rs.next()) {
+					
+					beforeDepth = afterDepth;
+					afterDepth = rs.getInt(1);
+					step = rs.getInt(2) + 1;
+					
+					c_number = rs.getInt(3);
+					
+					if(!(beforeDepth < afterDepth)) {
+						break;
+					}
+					
+					//해당 글(답글) 댓글 삭제
+					String replyDel_sql = "delete from ain_reply_board where c_Number = "+ rs.getInt("c_number");
+					PreparedStatement deleteReply = conn.prepareStatement(replyDel_sql);
+					deleteReply.executeQuery();
+					
+					//답글 삭제
+					String deletesql = " delete from ain_board where c_number = " + rs.getInt(3);
+					PreparedStatement delete = conn.prepareStatement(deletesql);
+					delete.executeUpdate();
+					
+					
+					
+				} else {
+					break;
+				}
+				
+			} while(beforeDepth < afterDepth);
+			
+			conn.commit();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				conn.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
-		return result;
+		
+		return 1;
 	}
 	
 	//댓글쓰기
@@ -474,7 +569,175 @@ public class AinBoardDao {
 		return row;
 	}
 	
+	//관리자페이지용
 	
+	//전체회원수
+	public int totalMemberCount() {
+		int result = 0;
+		
+		String sql = "select count(*) cnt from member";
+		
+		try (Connection conn = ds.getConnection();
+			PreparedStatement selectpstmt = conn.prepareStatement(sql);){
+			ResultSet rs = selectpstmt.executeQuery();
+				
+				if(rs.next()) {
+					result = rs.getInt("cnt");
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		
+		
+		return result;
+	}
 	
+	//전체 회원 목록
+	public List<MemberDto> memberList(int cpage, int pagesize) {
+		List<MemberDto> list = null;
+		
+		String sql =  "select * from (select rownum rn, email, password, division, nickname"
+				+ "	from member"
+				+ "	where rownum <= ?) where rn >= ?";
+		
+		int start = cpage * pagesize - (pagesize -1); //1 * 5 - (5 - 1) >> 1
+		int end = cpage * pagesize; // 1 * 5 >> 5
+		
+		
+		try(Connection conn = ds.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			
+			pstmt.setInt(1, end);
+			pstmt.setInt(2, start);
+
+			ResultSet rs = pstmt.executeQuery();
+			
+			list = new ArrayList<MemberDto>();
+			
+			while(rs.next()) {
+				MemberDto member = new MemberDto();
+				member.setEmail(rs.getString("email"));
+				member.setPassword(rs.getString("password"));
+				member.setDivision(rs.getString("division"));
+				member.setNickname(rs.getString("nickname"));
+				
+				list.add(member);
+			}
+			
+		} catch (Exception e) {
+			System.out.println("오류 :" + e.getMessage());
+		}
+		return list;
+	}
 	
+	//회원 정지처리
+		public int memberDelete(String email) {
+			
+			int result = 0;
+			
+			//해당 이메일을 가진 멤버 division 정보 변경
+			String sql = "update member set division=99"
+						+ "where email=?";
+			
+			try(Connection conn = ds.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql);) {
+					
+					pstmt.setString(1, email);
+					
+					result = pstmt.executeUpdate();
+						
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			return result;
+		}
+		
+	//회원 복구처리
+		public int memberReJoin(String email) {
+			
+			int result = 0;
+			
+			//해당 이메일을 가진 멤버 division 정보 변경
+			String sql = "update member set division=1"
+						+ "where email=?";
+			
+			try(Connection conn = ds.getConnection();
+					PreparedStatement pstmt = conn.prepareStatement(sql);) {
+					
+					pstmt.setString(1, email);
+					
+					result = pstmt.executeUpdate();
+						
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			return result;
+		}
+
+	//회원 이메일검색
+		public List<MemberDto> searchEmail(String email) {
+			List<MemberDto> list = new ArrayList<MemberDto>();
+			
+			String sql =  "select email, password, division, nickname "
+					+ "from member where email like ?";
+			
+			
+			try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+				pstmt.setString(1, "%" + email + "%");
+
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					MemberDto member = new MemberDto();
+					member.setEmail(rs.getString("email"));
+					member.setPassword(rs.getString("password"));
+					member.setDivision(rs.getString("division"));
+					member.setNickname(rs.getString("nickname"));
+					
+					list.add(member);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			}
+			
+			
+			return list;
+		}
+		
+	//회원 닉네임 검색
+		public List<MemberDto> searchNickname(String nickname) {
+			List<MemberDto> list = new ArrayList<MemberDto>();
+			
+			String sql =  "select email, password, division, nickname "
+					+ "from member where nickname like ?";
+			
+			
+			try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+				pstmt.setString(1, "%" + nickname + "%");
+
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					MemberDto member = new MemberDto();
+					member.setEmail(rs.getString("email"));
+					member.setPassword(rs.getString("password"));
+					member.setDivision(rs.getString("division"));
+					member.setNickname(rs.getString("nickname"));
+					
+					list.add(member);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			}
+			
+			
+			return list;
+		}
+
 }

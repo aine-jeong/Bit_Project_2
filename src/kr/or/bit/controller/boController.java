@@ -17,6 +17,7 @@ import kr.or.bit.noticeboard.service.BoardDeleteOk;
 import kr.or.bit.noticeboard.service.BoardEditOkService;
 import kr.or.bit.noticeboard.service.BoardEditService;
 import kr.or.bit.noticeboard.service.BoardListService;
+import kr.or.bit.noticeboard.service.BoardShowChartService;
 import kr.or.bit.noticeboard.service.BoardWriteService;
 
 @WebServlet("*.bo")
@@ -59,7 +60,13 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 		}else if(url.equals("/boardEditOk.bo")) {
 			action = new BoardEditOkService();
     		forward = action.execute(request, response);
-		}
+		}else if(url.equals("/chart.bo")) {
+				action = new BoardShowChartService();
+				forward = action.execute(request, response);
+				forward.setRedirect(false); 
+			}
+		
+		
 		
 		
 		

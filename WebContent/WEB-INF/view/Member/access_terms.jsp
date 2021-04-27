@@ -21,13 +21,14 @@
              border: 1px solid #ececec; 
              border-top-color: #e1e1e1; 
              border-left-color: #e1e1e1; 
-             background: #ececec; 
-             border-radius: 3px; 
             -moz-border-radius: 3px; 
             -webkit-border-radius: 3px;
+             border-radius: 20px;
+  			background:  #f5f5f5;
+  			box-shadow: 5px 5px 20px #cbced1, -13px -10px 10px #ffffff
 }        
         .scheme-g { 
-            margin: 26px 0 8px; 
+            margin: 26px 0 15px; 
             padding: 0px; 
             font-size: 1.2em; 
             font-weight: 100;
@@ -41,8 +42,8 @@
             margin-left: 5px; 
             padding: 8px 16px; 
             text-decoration: none; color:#fff; 
-            background:#0080ff; 
-            text-shadow: 1px 1px 1px #0066cc; 
+            background:#dca73a; 
+            text-shadow: 1px 1px 1px #dca73a; 
             -webkit-transition: all 0.2s ease-out; }
 </style>
 <script type="text/javascript">

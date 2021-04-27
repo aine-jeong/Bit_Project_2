@@ -71,7 +71,7 @@ a, button {
 		<div style="padding-top: 50px; text-align: center">
 			<div class="font-back-tittle mb-10 ">
 				<div class="archivment-front">
-					<h3 style="color: #EAAF24; font-size: 24px;">공지사항📣</h3>
+					<h3 style="color: #EAAF24; font-size: 20px;">공지사항</h3>
 					<h3 style="color: black; font-size: 24px;">${board.n_TITLE}</h3>
 				</div>
 			</div>
@@ -108,8 +108,8 @@ a, button {
 						
 					</tr>
 					<tr style="height: 300px;">
-						<td colspan="5" align="center">
-						<img src="<%=request.getSession().getServletContext().getRealPath("upload")%>/${board.n_FILENAME}">						
+						<td colspan="5" align="center" class="defaultImg">
+						<img src="upload/${board.n_FILENAME}">						
 						${fn:replace(board.n_CONTENT, newLineChar,"<br>")}
 						
 						</td>
@@ -189,15 +189,20 @@ a, button {
 	<script src="./assets/js/main.js"></script>
 	<script type="text/javascript">
 	
-	window.onload = function() {
-		console.log("${n_NUMBER}");
-		
 		var nowEmail= "<%=session.getAttribute("email")%>";
-	if('<%=session.getAttribute("email")%>' != 'admin@naver.com'){
-		$('.admin').css("display","none");
+		$('.admin').css("display","none")
+	
+		if('<%=session.getAttribute("email")%>' != 'admin@naver.com'){
 		} else {
+			$('.admin').css("display","");
 		}
-	}
+		
+		if('${board.n_FILENAME}'==''){
+			$(".defaultImg").find('img').attr('src','/JYP_PROJECT/image/defalutImg.png');	
+		}
+		
+		
+		console.log("/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload/${board.n_FILENAME}");
 	
 	function clip(){
 		var url = '';
@@ -213,8 +218,3 @@ a, button {
 	</script>
 </body>
 </html>
-
-
-
-
-

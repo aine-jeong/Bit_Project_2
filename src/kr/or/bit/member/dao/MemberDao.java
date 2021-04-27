@@ -167,6 +167,77 @@ public class MemberDao {
 	 * 
 	 * }
 	 */
+	public boolean emailCheck(String email) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			
+		conn = ds.getConnection();
+		String sql = "select email from member";
+		pstmt = conn.prepareStatement(sql);
+		rs = pstmt.executeQuery();
+
+		while(rs.next()) {
+			if(rs.getString("email").equals(email)) {
+				return true;
+			}
+		}
+		}catch(Exception e) {
+			
+		e.printStackTrace();
+		
+		}finally{
+		
+			try{
+				rs.close();
+				pstmt.close();
+				conn.close();//반환하기
+			}catch(Exception e2) {
+				
+		System.out.println(e2.getMessage());
+			}
+		}
+		return false;
+		}
+	
+	public boolean nickCheck(String nickname) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		try{
+			
+		conn = ds.getConnection();
+		String sql = "select * from member where nickname=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, nickname);
+		rs = pstmt.executeQuery();
+		if(rs.next()) {
+
+		return false;
+		
+		}
+		else{	//사용가능한 닉네임
+		return true;
+		}
+		}catch(Exception e) {
+			
+		e.printStackTrace();
+		
+		}finally{
+		
+			try{
+				rs.close();
+				pstmt.close();
+				conn.close();//반환하기
+			}catch(Exception e2) {
+				
+		System.out.println(e2.getMessage());
+			}
+		}
+		return true;
+		}
+	
 	
 	public int editInfoOk(MemberDto memberdto){
 		
@@ -190,6 +261,7 @@ public class MemberDao {
 
 			result = pstmt.executeUpdate();
 			
+			System.out.println("업데이트된 result 값 : " + memberdto.getPassword());
 			System.out.println("업데이트된 result 값 : " +result);
 			
 			

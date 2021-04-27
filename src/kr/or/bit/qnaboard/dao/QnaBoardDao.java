@@ -474,7 +474,7 @@ public class QnaBoardDao {
 	 */
 	public int deleteContent(int qnaNumber) {
 		
-		String sql1 = " select qna_depth, qna_step, qna_number from qna_board where qna_number = ? ";
+		String sql1 = " select qna_depth, qna_step, qna_number, qna_refer from qna_board where qna_number = ? ";
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -493,11 +493,13 @@ public class QnaBoardDao {
 			int beforeDepth = 0;
 			int afterDepth = 0;
 			int step = 0;
+			int refer = 0;
 			
 			if(rs.next()) {
 				beforeDepth = rs.getInt(1);
 				afterDepth = rs.getInt(1);
 				step = rs.getInt(2) + 1;
+				refer = rs.getInt(4);
 				
 				String deletesql = " delete from qna_board where qna_number = " + rs.getInt(3);
 				PreparedStatement delete = conn.prepareStatement(deletesql);
@@ -505,11 +507,12 @@ public class QnaBoardDao {
 			}
 			
 			do {
-				String sql2 = " select qna_depth, qna_step, qna_number from qna_board where qna_step = ? ";
+				String sql2 = " select qna_depth, qna_step, qna_number from qna_board where qna_step = ? and qna_refer = ?";
 				
 				PreparedStatement pstmt2 = conn.prepareStatement(sql2);
 				
 				pstmt2.setInt(1, step);
+				pstmt2.setInt(2, refer);
 				
 				rs = pstmt2.executeQuery();
 				
@@ -527,8 +530,6 @@ public class QnaBoardDao {
 					String deletesql = " delete from qna_board where qna_number = " + rs.getInt(3);
 					PreparedStatement delete = conn.prepareStatement(deletesql);
 					delete.executeUpdate();
-					
-					
 					
 				} else {
 					break;

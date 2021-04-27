@@ -70,6 +70,8 @@
                         <td colspan="2" align="center">
                             <input type="button" value="글쓰기" onclick="check();" /> 
                             <input type="reset"  value="다시쓰기" />
+                            <br>
+                            <a href="board_list_next.ha">목록</a>
                         </td>
                     </tr>
                 </table>
@@ -77,6 +79,7 @@
             
         </div>
     </div>
+    <div id="emptyspace" style="margin-bottom: 180px;"></div>
     <%
 		pageContext.include("/include/footer.jsp");
 	%>

@@ -5,6 +5,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>게시판 글쓰기</title>
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 	<!-- CSS here -->
    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -42,35 +43,12 @@ table.aintable, th, td {
     border-bottom: 1px solid #ccc;
 }
 </style>
-	<%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
-	
-	<!-- include libraries(jQuery, bootstrap) -->
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-	
-	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-	
-	<script>
-	
-	$(document).ready(function() {
-		  $('#summernote').summernote({
-			height: 450,
-			minHeight: 300,             
-			maxHeight: 600,       
-		    lang: 'ko-KR',
-		    placeholder: ' 내용을 입력해주세요.'
-		  });
-		});
-  	</script>
 	
 <SCRIPT type="text/javascript">
 		function check(){
 		    if(!bbs.title.value){
 		        alert("제목을 입력하세요");
-		        bbs.subject.focus();
+		        bbs.title.focus();
 		        return false;
 		    }
 		    if(!bbs.content.value){            
@@ -112,7 +90,9 @@ table.aintable, th, td {
                     </tr>
                     <tr>
                         <td width="10%" align="center">첨부파일</td>
-                        <td width="90%" align="left"><input type="file" name="filename"></td>
+                        <td width="90%" align="left">
+                        	<input type="file" id="filename" name="filename" accept=".jpg, .jpeg, .png, .gif">
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="2" align="center" style="padding-top: 20px; padding-bottom: 20px;">
@@ -126,4 +106,24 @@ table.aintable, th, td {
     </div>
     <jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
+<!-- include libraries(jQuery, bootstrap) -->
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+<script>
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			height: 450,
+			minHeight: 300,             
+			maxHeight: 600,       
+		    lang: 'ko-KR',
+		    placeholder: ' 내용을 입력해주세요.'
+		  });
+		});
+</script>
 </html>

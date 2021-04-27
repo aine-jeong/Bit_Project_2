@@ -18,9 +18,9 @@ public class BoardAddService implements Action {
 
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
-		String uploadpath = request.getSession().getServletContext().getRealPath("upload");
-		//String uploadpath = "/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload";
-		System.out.println(uploadpath);
+		//String uploadpath = request.getSession().getServletContext().getRealPath("upload");
+		String uploadpath = "/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload";
+		System.out.println("uploadpath"+uploadpath);
 		int size = 1024*1024*10;
 		int result = 0;
 		

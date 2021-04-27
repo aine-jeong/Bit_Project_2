@@ -19,6 +19,10 @@ import kr.or.bit.ainboard.service.AinReplyAddService;
 import kr.or.bit.ainboard.service.AinReplyDeleteService;
 import kr.or.bit.ainboard.service.AinRewriteOkService;
 import kr.or.bit.ainboard.service.AinRewriteService;
+import kr.or.bit.ainboard.service.AdminMainService;
+import kr.or.bit.ainboard.service.AdminMemberDelService;
+import kr.or.bit.ainboard.service.AdminMemberReJoinService;
+import kr.or.bit.ainboard.service.AdminMemberSearchService;
 import kr.or.bit.ainboard.service.AinBoardListService;
 import kr.or.bit.ainboard.service.AinWriteService;
 import kr.or.bit.ainboard.service.AinFileDownload;
@@ -99,6 +103,29 @@ public class AinController extends HttpServlet {
     	else if(url_Command.equals("/file.ain")) {
     		action = new AinFileDownload();
     		action.execute(request, response);
+    	}
+    	
+    	//관리자페이지 시작
+    	//메인
+    	else if(url_Command.equals("/admin.ain")) {
+    		action = new AdminMainService();
+    		forward = action.execute(request, response);
+    	}
+    	//회원 정지처리
+    	else if(url_Command.equals("/memberDelete.ain")) {
+    		action = new AdminMemberDelService();
+    		forward = action.execute(request, response);
+    	}
+    	//회원 복구처리
+    	else if(url_Command.equals("/memberReJoin.ain")) {
+    		action = new AdminMemberReJoinService();
+    		forward = action.execute(request, response);
+    	}
+    	//회원 검색
+    	else if(url_Command.equals("/ainSearch.ain")) {
+    		System.out.println("멤버검색 컨트롤러 들어옴");
+    		action = new AdminMemberSearchService();
+    		forward = action.execute(request, response);
     	}
     	
     	

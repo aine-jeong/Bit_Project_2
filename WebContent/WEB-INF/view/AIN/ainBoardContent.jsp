@@ -11,8 +11,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>board_content</title>
-
+<title>board-content</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 <!-- CSS here -->
    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
    <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -70,8 +71,7 @@ table.aintable {
 </style>
 
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
-	
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
 </head>
 
 <body>
@@ -82,6 +82,9 @@ table.aintable {
 	<c:set var="replyList" value="${requestScope.replyList}" />
 	
 	<c:import url="/include/header.jsp" />
+	
+	<input type="hidden" id="hidden-email" value="${sessionScope.email }">
+	
 	
 	<div class="font-back-tittle mb-50">
 		<div class="archivment-front">
@@ -100,7 +103,7 @@ table.aintable {
 						</td>
 					</tr>
 					<tr style="font-size: 25px">
-						<td colspan="4" style="padding-left: 60px; height: 54px;">${board.title}</td>
+						<td colspan="4" align="center" style="padding-left: 60px; height: 54px;">${board.title}</td>
 					</tr>
 					<tr>
 						<td width="20%" align="center"><b>글쓴이</b></td>
@@ -119,7 +122,12 @@ table.aintable {
 					
 					<tr height="100">
 						<td width="20%" align="center"><b>글내용</b></td>
-						<td colspan="3" style="height: 400px;">${fn:replace(board.content, newLineChar,"<br>")}</td>
+						<td colspan="3" style="height: 400px;">
+							<c:if test="${board.filerealname != null}">
+							<img src="upload/${board.filerealname}" width="30%">
+							</c:if>
+							${fn:replace(board.content, newLineChar,"<br>")}
+						</td>
 					</tr>
 					<tr>
 						<td colspan="2" align="left">
@@ -127,7 +135,7 @@ table.aintable {
 							<a href="boardReWrite.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}&title=${board.title}" class="genric-btn success medium">답글</a>
 						</c:if>
 						</td>
-						<c:if test="${sessionScope.email == board.email}">
+						<c:if test="${sessionScope.email == board.email || sessionScope.email == 'admin@naver.com'}">
 						<td colspan="2" align="right">
 							<a href="boardEdit.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">수정</a>
 							<button type="button" class="genric-btn success medium" id="boardDelete">
@@ -135,6 +143,14 @@ table.aintable {
 							</button>
 						</td>
 						</c:if>
+						<%-- <c:if test="${sessionScope.email == 'admin@naver.com'}">
+						<td colspan="2" align="right">
+							<a href="boardEdit.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}" class="genric-btn success medium">수정</a>
+							<button type="button" class="genric-btn success medium" id="boardDelete">
+								삭제
+							</button>
+						</td>
+						</c:if> --%>
 						<c:if test="${sessionScope.email != board.email}">
 						<td colspan="2">
 						</td>
@@ -163,8 +179,8 @@ table.aintable {
 									</td>
 								</tr>
 								<tr>
-									<td colspan="3" align="right" style="color: #cccccc">
-										이메일: ${sessionScope.email}
+									<td colspan="3" align="left" style="color: #cccccc">
+										회원 이메일: ${sessionScope.email}
 									</td>
 								</tr>
 							</table>
@@ -178,7 +194,7 @@ table.aintable {
 						</c:if>
 				</form>
 				<!-- 유효성 체크	 -->
-				<script type="text/javascript" src="${pageContext.request.contextPath}/js/ainTest.js?ver=1"></script>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/ainTest.js?ver=2"></script>
 				<br>
 				
 				<table width="80%" border="1" class="aintable" id="replyListStart">
@@ -201,7 +217,9 @@ table.aintable {
 								<form action="ReplyDeleteOk.do" method="POST" name="replyDel">
 									<input type="hidden" name="crNumber" value="${reply.crNumber}"> 
 									<input type="hidden" name="cNumber" value="${reply.cNumber}"> 
-									<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">
+									<c:if test="${sessionScope.email == reply.email}">
+										<input type="button" value="삭제" class="genric-btn success-border medium" onclick="reply_del_check(this.form)">
+									</c:if>
 								</form>
 								</td>
 							</tr>

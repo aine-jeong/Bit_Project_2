@@ -37,21 +37,20 @@
 										<li><a>고객센터</a>
 											<ul class="submenu">
 												<li><a href="boardList.bo">공지사항</a></li>
-												<li><a href="howToUse.do">이용방법</a></li>
 												<li><a href="boardList.qna?pageSize=10&currentPage=1">Q&A</a></li>
 												<li><a href="introduce.do">회사소개</a></li>
 												<li><a href="terms.do">이용약관</a></li>
 												<li><a href="personalInfo.do">개인정보처리방침</a></li>
 											</ul></li>
-										<li><a class="imAdmin" href="#">마이페이지</a>
+										<li><a class="notAdmin" href="#">마이페이지</a>
 											<ul class="submenu">
 												<li><a href="InfoEdit.do">내 정보 변경</a>
 												<li><a href="mytourList.tourlist">내 여행지</a></li>
 											</ul></li>
-											<li><a class="notAdmin">관리자</a>
+											<li class="imAdmin"><a class="imAdmin">관리자</a>
 											<ul class="submenu">
-												<li><a href="terms.do">관리자 페이지</a></li>
-												<li><a href="personalInfo.do">통계자료</a></li>
+												<li><a href="admin.ain">관리자 페이지</a></li>
+												<li><a href="chart.bo">통계자료</a></li>
 											</ul></li>
 									</ul>
 								</nav>
@@ -82,7 +81,8 @@
 	<script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
 	<!-- Jquery, Popper, Bootstrap -->
-	<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script>
+<!-- 	<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script> -->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="./assets/js/popper.min.js"></script>
 	<script src="./assets/js/bootstrap.min.js"></script>
 	<!-- Jquery Mobile Menu -->
@@ -115,12 +115,13 @@
 	<script src="./assets/js/main.js"></script>
 		<script type="text/javascript">
 			var nowEmail= '<%=session.getAttribute("email")%>'
+			$('.notAdmin').css("display","none");
+			$('.imAdmin').css("display","none");
 			console.log(nowEmail+"header");
-			if(nowEmail != 'admin@naver.com'){
-				$('.notAdmin').css("display","none");
+			if(nowEmail == 'admin@naver.com'){
+				$('.imAdmin').css("display","");
 				}else{
-				$('.imAdmin').css("display","none");
-				} 
+				$('.notAdmin').css("display","");
+				}  
 		</script>
 </body>
-</html>

@@ -184,6 +184,9 @@
 							<c:forEach var="i" begin="1" end="${board.depth}" step="1">
 								&nbsp;&nbsp;&nbsp;
 							</c:forEach>
+							<c:if test="${board.depth > 0}">
+								<img src="${pageContext.request.contextPath}/image/re.gif">
+							</c:if>
 							<a href="boardContent.sun?c_number=${board.c_number}&cp=${cpage}&ps=${pagesize}">
 								<c:choose>
 									<c:when test="${board.title != null && fn:length(board.title) > 10}">
@@ -213,7 +216,7 @@
 					
 						<tr border=none>
 						<td colspan="5" align="right">
-						<input type="button" id="writeGo" value="글쓰기" onclick="location.href='boardWrite.sun'">
+						<input type="button" class="btn btn-warning" value="글쓰기" onclick="location.href='boardWrite.sun'">
 						</td>
 						</tr>
 			

@@ -22,7 +22,7 @@ public class InfoEditOkService implements Action {
 		   - 세션 종료
 			session.invalidate();
  */
-		String email = request.getParameter("email");
+		String email = (String) request.getSession().getAttribute("email");
 		String password = request.getParameter("password");
 		String nickname = request.getParameter("nickname");
 		
@@ -31,6 +31,7 @@ public class InfoEditOkService implements Action {
 		MemberDto memberdto = new MemberDto(email, password, nickname);
 		
 		System.out.println("회원수정 여기까지 오나?(InfoEditOkService 43번째줄)");
+		System.out.println("멤바 : "+ memberdto.toString());
 		
 		try {
 			MemberDao memberdao = new MemberDao();
@@ -47,12 +48,13 @@ public class InfoEditOkService implements Action {
 				
 			}else {
 				msg="정보수정 실패";
-				url="/InfoEdit.do";
+				url="/JYP_PROJECT/InfoEdit.do";
 
 			}
 			
 			request.setAttribute("board_msg", msg);
 			request.setAttribute("board_url", url);
+			
 			
 			forward.setPath("/WEB-INF/view/SH/redirect.jsp");
 			

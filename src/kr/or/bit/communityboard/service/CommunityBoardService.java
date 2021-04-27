@@ -46,15 +46,9 @@ public class CommunityBoardService {
 		}
 		
 		//서비스 요청(게시글 삭제하기) : jspboard , reply 
-		public int board_Delete(String idx , String pwd) throws NamingException {
-			return new communityboardDao().deleteOk(0, pwd);
+		public int board_Delete(String c_number) throws NamingException {
+			return new communityboardDao().deleteOk( Integer.parseInt(c_number.trim()));
 		}
-		
-		//서비스 요청(댓글 삭제하기)
-		public int replyDelete(String no, String pwd) throws NamingException {
-			return new communityboardDao().replyDelete(no, pwd);
-		}
-		
 		
 		//서비스  요청(수정 데이터 조회 )
 		public CommunityBoard board_EditContent(String c_number) throws NamingException {

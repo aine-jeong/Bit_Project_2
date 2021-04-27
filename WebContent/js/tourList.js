@@ -59,12 +59,14 @@ async function getJejuData(form_data) {
 					totalResult.push(response);
 
 					resolve(form_data);
-				},beforeSend: function() {
+				}
+				
+				/*,beforeSend: function() {
 					$('.wrap-loading').removeClass('display-none');
 				}, complete: function() {
 					$('.wrap-loading').addClass('display-none');
 				}
-				
+				*/
 			}
 		);
 

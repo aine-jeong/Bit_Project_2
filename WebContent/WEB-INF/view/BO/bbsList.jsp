@@ -81,14 +81,12 @@ a:not([href]):not([tabindex]) {
 	<!-- Preloader Start -->
 	<c:import url="/include/header.jsp" />
 	<div style="padding-top: 50px; text-align: center;">
-		<div class="font-back-tittle mb-50">
+		<div class="font-back-tittle">
 			<div class="archivment-front">
-				<h3 style="color: #EAAF24">공지사항 📣</h3>
+				<h3 style="color: #EAAF24">공지사항</h3>
 			</div>
 			<h3 class="archivment-back">공지사항</h3>
 		</div>
-		<br>
-
 		<c:set var="pagesize" value="${requestScope.pagesize}" />
 		<c:set var="cpage" value="${requestScope.cpage}" />
 		<c:set var="pagecount" value="${requestScope.pagecount}" />
@@ -97,7 +95,7 @@ a:not([href]):not([tabindex]) {
 		<c:set var="pager" value="${requestScope.pager}" />
 
 		<div id="pagecontainer">
-			<div style="padding-top: 30px; text-align: cetner;" align="center">
+			<div style="padding-top: 0px; text-align: cetner;" align="center">
 			<hr width="80%">
 				<table  class="noneBorder" width="80%" cellspacing="0" align="center" >
 					<tr>
@@ -141,7 +139,7 @@ a:not([href]):not([tabindex]) {
 						</tr>
 					</c:forEach>
 					<!-- forEach()  -->
-					<tr>
+					<tr> 
 						<td colspan="5" align="center">
 							<hr width="100%">
 						</td>
@@ -203,13 +201,15 @@ a:not([href]):not([tabindex]) {
 	<script src="./assets/js/plugins.js"></script>
 	<script src="./assets/js/main.js"></script>
 	<script type="text/javascript">
-	window.onload = function() {
-		var nowEmail= "<%=session.getAttribute("email")%>";
+	
+	var nowEmail= "<%=session.getAttribute("email")%>";
+	
+	$('.admin').css("display","none");
+	
 	if('<%=session.getAttribute("email")%>' != 'admin@naver.com'){
-		$('.admin').css("display","none");
 		} else {
+			$('.admin').css("display","");
 		}
-	}
 	
 	function isNext(){
 		if("${cpage}"=="${pagecount}"){

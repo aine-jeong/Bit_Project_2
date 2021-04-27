@@ -31,6 +31,18 @@
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="css/bopage.css">
 
+<style>
+.sl1{
+ background-image: url("image/imgSlider/1.jpeg") !important;
+}
+.sl2{
+ background-image: url("image/imgSlider/2.jpeg") !important;
+}
+.sl3{
+ background-image: url("image/imgSlider/3.jpeg") !important;
+}
+</style>
+
 </head>
 
 <body>
@@ -63,7 +75,7 @@
 			<!-- 1번 이미지 -->
 			<div class="slider-active dot-style">
 				<div
-					class="single-slider  hero-overly slider-height d-flex align-items-center"
+					class="single-slider  hero-overly slider-height d-flex align-items-center sl1"
 					data-background="image/imgSlider/1.jpeg">
 					<div class="container">
 						<div class="row justify-content-center text-center">
@@ -78,7 +90,7 @@
 				</div>
 				<!-- 2번 이미지 -->
 				<div
-					class="single-slider  hero-overly slider-height d-flex align-items-center"
+					class="single-slider  hero-overly slider-height d-flex align-items-center sl2"
 					data-background="image/imgSlider/2.jpeg">
 					<div class="container">
 						<div class="row justify-content-center text-center">
@@ -93,7 +105,7 @@
 				</div>
 				<!-- 3번 이미지 -->
 				<div
-					class="single-slider  hero-overly slider-height d-flex align-items-center"
+					class="single-slider  hero-overly slider-height d-flex align-items-center sl3"
 					data-background="image/imgSlider/3.jpeg">
 					<div class="container">
 						<div class="row justify-content-center text-center">
@@ -550,7 +562,7 @@
 				</div>
 				<div class="row justify-content-center">
 					<div class="room-btn pt-70">
-						<a href="#" class="btn view-btn1">더보기<i
+						<a href="tourList.tourlist" class="btn view-btn1">더보기<i
 							class="ti-angle-right"></i>
 						</a>
 					</div>
@@ -633,5 +645,3 @@
 
 </body>
 </html>
-
-

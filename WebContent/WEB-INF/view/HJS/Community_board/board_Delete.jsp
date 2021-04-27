@@ -1,26 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%
-	//삭제글 처리 (글번호 받기)
-	String c_number = request.getParameter("c_number");
-	if(c_number == null || c_number.trim().equals(""))
-	{
-%>
-	<script>
-		alert("글번호가 넘어오지 않았습니다");
-		history.back();
-	</script>
-<%	
-	return; //서버에서 더이 코드 실행하지 않고 종료 .....
-	}
-%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>Insert title here</title>
-	 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>게시글 편집창</title>
 	<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 	<link rel="manifest" href="site.webmanifest">
 	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
@@ -42,8 +27,21 @@
 	<link rel="stylesheet" href="assets/css/responsive.css">
 	<link rel="stylesheet" href="css/bopage.css">
 	<script type="text/javascript">
-</script>
-
+		function delCheck(){
+			
+				if(del.pwd.value==""){
+					alert("비밀번호를 입력해야합니다.");
+					del.pwd.focus();
+					return false;
+				}
+				if(del.pwd.value.length>8){
+					alert("비밀번호는 8자리 이내입니다.");
+					del.pwd.select();
+					return false;
+				}//if---------
+				document.del.submit();
+			}
+	</script>
 </head>
 <body>
 	<%
@@ -51,7 +49,15 @@
 	%>
 	<div id="pageContainer">
 		<div style="padding-top: 25px; text-align: center">
-			<form name="del" method="POST" action="c_content_delete.ha">
+			<form name="del" method="POST" action="c_content_delete_ok.ha">
+				<center>
+					비밀번호 :
+					<input type="password" name="pwd">
+					<input type="hidden"  name="c_number" value="${c_number}">
+					<hr width="500" color="gold">
+					<input type="button" value="삭제" onclick="delCheck();">
+					<input type="reset" value="다시">
+				</center>
 			</form>
 		</div>
 	</div>

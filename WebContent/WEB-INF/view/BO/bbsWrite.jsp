@@ -27,8 +27,8 @@
 	<link rel="stylesheet" href="assets/css/responsive.css">
 	
 		<!-- include libraries(jQuery, bootstrap) -->
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
-	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<!-- include summernote css/js -->
@@ -161,7 +161,8 @@ function check(){
     <script src="./assets/js/vendor/modernizr-3.5.0.min.js"></script>
 
 	<!-- Jquery, Popper, Bootstrap -->
-	<!-- <script src="./assets/js/vendor/jquery-1.12.4.min.js"></script> -->
+<!-- 	<script src="./assets/js/vendor/jquery-1.12.4.min.js"></script> -->
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="./assets/js/popper.min.js"></script>
 	<script src="./assets/js/bootstrap.min.js"></script>
 	<!-- Jquery Mobile Menu -->
@@ -193,7 +194,11 @@ function check(){
 	<script src="./assets/js/plugins.js"></script>
 	<script src="./assets/js/main.js"></script>
 	
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
 	<script type="text/javascript">
+	
 	$(document).ready(function() {
 		  $('#summernote').summernote({
 			height: 300,

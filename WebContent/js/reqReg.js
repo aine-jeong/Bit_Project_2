@@ -6,7 +6,8 @@
 		2. 공백없이
 		3. 영문 + 숫자 + 특수문자 포함
 	*/
-	window.onload = function() {
+	
+	$(document).ready(function() {
 	/* 비밀번호 유효성체크 */
 	function check_pwd(){
 		let password = $('#password').val();
@@ -111,4 +112,4 @@
  	$("#reset").click(function() {  
          $(".form-horizontal")[0].reset();    
 });
-};
+});

@@ -11,6 +11,7 @@ import kr.or.bit.member.dto.MemberDto;
 
 public class LoginOkService implements Action {
 
+	@SuppressWarnings("unused")
 	@Override
 	public ActionForward execute(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -38,7 +39,10 @@ public class LoginOkService implements Action {
 			String msg = "";
 			String url = "";
 			
-			if(result != null){
+			if(result.getDivision().equals("99")) {
+				msg = "활동이 정지된 회원입니다. 고객센터에 문의해주세요.";
+				url = "/JYP_PROJECT/Login.do";
+			} else if(result != null){
 				
 				msg = "로그인!";
 				url = "/JYP_PROJECT/bopage.jsp";

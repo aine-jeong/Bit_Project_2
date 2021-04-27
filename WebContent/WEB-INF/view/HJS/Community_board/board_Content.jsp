@@ -1,3 +1,4 @@
+<%@page import="kr.or.bit.member.dto.MemberDto"%>
 <%@page import="java.util.List"%>
 <%@page import="kr.or.bit.communityboard.dto.CommunityBoard"%>
 <%@page import="kr.or.bit.communityboard.service.CommunityBoardService"%>
@@ -5,6 +6,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -115,8 +117,14 @@
 						<td colspan="4" align="center"><a
 							href="c_content_golist.ha?cp=<%=cpage%>&ps=<%=pagesize%>">목록가기</a> |<a
 							href="c_content_edit.ha?c_number=<%=c_number%>&cp=<%=cpage%>&ps=<%=pagesize%>">편집</a>
-							|<a
-							href="c_content_delete.ha?c_number=<%=c_number%>&cp=<%=cpage%>&ps=<%=pagesize%>">삭제</a>
+							<c:set var="user" value='<%=(MemberDto)request.getSession().getAttribute("user") %>' />
+							<c:set var="email" value="<%=board.getEmail() %>"/>
+							
+							<c:if test="${(not empty user  && user.email eq email) || user.division eq 0}">
+							| <a href="c_content_delete.ha?c_number=<%=c_number%>&cp=<%=cpage%>&ps=<%=pagesize%>">삭제</a>	
+							</c:if>
+							
+							
 							
 						</td>
 					</tr>
@@ -124,6 +132,7 @@
 			</center>
 		</div>
 	</div>
+	<div id="emptyspace" style="margin-bottom: 180px;"></div>
 	<%
 		pageContext.include("/include/footer.jsp");
 	%>

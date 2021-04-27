@@ -119,9 +119,9 @@
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 	
 	<!-- 로딩이미지용 -->
-  	<div class="wrap-loading display-none">
+  	<!-- <div class="wrap-loading display-none">
    		 <div><img src="image/tourLoading.svg" /></div>
-   		 <!-- <div id="preloader-active">
+   		 <div id="preloader-active">
 		     <div class="preloader d-flex align-items-center justify-content-center">
 		         <div class="preloader-inner position-relative">
 		             <div class="preloader-circle"></div>
@@ -130,8 +130,8 @@
 		             </div>
 		         </div>
 		     </div>
- 		</div> -->
-	</div>
+ 		</div>
+	</div> -->
 	<div class="dining-area dining-padding-top">
 		</div>
 	<footer>

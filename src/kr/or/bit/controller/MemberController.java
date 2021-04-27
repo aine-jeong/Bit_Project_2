@@ -86,7 +86,29 @@ public class MemberController extends HttpServlet {
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/view/Member/access_terms.jsp");
+    	
     	}
+    	
+    	//회사소개페이지 UI제공
+    	else if(urlcommand.equals("/introduce.do")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/view/AIN/introducePage.jsp");
+    	}
+    	//이용약관페이지 UI제공
+    	else if(urlcommand.equals("/terms.do")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/view/AIN/termsPage.jsp");
+    	}
+    	//개인정보처리방침페이지 UI제공
+    	else if(urlcommand.equals("/personalInfo.do")) {
+    		forward = new ActionForward();
+    		forward.setRedirect(false);
+    		forward.setPath("/WEB-INF/view/AIN/InfomationPage.jsp");
+    	}
+    	
+    	
     	if(forward != null) {
     		if(forward.isRedirect()) {    
     			response.sendRedirect(forward.getPath());   

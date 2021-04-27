@@ -6,6 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시판 글쓰기</title>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 <!-- CSS here -->
 <link rel="stylesheet" href="assets/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
@@ -51,6 +52,10 @@ table.aintable, th, td {
     border-bottom: 1px solid #ccc;
 }
 
+body {
+	background: #f2f2f2;
+}
+
 </style>
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 
@@ -61,25 +66,6 @@ table.aintable, th, td {
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-<!-- include summernote css/js -->
-<link
-	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
-	rel="stylesheet">
-<script
-	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
-
-<script>
-$(document).ready(function() {
-	  $('#summernote').summernote({
-		height: 450,
-		minHeight: 300,             
-		maxHeight: 600,       
-	    lang: 'ko-KR',
-	    placeholder: ' 내용을 입력해주세요.'
-	  });
-	});
-  	</script>
 
 <SCRIPT type="text/javascript">
 		function editCheck(){
@@ -123,12 +109,12 @@ $(document).ready(function() {
 					</tr>
 					<tr>
 						<td colspan="2" align="left">
-							<input type="text" name="title" placeholder=" 제목을 입력해 주세요." size="100%" style="height: 35px; border: 1px solid #cccccc;">
+							<input type="text" name="title" value="${board.title}" size="100%" style="height: 35px; border: 1px solid #cccccc;">
 						</td>
 					</tr>
 					<tr>
                         <td colspan="2" align="left">
-                        	<textarea rows="10" cols="60" name="content" id="summernote"></textarea>
+                        	<textarea rows="10" cols="60" name="content" id="summernote">${board.content}</textarea>
                         </td>
                     </tr>
 					<tr>
@@ -145,4 +131,19 @@ $(document).ready(function() {
 	</div>
 	<jsp:include page="/include/footer.jsp"></jsp:include>
 </body>
+<!-- include summernote css/js -->
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+	
+<script>
+	$(document).ready(function() {
+		  $('#summernote').summernote({
+			height: 450,
+			minHeight: 300,             
+			maxHeight: 600,       
+		    lang: 'ko-KR',
+		    placeholder: ' 내용을 입력해주세요.'
+		  });
+		});
+</script>
 </html>

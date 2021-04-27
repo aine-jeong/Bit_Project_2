@@ -24,6 +24,35 @@
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
    
+   <!-- 부트스트랩 start -->
+	<link rel="apple-touch-icon" href="apple-icon.png">
+	<link rel="shortcut icon" href="favicon.ico">
+	
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/themify-icons/css/themify-icons.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="WEB-INF/vendors/selectFX/css/cs-skin-elastic.css">
+	<link rel="stylesheet" href="WEB-INF/vendors/jqvmap/dist/jqvmap.min.css">
+	
+	<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+
+
+	<link rel="stylesheet" href="assets/css/style.css">
+	
+	<link
+   href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
+   rel='stylesheet' type='text/css'>
+<!-- 부트스트랩 end  -->
+   
+
    <style type="text/css">
 	@font-face {
      font-family: 'S-CoreDream-3Light';
@@ -35,24 +64,81 @@
 	*{
 	 font-family: 'S-CoreDream-3Light';
 	}
+	.note-editable{
+	height:300px;
+	}
+	
+	.btn-primary{
+		color : #F2CF7C;
+	}
 	</style>
 	
-<link rel="Stylesheet" href="${pageContext.request.contextPath}/css/default.css" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/css/default.css" /> --%>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+   <!-- include summernote css/js -->
+  <!--  <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+   <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+   -->
+	<script type="text/javascript">
+	
+	function editCheck() {
+
+		if (!edit.title.value) {
+			alert("제목을 입력하세요");
+			edit.title.focus();
+			return false;
+		}
+
+		if (!edit.summernote.value) {
+			alert("글 내용을 입력하세요");
+			edit.summernote.focus();
+			return false;
+		}
+
+		document.edit.submit();
+	}
+	
+</script>
 </head>
 <body>
+<jsp:include page="/include/header.jsp"></jsp:include>
+               
 	<c:set var="board" value="${requestScope.board}" />
 	<c:set var="c_number" value="${requestScope.c_number}" />
 	<c:set var="cpage" value="${requestScope.cp}" />
 	<c:set var="pagesize" value="${requestScope.ps}" />
 	<c:set var="replyList" value="${requestScope.replyList}" />
 	
+	<hr style="color : gray;">
+     <!--   <div class="breadcrumbs">
+         <div class="col-sm-4">
+            <div class="page-header float-left">
+            </div>
+         </div>
+         <div class="col-sm-8">
+            <div class="page-header float-right">
+               <div class="page-title">
+               
+               </div>
+            </div>
+         </div>
+      </div> -->
 
-	<jsp:include page="/include/header.jsp"></jsp:include>
-	<div id="pageContainer">
+      <!-- <form name="list"> -->
+      <%-- ${requestScope.list} --%>
+      <!--  </form> -->
+     <div class="main-panel">
+         <div class="content-wrapper">
+            <div class="row ">
+               <div class="col-12">
+               
+	<article>
+	<div class="container" role="main">
 		<div style="padding-top: 30px; text-align: center">
 			<center>
-				<b>선희 커뮤니티</b>
 				<table width="80%" border="1">
 					<tr>
 						<td width="20%" align="center"><b> 글번호 </b></td>
@@ -80,15 +166,22 @@
 					</tr>
 					<tr>
 						<td colspan="4" align="center"><a
-							href="boardList.sun?cp=${cpage}&ps=${pagesize}">목록가기</a> |
-							
-							<a href="boardEdit.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">편집</a> |
-							<a href="boardDelete.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">삭제</a>
-							|<a href="boardRewrite.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}&title=${board.title}">답글</a>
+							href="boardList.sun?cp=${cpage}&ps=${pagesize}">목록가기</a>&nbsp 
+						
+						<c:if test="${sessionScope.email == board.email}">
+							<a href="boardEdit.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">수정</a>&nbsp 
+							<a href="boardDelete.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">삭제</a>&nbsp 
+						</c:if>
+						<c:if test="${sessionScope.email != null}">
+							<a href="boardRewrite.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}&title=${board.title}">답글</a>
+						</c:if>
+						<c:if test="${sessionScope.email != board.email}">
+						<td colspan="2"></td>
+						</c:if>
 						</td>
 					</tr>
 				</table>
-				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js"></script>
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/sunTest.js?ver=1"></script>
 				<br>
 				<!--  꼬리글 달기 테이블 -->
 				<form name="reply" action="ReplyOk.sun" method="POST">
@@ -101,19 +194,20 @@
 								<th colspan="3" >댓글</th>
 							</tr>
 							<tr>
-								<td width="20%" align="left">작성자 :
+								<td width="20%" align="left"> [ 작성자 ]
 								 	<input type="text" name="nickname" value="${nickname}" style="border:none" readonly><br /> 
 								 	</td>
 								 <td width="60%" align="left">
-								 	<textarea id="replyContent" name="reply_content" rows="2" cols="90" style="border:none"></textarea></td>
+								 	<textarea id="reply_content" name="reply_content" rows="2" cols="90" style="border:none"></textarea></td>
 								 <td width="20%" align="center">	
-								 	<input type="button" value="등록" onclick="reply_check()">
+								 	<input type="button" value="등록" onclick="reply_check(this.form)"/>
+
 								</td>
 							</tr>
 						</table>
 				</form>
 				<!-- 유효성 체크	
-				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js"></script> -->
+				<script type="text/javascript" src="${pageContext.request.contextPath}/js/test.js"></script>-->
 				<br>
 				<!-- 꼬리글 목록 테이블 -->
 				<span id="span-reply">
@@ -132,16 +226,22 @@
 								<form action="ReplyDeleteOk.sun" method="POST" name="replyDel">
 									<input type="hidden" name="cr_number" value="${reply.cr_number}"> 
 									<input type="hidden" name="c_number" value="${c_number}"> 
-									<input type="button" value="삭제" onclick="reply_del(this.form)">
+									<input type="button" value="삭제" onclick="reply_del(this.form)"/>
 								</form>
 								</td>
 							</tr>
 						</table>
 					</c:forEach>
+					
 				</c:if>
 				</span>
 			</center>
 		</div>
+	</div>
+	</article>
+	</div>
+	</div>
+	</div>
 	</div>
 	<jsp:include page="/include/footer.jsp"></jsp:include>
 </body>

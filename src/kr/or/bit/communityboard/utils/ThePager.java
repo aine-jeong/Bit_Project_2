@@ -37,20 +37,20 @@ public class ThePager {
 	  }
 	  
 	  //2. 페이지 번호 Link 만들기
-	  int pagerBlock = (currentPage - 1) / pagerSize;
-	  int start = (pagerBlock * pagerSize) + 1;
-	  int end = start + pagerSize;
-	  for (int i = start; i < end; i++) {
-	   if (i > pageCount) break;
-	   linkString.append("&nbsp;");
-	   if(i == currentPage) {
-	    linkString.append(String.format("[%d]", i));
-	   } else { 
-	    linkString.append(String.format(
-	     "<a href='%s?pageno=%d'>%d</a>", linkUrl, i, i));
-	   }
-	   linkString.append("&nbsp;");
-	  }
+		int pagerBlock = (currentPage - 1) / pagerSize;
+		int start = (pagerBlock * pagerSize) + 1;
+		int end = start + pagerSize;
+		for (int i = start; i < end; i++) {
+			if (i > pageCount)
+				break;
+			linkString.append("&nbsp;");
+			if (i == currentPage) {
+				linkString.append(String.format("<span style='color:#EAAF24; font-weight: bold;'>%d</span>", i));
+			} else {
+				linkString.append(String.format("<a href='%s?cp=%d'>%d</a>", linkUrl, i, i));
+			}
+			linkString.append("&nbsp;");
+		}
 	  
 	  //3. 다음, 마지막 항목 만들기
 	  if (currentPage < pageCount) {

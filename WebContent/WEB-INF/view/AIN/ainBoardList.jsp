@@ -12,8 +12,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
-<title>Insert title here</title>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+<title>아인게시판</title>
 
 <!-- CSS here -->
    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -102,13 +102,6 @@ tr:nth-child(even) {
 			<table width="80%" border="1" cellspacing="0" align="center" class="aintable">
 				<tr>
 					<td colspan="5" style="text-align: right;">
-						<!--  
-							form 태그 action 전송 주소(목적지) >> submit()
-							>> form name="list" ... action 없다면.. 
-							>> [현재 URL 창에 있는 주소] 그대로  .....   
-							>> board_list.jsp?ps=select 태그 값으로 .... 다시 호출 .....
-							>>http://192.168.0.169:8090/WebServlet_5_Board_Model1_Sample/board/board_list.jsp?ps=10					
-						-->
 						<form name="list" >
 							<select name="ps" onchange="submit()">
 							   <c:forEach var="i" begin="5" end="20" step="5">

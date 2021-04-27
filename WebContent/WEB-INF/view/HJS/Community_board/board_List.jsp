@@ -40,6 +40,13 @@
 <body>
 	<!-- 헤더부분 추가하기-->
 	<c:import url="/include/header.jsp" />
+	<div class="font-back-tittle mb-50">
+		<div class="archivment-front">
+			<h1>⌨ Ha-Board</h1>
+		</div>
+		<h3 class="archivment-back">Ha-Board</h3>
+	</div>
+	
 	<br>
 	<%
 		CommunityBoardService service = CommunityBoardService.getInBoardService();
@@ -107,7 +114,7 @@
 					</td>
 				</tr>
 				<tr>
-					<th width="10%">순번</th>
+					<th width="10%">글번호</th>
 					<th width="40%">제목</th>
 					<th width="20%">글쓴이</th>
 					<th width="20%">날짜</th>
@@ -121,7 +128,7 @@
 		        %>
 				<!-- forEach()  목록 출력하기  -->
 				<c:forEach var="board" items="<%=list%>">
-					<tr onmouseover="this.style.backgroundColor='#587D4E'" onmouseout="this.style.backgroundColor='white'">
+					<tr onmouseover="this.style.backgroundColor='#EAAF24'" onmouseout="this.style.backgroundColor='white'">
 						<td align="center">${board.cNumber}</td>
 						<td align="left">
 						
@@ -144,22 +151,11 @@
 				<!-- forEach()  -->
 				<tr>
 					<td colspan="5" align="center">
-						<hr width="70%"  color="#587D4E">
-						<a href="boardWrite.ha">글쓰기</a>
+						<a href="boardWrite.ha">[글쓰기]</a>
 					</td>
 				</tr>
 				<tr>
 					<td colspan="3" align="center">
-					<!--  
-					원칙적인 방법 아래 처럼 구현
-					[1][2][3][다음]
-					[이전][4][5][6][다음]
-					[이전][7][8][9][다음]
-					[이전][10][11]
-					
-					현재 아래 코드 [][][][][][][]...
-					-->
-					
 						<!--이전 링크 --> 
 						<c:if test="${cpage > 1}">
 							<a href="board_list_before.ha?cp=${cpage-1}&ps=${pagesize}">이전</a>
@@ -171,30 +167,23 @@
 										<font color="#EAAF24" >[${i}]</font>
 								</c:when>
 								<c:otherwise>
-									<a href="/board_list.ha?cp=${i}&ps=${pagesize}">[${i}]</a>
+									<a href="board_list_next.ha?cp=${i}&ps=${pagesize}">[${i}]</a>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						<!--다음 링크 --> 
 						<c:if test="${cpage < pagecount}">
-							<a href="/board_list_next.ha?cp=${cpage+1}&ps=${pagesize}">다음</a>
+							<a href="board_list_next.ha?cp=${cpage+1}&ps=${pagesize}">다음</a>
 						</c:if>
 					</td>
 					<td colspan="2" align="center">총 게시물 수 : <%= totalboardcount %>
 					</td>
 				</tr>
-				<tr>
-					<td colspan="5" align="center">
-					<%
-						int pagersize=3; //[1][2][3]
-						ThePager pager = new ThePager(totalboardcount,cpage,pagesize,pagersize,"board_List_pager.ha");
-					%>
-					<%= pager.toString() %>
-					</td>
 				</tbody>
 			</table>
 		</div>
 	</div>
+	<div id="emptyspace" style="margin-bottom: 180px;"></div>
 	<%
 		pageContext.include("/include/footer.jsp");
 	%>

@@ -16,10 +16,13 @@ public class RegisterOkService implements Action {
 		System.out.println("여기까지 오나?");
 		try {
 			MemberDao memberdao = new MemberDao();
+			
 			int result = memberdao.RegisterMember(memberdto);
 			System.out.println("회원가입?????");
+			
 			String msg = "";
 			String url = "";
+			
 			if(result > 0){
 				msg = "반갑습니다 회원님, 로그인을 진행해주세요";
 				url = "/JYP_PROJECT/Login.do";

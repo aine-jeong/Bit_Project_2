@@ -214,74 +214,30 @@ public class communityboardDao {
 			}
 
 		//게시글 삭제하기
-		public int deleteOk(int c_number, String email) { // 이메일정보 입력시 글 삭제 가능
+		public int deleteOk(int c_number) { // 이메일정보 입력시 글 삭제 가능
 			
 			Connection conn = null;
 			PreparedStatement pstmt = null;
-			ResultSet rs = null;
 			int row = 0;
 			try {
 					conn = ds.getConnection();
 					
-					//email검증
-					String sql_email="select email from community_board where c_number=?";
 					
-					//두개의 테이블 (FK) : 자식부터 삭제 , 부모 삭제
-					//jspboard(pk) , reply(fk:idx)
-					//reply idx_fk=1 delete, jspboard idx=1 delete
-					
-					// 댓글삭제
-					String sql_reply = "delete from community_reply_board where c_number=?";
 					
 					//게시글 삭제
 					String sql_board="delete from community_board where c_number=?";
 					
-					pstmt = conn.prepareStatement(sql_email);
+					pstmt = conn.prepareStatement(sql_board);
 					pstmt.setInt(1, c_number);
-					rs = pstmt.executeQuery();
-					if(rs.next()) { //삭제글은 존재
-						//사용자가 입력한 email
-						 if(email.equals(rs.getString("email"))) {
-							 //실 삭제 처리
-							 //트랜잭션 (둘다 처리 , 둘다 실패)
-							 //두개를 하나의 논리적 단위
-							 //JDBC : auto commit 
-							 conn.setAutoCommit(false);//개발자가 rollback , commit 강제
-							 	//댓글삭제
-							 	pstmt = conn.prepareStatement(sql_reply);
-							 	pstmt.setInt(1,c_number);
-							 	pstmt.executeUpdate();
-							 	
-							 	//게시글 삭제 (원본글 , 답글)
-							 	pstmt = conn.prepareStatement(sql_board);
-							 	pstmt.setInt(1,c_number);
-							 	row = pstmt.executeUpdate();
-							 	
-							 	if(row > 0) {
-							 		conn.commit(); //두개의 delete 실반영
-							 	}
-		
-						 }else { //email이 일치 하지 않는 경우
-							  row = -1;
-						 }
-					}else { //삭제하는 글이 존재하지 않는 경우
-						row = 0;					
-					}
+					row = pstmt.executeUpdate();
+					
 					
 					
 			} catch (Exception e) {
-				//rollback 
-				//예외가 발생하면
-				try {
-					conn.rollback();
-				} catch (SQLException e1) {
-					
-					e1.printStackTrace();
-				}
+				e.printStackTrace();
 			}finally {
 				try {
 					pstmt.close();
-					rs.close();
 					conn.close();//반환
 				} catch (Exception e2) {
 					

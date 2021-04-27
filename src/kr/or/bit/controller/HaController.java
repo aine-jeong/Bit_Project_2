@@ -87,7 +87,7 @@ public class HaController extends HttpServlet {
 		
 		// content에서 수정하기 눌렀을 때
 		}else if(url.equals("/c_content_edit.ha")) {
-			System.out.println("편집하기");
+			System.out.println("편집하기로 이동");
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/HJS/Community_board/board_Edit.jsp");
@@ -97,21 +97,13 @@ public class HaController extends HttpServlet {
 			System.out.println("삭제하기");
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("WEB-INF/view/HJS/Community_board/board_Delete.jsp");
-			
-		// content 에서 리플 달았을때
-		}else if(url.equals("/board_replyok.ha")) {
-			System.out.println("리플달기 버튼");
-			forward = action.execute(request, response);
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("WEB-INF/view/HJS/Community_board/board_Reply_ok.jsp");
+			forward.setPath("WEB-INF/view/HJS/Community_board/board_Delete_ok.jsp");
 			
 		// 이전 페이지 가기
 		}else if(url.equals("/board_list_before.ha")) {
 			System.out.println("이전 페이지 가기");
 			forward = new ActionForward();
-			forward = action.execute(request, response);
+			// forward = action.execute(request, response);
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/HJS/Community_board/board_List.jsp");
 			
@@ -137,13 +129,13 @@ public class HaController extends HttpServlet {
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/HJS/Community_board/board_List.jsp");
 			
-		// 페이저 설정
-		}else if(url.equals("/board_List_pager.ha")){
-			System.out.println("pager");
-			forward = new ActionForward();
-			forward = action.execute(request, response);
-			forward.setRedirect(false);
-			forward.setPath("WEB-INF/view/HJS/Community_board/board_List.jsp");
+//		// 페이저 설정
+//		}else if(url.equals("/board_List_pager.ha")){
+//			System.out.println("pager");
+//			forward = new ActionForward();
+//			forward = action.execute(request, response);
+//			forward.setRedirect(false);
+//			forward.setPath("WEB-INF/view/HJS/Community_board/board_List.jsp");
 		
 		// 목록으로 가는 페이지
 		}else if(url.equals("/board_list.ha")) {
@@ -160,8 +152,8 @@ public class HaController extends HttpServlet {
 			forward = new ActionForward();
 			forward.setRedirect(false);
 			forward.setPath("WEB-INF/view/HJS/Community_board/board_Edit_ok.jsp");
-			
 		}
+		
 			if(forward != null) {
 	    		if(forward.isRedirect()) { //true 
 	    			response.sendRedirect(forward.getPath());
