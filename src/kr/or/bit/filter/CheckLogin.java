@@ -17,7 +17,7 @@ import kr.or.bit.member.dto.MemberDto;
 /**
  * Servlet Filter implementation class CheckLogin
  */
-@WebFilter(description = "등록된 url 패턴은 로그인 상태에서 이용이 가능한 서비스다.", urlPatterns = { "*.qna", "*.ain" })
+@WebFilter(description = "등록된 url 패턴은 로그인 상태에서 이용이 가능한 서비스다.", urlPatterns = {"*.qna"})
 public class CheckLogin implements Filter {
 
     
