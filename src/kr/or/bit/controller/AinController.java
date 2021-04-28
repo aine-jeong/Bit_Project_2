@@ -38,6 +38,7 @@ public class AinController extends HttpServlet {
     protected void doProcess(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String requestURI = request.getRequestURI();
     	String contextPath = request.getContextPath();
+    	
     	String url_Command = requestURI.substring(contextPath.length());
     	
     	Action action = null;

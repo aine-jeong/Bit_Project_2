@@ -27,6 +27,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 <!-- 폰트 -->
    <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -237,7 +238,6 @@ table.aintable {
 <script type="text/javascript">
 	$("#boardDelete").click(function(){
 		var result = confirm("정말 삭제하시겠습니까?😥 \n해당 글에 작성된 답글과 댓글도 함께 삭제되며, \n삭제된 글은 복구할 수 없습니다.");
-		
 		if(result) {
 			location.href = 'boardDelete.ain?cNumber=${cNumber}&cp=${cpage}&ps=${pagesize}';
 		}

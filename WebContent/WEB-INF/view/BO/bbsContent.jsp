@@ -25,6 +25,7 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="css/bopage.css">
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 <style>
 .adminPro{
 width: 36px;
@@ -54,8 +55,17 @@ margin: auto; margin-top: 10px; margin-bottom: 30px;
 }
 
 a, button {
-    color: black;
+    color: #ebb11f;
     font-weight: 1000;
+}
+
+*{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+a:hover {
+    color: #FAECCC;
+    text-decoration: none;
 }
 
 </style>
@@ -70,9 +80,9 @@ a, button {
 	<div id="pageContainer">
 		<div style="padding-top: 50px; text-align: center">
 			<div class="font-back-tittle mb-10 ">
-				<div class="archivment-front">
+				<div class="archivment-front" style="padding-bottom: 10px">
 					<h3 style="color: #EAAF24; font-size: 20px;">공지사항</h3>
-					<h3 style="color: black; font-size: 24px;">${board.n_TITLE}</h3>
+					<h3 style="color: black; font-size: 30px;">${board.n_TITLE}</h3>
 				</div>
 			</div>
 			<br>

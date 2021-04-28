@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="manifest" href="site.webmanifest">
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
@@ -67,7 +67,7 @@ function check(){
   transition: all 0.4s ease-out 0s;
   }
   
-  .font-back-tittle .archivment-front h3{
+  	.font-back-tittle .archivment-front h3{
 	font-family: 'Nanum Gothic', sans-serif;
 	}
 	
@@ -96,6 +96,10 @@ function check(){
 	#image_uploads{
 	float: left;
 	}
+
+	*{
+	font-family: 'Nanum Gothic', sans-serif !important;
+	}
 	
 	
 	/* 
@@ -120,7 +124,7 @@ function check(){
             <form name="bbs" action="boardWriteOk.bo" method="POST" enctype="multipart/form-data">
             <div class="font-back-tittle mb-50">
 								<div class="archivment-front">
-									<h3 style="color: #EAAF24">공지사항 📣</h3>
+									<h3 style="color: #EAAF24">공지사항</h3>
 								</div>
 								<h3 class="archivment-back">공지사항</h3>
 							</div>
@@ -137,7 +141,7 @@ function check(){
                         <td width="10%" align="center"></td>
                         <td width="80%" align="left">
                          <label for="image_uploads" style="color: #587D4E; font-family: 'Nanum Gothic';"><img src="image/upload.png">(gif,png,jpg,jpeg의 형식만 업로드 가능합니다.)</label>
-                         <input height="1px" name="image_uploads" id="image_uploads" type="file">
+                         <input height="1px" name="image_uploads" id="image_uploads" type="file" accept="image/png, image/jpeg, image/gif, image/jpg">
                          <div class="preview">
 						    <p>아직 업로드 된 파일이 없습니다.</p>
 						 </div>
@@ -209,12 +213,14 @@ function check(){
 		  var input = document.querySelector('#image_uploads');
 		  var preview = document.querySelector('.preview');
 		  input.style.opacity = 0.0;
-		  input.style.float = "right";
-		  input.addEventListener("change", function(event) {
+		  input.style.float = 'right';
+		  input.addEventListener('change', function(event) {
 			  $('.preview').empty();
-			  $('.preview').append("<p>"+event.target.value+"<p>");
-		  })
-	});
+			  var uploadFileReady = event.target.value.toString();
+			  var uploadFileName = uploadFileReady.replace('C:\\fakepath\\', '업로드된 파일명: ');
+			  $('.preview').append("<p>"+uploadFileName+"<p>");
+		  });
+		  });
 	</script>	
 	
 </body>

@@ -64,13 +64,11 @@ private void doProcess(HttpServletRequest request, HttpServletResponse response)
 				action = new BoardShowChartService();
 				forward = action.execute(request, response);
 				forward.setRedirect(false); 
-			}
-		
-		
-		
-		
-		
-		
+		} else if(url.equals("/main.bo")) {
+			forward = new ActionForward();
+			forward.setRedirect(false);
+			forward.setPath("WEB-INF/view/BO/bopage.jsp");
+		}	
 		
 		
 		if (forward != null) {

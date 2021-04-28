@@ -67,7 +67,7 @@ public class communityboardDao {
 				conn = ds.getConnection();
 				String sql = "select * from " +
                         "(select rownum rn,c_number, email, c_title, c_content, c_writedate, c_viewcount "+
-                        " from ( SELECT * FROM community_board ) "+
+                        " from ( SELECT * FROM community_board order by c_number desc ) "+
 	                       " where rownum <= ?" +  //endrow
 	         ") where rn >= ?"; //startrow
 				pstmt = conn.prepareStatement(sql);

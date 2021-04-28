@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import kr.or.bit.action.ActionForward;
 import kr.or.bit.qnaboard.service.QnaBoardContentService;
+import kr.or.bit.qnaboard.service.QnaBoardFiledownloadService;
 import kr.or.bit.qnaboard.service.QnaBoardListService;
 import kr.or.bit.qnaboard.service.QnaBoardRegister;
 import kr.or.bit.qnaboard.service.QnaBoardRewriteService;
@@ -80,6 +81,11 @@ public class QnaController extends HttpServlet {
     	else if(url.equals("/deleteContent.qna")) {
     		forward = new QnaBoardDeleteService().execute(request, response);
     		forward.setRedirect(false);
+    	}
+    	
+    	// Q&A 상세보기 파일 다운로드
+    	else if(url.equals("/filedownload.qna")) {
+    		new QnaBoardFiledownloadService().execute(request, response);
     	}
     	
     	

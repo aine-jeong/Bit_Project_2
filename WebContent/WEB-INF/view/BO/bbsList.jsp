@@ -11,6 +11,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
 <title>공지사항</title>
 <link rel="Stylesheet"
 	href="${pageContext.request.contextPath}/style/default.css" />
@@ -46,6 +48,10 @@
     border-bottom-width: 0px;
 }
 
+a:not([href]):not([tabindex]) {
+    color: #ebb11 !important;
+}
+
 .menuClip{	
 	width:80px;
 	background: #FAECCC;
@@ -53,34 +59,39 @@
     text-align: center;
     padding: 8px;
     font-weight: bold;
-    color: black;
-    cursor: pointer;
-    font-weight: normal;
 }
 
-a:not([href]):not([tabindex]) {
-    color: black;
+.hrSpace{
+margin: auto; margin-top: 10px; margin-bottom: 30px;
+
 }
+
+a, button {
+    color: #ebb11f;
+    font-weight: 1000;
+}
+
+*{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+a:hover {
+    color: #FAECCC;
+    text-decoration: none;
+}
+
 
 
 </style>
 </head>
 <body>
 	<!-- Preloader Start -->
-	<div id="preloader-active">
-		<div
-			class="preloader d-flex align-items-center justify-content-center">
-			<div class="preloader-inner position-relative">
-				<div class="preloader-circle"></div>
-				<div class="preloader-img pere-text">
-					<strong>J Y P</b>
-				</div>
-			</div>
-		</div>
-	</div>
+	
 	<!-- Preloader Start -->
 	<c:import url="/include/header.jsp" />
 	<div style="padding-top: 50px; text-align: center;">
+	<br>
+	<br>
 		<div class="font-back-tittle">
 			<div class="archivment-front">
 				<h3 style="color: #EAAF24">공지사항</h3>
@@ -96,7 +107,11 @@ a:not([href]):not([tabindex]) {
 
 		<div id="pagecontainer">
 			<div style="padding-top: 0px; text-align: cetner;" align="center">
-			<hr width="80%">
+			<br>
+					<br>
+					<hr width="80%" align="center" class="hrSpace">
+					<br>
+					<br>
 				<table  class="noneBorder" width="80%" cellspacing="0" align="center" >
 					<tr>
 						<td  colspan="5" style="padding-bottom: 20px;">
@@ -120,9 +135,9 @@ a:not([href]):not([tabindex]) {
 					<!-- forEach()  목록 출력하기  -->
 					<c:forEach var="board" items="${list}">
 					<tr height="50px">
-							<td style="color: #EAAF24" width="20%" colspan="2" align="center">${board.n_NUMBER}번째 공지사항</td>
+							<td style="color: gray;" width="20%" colspan="2" align="center">${board.n_NUMBER}번째 공지사항</td>
 							<td width="60%"align="center" style="font-size: large;">
-								<a style="color: black;"
+								<a style="color: #EAAF24"
  								href="boardContent.bo?n_NUMBER=${board.n_NUMBER}&cp=${cpage}&ps=${pagesize}">
 									<c:choose>
 										<c:when
@@ -135,7 +150,7 @@ a:not([href]):not([tabindex]) {
 									</c:choose>
 							</a>
 							</td>
-							<td align="center">${board.n_WRITEDATE}</td>
+							<td align="center" style="color: gray">${board.n_WRITEDATE}</td>
 						</tr>
 					</c:forEach>
 					<!-- forEach()  -->
@@ -147,9 +162,9 @@ a:not([href]):not([tabindex]) {
 					<tr>
 						 <!--이전 링크 -->
 					<td colspan="5" align="center">
-						<a class="menuClip" onclick="isPrv()">이전</a>
+						<a class="menuClip" onclick="isPrv()" style="color: #EAAF24">이전</a>
 					<!--다음 링크 -->
-						<a class="menuClip" onclick="isNext()">다음</a>
+						<a class="menuClip" onclick="isNext()" style="color: #EAAF24">다음</a>
 					</td>
 					</tr>
 					<tr>

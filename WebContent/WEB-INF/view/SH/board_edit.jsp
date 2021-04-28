@@ -23,6 +23,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
    
     <!-- 부트스트랩 start -->
 	<link rel="apple-touch-icon" href="apple-icon.png">
@@ -52,17 +53,12 @@
    rel='stylesheet' type='text/css'>
 <!-- 부트스트랩 end  -->
    
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
    
    <style type="text/css">
-	@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
-}
 	
 	*{
-	 font-family: 'S-CoreDream-3Light';
+	 font-family: 'Nanum Gothic', sans-serif;
 	}
 	
 	.note-editable{
@@ -151,7 +147,7 @@
 				<input type="hidden" name="c_number" value="${requestScope.c_number}" />
 				
 				<div class="mb-3" >
-					<label for="reg_id"><b>글번호</b></label><div>${requestScope.c_number}</div></div>
+					<label for="reg_id"><b>글번호</b></label><div>${dto.c_number}</div></div>
 		
 					<label for="reg_id"><b>작성일</b></label> 
 					<div>${dto.writedate}</div>
@@ -170,7 +166,8 @@
 				
 				<div class="mb-3">
 					<label for="reg_id"><b>첨부파일</b></label> 
-					<input type="file" class="form-control" name="filename" id="reg_id"
+					<input type="hidden" name="filename" value="${dto.filename}">
+					<input type="file" class="form-control" name="filename" id="filename" 
 						placeholder="첨부파일">
 				</div>
 

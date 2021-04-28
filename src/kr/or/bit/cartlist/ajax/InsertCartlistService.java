@@ -30,8 +30,8 @@ public class InsertCartlistService implements Action {
 		}
 		
 		if(loginUser == null) {
-			out.print("로그아웃되어 찜목록 추가에 실패하였습니다.\n");
-			out.print("로그인하고 다시 시도 해주세요");
+			out.print("회원만 이용가능한 서비스입니다.\n");
+			out.print("로그인하고 다시 시도 해주세요.");
 			return null;
 		}
 		

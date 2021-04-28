@@ -25,6 +25,8 @@
 <link rel="stylesheet" href="assets/css/style.css">
 <link rel="stylesheet" href="assets/css/responsive.css">
 <link rel="stylesheet" href="css/bopage.css">
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 <style>
 .adminPro {
@@ -58,6 +60,11 @@ a, button {
 	color: black;
 	font-weight: 1000;
 }
+
+* {
+font-family: 'Nanum Gothic';
+}
+
 </style>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -66,6 +73,8 @@ a, button {
 	<jsp:include page="/include/header.jsp"></jsp:include>
 	<div id="pageContainer">
 		<div style="padding-top: 10px; text-align: center">
+			<br>
+			<br>
 			<br>
 			<div class="font-back-tittle mb-10 ">
 				<div class="archivment-front">
@@ -78,39 +87,34 @@ a, button {
 				</table>
 			</center>
 			<center>
-			<hr width="80%">
+			<br>
+					<br>
+					<hr width="80%" align="center" class="hrSpace">
+					<br>
+					<br>
 				<table width="70%" class="noneBorder">
 					<tr style="height: 200px; padding-top: 10px;">
 						<td colspan="1" align="center" width="10%">
 							<div id="graph-container">
 								<canvas id="myChart" width="800" height="500"></canvas>
 							</div>
+						</td>
+					</tr>
+					</table>
+					<hr width="80%" align="center" class="hrSpace">
+					<table width="70%" class="noneBorder">
+					<tr style="height: 300px;">
+						<td colspan="5" align="center">
+							<div id="graph-container">
+								<canvas id="myChart2" width="800" height="500"></canvas>
+							</div>
 
 						</td>
 					</tr>
-<!-- 					<tr style="height: 300px;"> -->
-<!-- 						<td colspan="5" align="center"> -->
-<!-- 							<div id="graph-container"> -->
-<%-- 								<canvas id="myChart2" width="800" height="500"></canvas> --%>
-<!-- 							</div> -->
-
-<!-- 						</td> -->
-<!-- 					</tr> -->
-
 				</table>
 			</center>
 			<hr width="80%" align="center" class="hrSpace">
-			<%-- <table width="80%" align="center">
-				<tr align="right" style="opacity: 0.65;">
-					<td align="left" width="20%"><a class="menuClip"
-						href="boardList.bo?cp=${cpage}&ps=${pagesize}">목록가기</a></td>
-					<td class="admin"><a class="admin menuClip"
-						href="boardWrite.bo">글쓰기</a> <a class="menuClip admin"
-						href="boardEdit.bo?n_NUMBER=${n_NUMBER}">수정하기</a> <a
-						class="menuClip admin" href="boardDelete.bo?n_NUMBER=${n_NUMBER}">삭제하기</a>
-					</td>
-				</tr>
-			</table> --%>
+			 
 			<br>
 		</div>
 		<div style="padding-bottom: 100px; text-align: center"></div>
@@ -163,18 +167,227 @@ a, button {
 
 
 
-	<script type="text/javascript">
+<script type="text/javascript">
 	window.onload = function() {
 		
 		var nowEmail= "<%=session.getAttribute("email")%>";
-		var nowJSON= ${requestScope.chartTourList}
-		console.log(nowJSON);
+		var nowJSON= ${requestScope.chartTourList};
+		
+		var jUrl = "http://api.visitjeju.net/vsjApi/contents/searchList?apiKey=wuuv42tnk9hazf5h&locale=kr";
+		
+		
+		var jCount = [];
+		var jTitle = [];
+		
+		
+		for(let i=0; i<nowJSON.length; i++){
+			jUrl+="&cid="+nowJSON[i].cid;
+			jCount.push(nowJSON[i].count);
+		}
+		
+		
+		$.getJSON(jUrl, function(data) {
+			for(let i=0; i<data.items.length; i++){
+				jTitle.push(data.items[i].title);
+			}
+			
+			 /* 두번째 차트 */
+		    
+		    var ctx2 = document.getElementById('myChart2').getContext('2d');
+		    let myChart2 = new Chart(ctx2, {
+		        type: 'bar',
+		        data: {
+		            labels: chartLabel2,
+		            datasets: [
+		            	{
+		                label: jTitle[0],
+		                data: [jCount[0]],
+		                backgroundColor: [
+		                	'#b2e4ff',
+		                ],
+		                borderColor: [
+		                	'#b2e4ff',
+		                ],
+		                borderWidth: 1,
+		            },
+		            {
+		            	label: jTitle[1],
+		                data: [jCount[1]],
+		                backgroundColor: [
+		                    '#d9f3ff',
+		                ],
+		                borderColor: [
+		                    '#d9f3ff',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[2],
+		                data: [jCount[2]],
+		                backgroundColor: [
+		                    '#CFFAE1',
+		                ],
+		                borderColor: [
+		                    '#CFFAE1',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[3],
+		                data: [jCount[3]],
+		                backgroundColor: [
+		                    '#ddedeb',
+		                ],
+		                borderColor: [
+		                    '#ddedeb',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[4],
+		                data: [jCount[4]],
+		                backgroundColor: [
+		                    '#a4d2ff',
+		                ],
+		                borderColor: [
+		                    '#a4d2ff',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[5],
+		                data: [jCount[5]],
+		                backgroundColor: [
+		                    '#cdd5b1',
+		                ],
+		                borderColor: [
+		                    '#cdd5b1',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[6],
+		                data: [jCount[6]],
+		                backgroundColor: [
+		                    '#A1D6C9',
+		                ],
+		                borderColor: [
+		                    '#A1D6C9',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[7],
+		                data: [jCount[7]],
+		                backgroundColor: [
+		                    '#CBF9C5',
+		                ],
+		                borderColor: [
+		                    '#CBF9C5',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[8],
+		                data: [jCount[8]],
+		                backgroundColor: [
+		                    '#D1EBE3',
+		                ],
+		                borderColor: [
+		                    '#D1EBE3',
+		                ],
+		                borderWidth: 1
+		            },
+		            {
+		            	label: jTitle[9],
+		                data: [jCount[9]],
+		                backgroundColor: [
+		                    '#F5CEF4',
+		                ],
+		                borderColor: [
+		                    '#F5CEF4',
+		                ],
+		                borderWidth: 1
+		            }
+		            ]
+		    	},
+		    	plugins: [ChartDataLabels],
+		        options: {
+		        	title: {
+				        display: true,
+				        text: '인기관광지 TOP10',
+				        fontSize: 20,
+				        },
+		        	
+		        	legend: {
+		                display: true,
+		                labels: {
+		                        fontSize: 20,
+		                        //fontFamily: 'sans-serif',
+		                        //fontColor: '#000000',
+		                        //fontStyle: 'bold'
+		                            }
+		                },
+		        	animation: {
+		        	      onComplete: () => {
+		        	        delayed = true;
+		        	      },
+		        	      delay: (context) => {
+		        	        let delay = 0;
+		        	        if (context.type === 'data' && context.mode === 'default' && !delayed) {
+		        	          delay = context.dataIndex * 300 + context.datasetIndex * 100;
+		        	        }
+		        	        return delay;
+		        	      },
+		        	    },
+		        	responsive: true,
+		    		plugins:{
+		    			datalabels: {
+		    				align: 'center',
+		    				//anchor: 'end',
+		    				color: 'white',
+		    				font: {
+		    					weight: 'bold',
+		    					size: 40
+		    				},
+		    			}
+		    		},
+		            scales: {
+		            	labels: [{
+		            		ticks: {
+		                        beginAtZero: true,
+		                        fontSize : 500
+		                    }
+		            	}],
+		            	
+		                yAxes: [{
+		                    ticks: {
+		                        beginAtZero: true,
+		                        fontSize : 20,
+		                        beginAtZero: true,
+		    					display: false
+		                    }
+		                }],
+		                xAxes: [{
+		                    ticks: {
+		                        beginAtZero: true,
+		                        fontSize : 20
+		                    }
+		                }]
+		            }
+		        }
+		    });
+			
+		});
+		
+		
+		
 		
 		if('<%=session.getAttribute("email")%>' != 'admin@naver.com'){
 			$('.admin').css("display","none");
 			}
 		
-		var chartJSON = ${requestScope.chartList}
+		var chartJSON = ${requestScope.chartList};
 		console.log(chartJSON);
 		
 		var emailList = [
@@ -202,11 +415,13 @@ a, button {
 			];
 		
 		
-		var chartLabel = ["작성 횟수"];
+		var chartLabel = ["작성한 게시글 개수"];
+		var chartLabel2 = ["회원들이 많이 저장한 관광지"];
+		
 	
 		
 		
-	var ctx = document.getElementById('myChart').getContext('2d');
+var ctx = document.getElementById('myChart').getContext('2d');
     let myChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -216,10 +431,10 @@ a, button {
                 label: chartJSON[0].nickname,
                 data: totalCount1,
                 backgroundColor: [
-                   'rgba(255, 159, 64, 0.7)',
+                   '#B9FACB',
                 ],
                 borderColor: [
-    			'rgba(255, 159, 64, 0.7)',
+    			'#B9FACB',
                 ],
                 borderWidth: 1,
             },
@@ -227,10 +442,10 @@ a, button {
                 label: chartJSON[1].nickname,
                 data: totalCount2,
                 backgroundColor: [
-                    'rgba(120, 159, 64, 0.7)',
+                    '#93E6E1',
                 ],
                 borderColor: [
-                    'rgba(120, 159, 64, 0.7)',
+                    '#93E6E1',
                 ],
                 borderWidth: 1
             },
@@ -238,25 +453,26 @@ a, button {
                 label: chartJSON[2].nickname,	
                 data: totalCount3,
                 backgroundColor: [
-                    'rgba(0, 159, 64, 0.7)',
+                    '#D9EAFF',
                 ],
                 borderColor: [
-                    'rgba(0, 159, 64, 0.7)',
+                    '#D9EAFF',
                 ],
                 borderWidth: 1
             }
-            
             ]
     	},
     	plugins: [ChartDataLabels],
         options: {
+        	title: {
+		        display: true,
+		        text: '게시글 작성 TOP3 회원',
+		        fontSize: 20,
+		        },
         	legend: {
                 display: true,
                 labels: {
                         fontSize: 20,
-                        //fontFamily: 'sans-serif',
-                        //fontColor: '#000000',
-                        //fontStyle: 'bold'
                             }
                 },
         	animation: {
@@ -275,7 +491,6 @@ a, button {
     		plugins:{
     			datalabels: {
     				align: 'center',
-    				//anchor: 'end',
     				color: 'white',
     				font: {
     					weight: 'bold',
@@ -287,14 +502,16 @@ a, button {
             	labels: [{
             		ticks: {
                         beginAtZero: true,
-                        fontSize : 500
+                        fontSize : 50
                     }
             	}],
             	
                 yAxes: [{
                     ticks: {
                         beginAtZero: true,
-                        fontSize : 20
+                        fontSize : 15,
+                        beginAtZero: true,
+    					display: false
                     }
                 }],
                 xAxes: [{
@@ -307,112 +524,8 @@ a, button {
         }
     });
     
-    /* 두번째 차트 */
-    
-//     var ctx2 = document.getElementById('myChart2').getContext('2d');
-//     let myChart2 = new Chart(ctx2, {
-//         type: 'bar',
-//         data: {
-//             labels: chartLabel,
-//             datasets: [
-//             	{
-//                 label: chartJSON[0].nickname,
-//                 data: totalCount1,
-//                 backgroundColor: [
-//                    'rgba(255, 159, 64, 0.7)',
-//                 ],
-//                 borderColor: [
-//     			'rgba(255, 159, 64, 0.7)',
-//                 ],
-//                 borderWidth: 1,
-//             },
-//             {
-//                 label: chartJSON[1].nickname,
-//                 data: totalCount2,
-//                 backgroundColor: [
-//                     'rgba(120, 159, 64, 0.7)',
-//                 ],
-//                 borderColor: [
-//                     'rgba(120, 159, 64, 0.7)',
-//                 ],
-//                 borderWidth: 1
-//             },
-//             {
-//                 label: chartJSON[2].nickname,	
-//                 data: totalCount3,
-//                 backgroundColor: [
-//                     'rgba(0, 159, 64, 0.7)',
-//                 ],
-//                 borderColor: [
-//                     'rgba(0, 159, 64, 0.7)',
-//                 ],
-//                 borderWidth: 1
-//             }
-            
-//             ]
-//     	},
-//     	plugins: [ChartDataLabels],
-//         options: {
-//         	legend: {
-//                 display: true,
-//                 labels: {
-//                         fontSize: 20,
-//                         //fontFamily: 'sans-serif',
-//                         //fontColor: '#000000',
-//                         //fontStyle: 'bold'
-//                             }
-//                 },
-//         	animation: {
-//         	      onComplete: () => {
-//         	        delayed = true;
-//         	      },
-//         	      delay: (context) => {
-//         	        let delay = 0;
-//         	        if (context.type === 'data' && context.mode === 'default' && !delayed) {
-//         	          delay = context.dataIndex * 300 + context.datasetIndex * 100;
-//         	        }
-//         	        return delay;
-//         	      },
-//         	    },
-//         	responsive: true,
-//     		plugins:{
-//     			datalabels: {
-//     				align: 'center',
-//     				//anchor: 'end',
-//     				color: 'white',
-//     				font: {
-//     					weight: 'bold',
-//     					size: 40
-//     				},
-//     			}
-//     		},
-//             scales: {
-//             	labels: [{
-//             		ticks: {
-//                         beginAtZero: true,
-//                         fontSize : 500
-//                     }
-//             	}],
-            	
-//                 yAxes: [{
-//                     ticks: {
-//                         beginAtZero: true,
-//                         fontSize : 20
-//                     }
-//                 }],
-//                 xAxes: [{
-//                     ticks: {
-//                         beginAtZero: true,
-//                         fontSize : 20
-//                     }
-//                 }]
-//             }
-//         }
-//     });
-    
-    
-    
 	}
+	
 	</script>
 </body>
 </html>

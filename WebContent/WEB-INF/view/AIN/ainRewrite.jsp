@@ -22,6 +22,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 <!-- 폰트 -->
    <link rel="preconnect" href="https://fonts.gstatic.com">

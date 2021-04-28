@@ -42,7 +42,7 @@ function runAjax(url, formData) {
 				});
 				$('#span-reply').html(whynot);
 				
-				$('#replyContent').val('');
+				$('#reply_content').val('');
 			},
 			error: function(xhr) {
 				console.log("here");

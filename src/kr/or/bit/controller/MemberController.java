@@ -14,6 +14,7 @@ import kr.or.bit.action.ActionForward;
 import kr.or.bit.member.service.InfoEditOkService;
 import kr.or.bit.member.service.LogOutOkService;
 import kr.or.bit.member.service.LoginOkService;
+import kr.or.bit.member.service.CheckService;
 import kr.or.bit.member.service.RegisterOkService;
 
 
@@ -86,7 +87,16 @@ public class MemberController extends HttpServlet {
     		forward = new ActionForward();
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/view/Member/access_terms.jsp");
-    	
+    		
+    	}else if(urlcommand.equals("/emailCheck.do")) {
+    		System.out.println("이메일 중복 체크");
+    		action = new CheckService();
+    		forward = action.execute(request, response);
+    		
+    	}else if(urlcommand.equals("/nickCheck.do")) {
+    		System.out.println("닉네임 중복 체크");
+    		action = new CheckService();
+    		forward = action.execute(request, response);
     	}
     	
     	//회사소개페이지 UI제공
@@ -107,8 +117,6 @@ public class MemberController extends HttpServlet {
     		forward.setRedirect(false);
     		forward.setPath("/WEB-INF/view/AIN/InfomationPage.jsp");
     	}
-    	
-    	
     	if(forward != null) {
     		if(forward.isRedirect()) {    
     			response.sendRedirect(forward.getPath());   

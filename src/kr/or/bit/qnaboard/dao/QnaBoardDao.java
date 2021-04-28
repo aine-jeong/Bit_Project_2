@@ -518,7 +518,7 @@ public class QnaBoardDao {
 				
 				if(rs.next()) {
 					
-					beforeDepth = afterDepth;
+					//beforeDepth = afterDepth;
 					afterDepth = rs.getInt(1);
 					step = rs.getInt(2) + 1;
 					

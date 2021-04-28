@@ -1,88 +1,72 @@
 /* 유닉스 타임 날짜 변화함수 스타트 */
+
+/*
+유닉스타임란?: 1185397439 이런식으로 들어오는 시간데이터!
+*/
+
     	function UnixTimestamp(time) {
+			// 유닉스 타임에 1000을 곱해줘요
     		var date = new Date(time * 1000);
+			// 현지시간에 따라 지정된 연도를 반환해요			
     		var year = date.getFullYear();
+			// 현지시간에 따라 지정된 월을 반환하는데 0부터라 1을 더해줘요
     		var month = (date.getMonth() + 1);
+			// 현지시간에 따라 지정된 일(며칠인지)을 반환해줘요
     		var day = date.getDate();
-    		var dayOfWeeks = date.getDay();
-    		var hour = date.getHours();
-    		var minute = date.getMinutes();
-    		var second = date.getSeconds();
     		
+			// 날짜값을 리턴해줘요
     		return ({
     			date : date,
     			year : year,
     			month : month,
     			day : day,
-    			dayOfWeeks: dayOfWeeks
     		});
     	}
     	/* 유닉스 타임 날짜 변화함수 끝 */
-
+		
+		
+		//페이지가 로딩되면 시작하는 이벤트
     	window.onload = function() {
 
     	// API가 들어오는 URL
     	var wUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=33.5097&lon=126.5219&exclude=hourly,minutely,current&appid=61698f0d96bc4fe8c944ed0ff63b195f&units=metric&lang=kr";
     	var jUrl = "http://api.visitjeju.net/vsjApi/contents/searchList?apiKey=wuuv42tnk9hazf5h&locale=kr&page=50"
     			
-    	/* 	날씨 시작	*/
-    	// 각 날짜에 날짜와 온도정보 날씨가 들어있어요
-    	var day1 = {};
-    	var day2 = {};
-    	var day3 = {};
-    	var day4 = {};
-    	var day5 = {};
-    	var day6 = {};
-    	var day7 = {};
-    	var days = {};
+    	
+		/* 	날씨 시작	*/
+    	// 각 날짜 객체에 날짜와 온도정보 날씨를 넣을거에요
+    	
+		var day1 = {}
+    	,day2 = {}
+    	,day3 = {}
+    	,day4 = {}
+    	,day5 = {}
+    	,day6 = {}
+    	,day7 = {}
+		,days = {};
+		
+		// 그걸 배열로 담아요
+		var dayArr=[day1,day2,day3,day4,day5,day6,day7];
+		
     	// 데이터를 넣어요
     	$.getJSON(wUrl, function(data) {
-    		
-    		
-    		// 날짜 데이터를 넣어요
-    		day1.date = UnixTimestamp(data.daily[0].dt); // 오늘
-    		day2.date = UnixTimestamp(data.daily[1].dt); // 내일
-    		day3.date = UnixTimestamp(data.daily[2].dt); // 이틀 후  		
-    		day4.date = UnixTimestamp(data.daily[3].dt); // 3일 후
-    		day5.date = UnixTimestamp(data.daily[4].dt); // 4일 후
-    		day6.date = UnixTimestamp(data.daily[5].dt); // 5일 후
-    		day7.date = UnixTimestamp(data.daily[6].dt); // 6일 후
-    		
-    		// 온도정보를 넣어요
-    		day1.temp = data.daily[0].temp;
-    		day2.temp = data.daily[1].temp;
-    		day3.temp = data.daily[2].temp;
-    		day4.temp = data.daily[3].temp;
-    		day5.temp = data.daily[4].temp;
-    		day6.temp = data.daily[5].temp;
-    		day7.temp = data.daily[6].temp;
-    		
-    		// 날씨정보를 넣어요
-    		day1.weather = data.daily[0].weather;
-    		day2.weather = data.daily[1].weather;
-    		day3.weather = data.daily[2].weather;
-    		day4.weather = data.daily[3].weather;
-    		day5.weather = data.daily[4].weather;
-    		day6.weather = data.daily[5].weather;
-    		day7.weather = data.daily[6].weather;
-    		
-    		// 1일부터 7일까지 모아줘요
-    		days.day1 = day1;
-    		days.day2 = day2;
-    		days.day3 = day3;
-    		days.day4 = day4;
-    		days.day5 = day5;
-    		days.day6 = day6;
-    		days.day7 = day7;
+			for(i=0; i<dayArr.length; i++){
+				// 날짜 데이터를 넣어요
+				dayArr[i].date = UnixTimestamp(data.daily[i].dt);
+				// 기온 데이터를 넣어요
+				dayArr[i].temp = data.daily[i].temp;
+				// 날씨 정보를 넣어요
+    			dayArr[i].weather = data.daily[i].weather;
+			}
     		
     		// 날짜 정보를 가공해요
-    		let day1Date = days.day1.date.year+"년 "+days.day1.date.month+"월 "+days.day1.date.day+"일"
-    		let day2Date = days.day2.date.year+"년 "+days.day2.date.month+"월 "+days.day2.date.day+"일"
-    		let day3Date = days.day3.date.year+"년 "+days.day3.date.month+"월 "+days.day3.date.day+"일"
-    		let day4Date = days.day4.date.year+"년 "+days.day4.date.month+"월 "+days.day4.date.day+"일"
-    		let day5Date = days.day5.date.year+"년 "+days.day5.date.month+"월 "+days.day5.date.day+"일"
-    		let day6Date = days.day6.date.year+"년 "+days.day6.date.month+"월 "+days.day6.date.day+"일"
-    		let day7Date = days.day7.date.year+"년 "+days.day7.date.month+"월 "+days.day7.date.day+"일"
+    		let day1Date = dayArr[0].date.year+"년 "+dayArr[0].date.month+"월 "+dayArr[0].date.day+"일"
+    		let day2Date = dayArr[1].date.year+"년 "+dayArr[1].date.month+"월 "+dayArr[1].date.day+"일"
+    		let day3Date = dayArr[2].date.year+"년 "+dayArr[2].date.month+"월 "+dayArr[2].date.day+"일"
+    		let day4Date = dayArr[3].date.year+"년 "+dayArr[3].date.month+"월 "+dayArr[3].date.day+"일"
+    		let day5Date = dayArr[4].date.year+"년 "+dayArr[4].date.month+"월 "+dayArr[4].date.day+"일"
+    		let day6Date = dayArr[5].date.year+"년 "+dayArr[5].date.month+"월 "+dayArr[5].date.day+"일"
+    		let day7Date = dayArr[6].date.year+"년 "+dayArr[6].date.month+"월 "+dayArr[6].date.day+"일"
     		
     		// 날짜 정보를 보여줘요
     		$(".day1").append("<a>"+day1Date+"</a>");
@@ -94,31 +78,31 @@
     		$(".day7").append("<a>"+day7Date+"</a>");
     		
     		// 날씨 아이콘을 보여줘요
-    		$(".day1icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day1.weather[0].icon+'@2x.png');
-    		$(".day2icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day2.weather[0].icon+'@2x.png');
-    		$(".day3icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day3.weather[0].icon+'@2x.png');
-    		$(".day4icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day4.weather[0].icon+'@2x.png');
-    		$(".day5icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day5.weather[0].icon+'@2x.png');
-    		$(".day6icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day6.weather[0].icon+'@2x.png');
-    		$(".day7icon").find('img').attr('src','http://openweathermap.org/img/wn/'+days.day7.weather[0].icon+'@2x.png');
+    		$(".day1icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[0].weather[0].icon+'@2x.png');
+    		$(".day2icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[1].weather[0].icon+'@2x.png');
+    		$(".day3icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[2].weather[0].icon+'@2x.png');
+    		$(".day4icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[3].weather[0].icon+'@2x.png');
+    		$(".day5icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[4].weather[0].icon+'@2x.png');
+    		$(".day6icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[5].weather[0].icon+'@2x.png');
+    		$(".day7icon").find('img').attr('src','http://openweathermap.org/img/wn/'+dayArr[6].weather[0].icon+'@2x.png');
     		
     		// 날씨 설명을 보여줘요
-    		$(".day1description").append(days.day1.weather[0].description);
-    		$(".day2description").append(days.day2.weather[0].description);
-    		$(".day3description").append(days.day3.weather[0].description);
-    		$(".day4description").append(days.day4.weather[0].description);
-    		$(".day5description").append(days.day5.weather[0].description);
-    		$(".day6description").append(days.day6.weather[0].description);
-    		$(".day7description").append(days.day7.weather[0].description);
-    		
+    		$(".day1description").append(dayArr[1].weather[0].description);
+    		$(".day2description").append(dayArr[2].weather[0].description);
+    		$(".day3description").append(dayArr[3].weather[0].description);
+    		$(".day4description").append(dayArr[4].weather[0].description);
+    		$(".day5description").append(dayArr[5].weather[0].description);
+    		$(".day6description").append(dayArr[6].weather[0].description);
+    			
+
     		// 온도를 가공해서 보여줘요
-    		$(".day1temp").append("최고 기온: "+days.day1.temp.max+" ℃<br>최저 기온: "+days.day1.temp.min+" ℃");
-    		$(".day2temp").append("최고 기온: "+days.day2.temp.max+" ℃<br>최저 기온: "+days.day2.temp.min+" ℃");
-    		$(".day3temp").append("최고 기온: "+days.day3.temp.max+" ℃<br>최저 기온: "+days.day3.temp.min+" ℃");
-    		$(".day4temp").append("최고 기온: "+days.day4.temp.max+" ℃<br>최저 기온: "+days.day4.temp.min+" ℃");
-    		$(".day5temp").append("최고 기온: "+days.day5.temp.max+" ℃<br>최저 기온: "+days.day5.temp.min+" ℃");
-    		$(".day6temp").append("최고 기온: "+days.day6.temp.max+" ℃<br>최저 기온: "+days.day6.temp.min+" ℃");
-    		$(".day7temp").append("최고 기온: "+days.day7.temp.max+" ℃<br>최저 기온: "+days.day7.temp.min+" ℃");
+    		$(".day1temp").append("최고 기온: "+dayArr[0].temp.max+" ℃<br>최저 기온: "+dayArr[0].temp.min+" ℃");
+    		$(".day2temp").append("최고 기온: "+dayArr[1].temp.max+" ℃<br>최저 기온: "+dayArr[1].temp.min+" ℃");
+    		$(".day3temp").append("최고 기온: "+dayArr[2].temp.max+" ℃<br>최저 기온: "+dayArr[2].temp.min+" ℃");
+    		$(".day4temp").append("최고 기온: "+dayArr[3].temp.max+" ℃<br>최저 기온: "+dayArr[3].temp.min+" ℃");
+    		$(".day5temp").append("최고 기온: "+dayArr[4].temp.max+" ℃<br>최저 기온: "+dayArr[4].temp.min+" ℃");
+    		$(".day6temp").append("최고 기온: "+dayArr[5].temp.max+" ℃<br>최저 기온: "+dayArr[5].temp.min+" ℃");
+    		$(".day7temp").append("최고 기온: "+dayArr[6].temp.max+" ℃<br>최저 기온: "+dayArr[6].temp.min+" ℃");
     		/* 	날씨 	끝*/
     		});
     	

@@ -25,11 +25,19 @@ var cardarr = [];
 
 init();
 
-// 화면 open시 실행
+//화면 open시 실행
+//비동기 async&await 사용
+//관광지 페이지 진입시 콜백 함수를여러개 사용하게 되면서, 
+//예상치 못한 순서로 코드가 실행되는 문제를 해결하기 위해 사용함
+
+//async: 예약어 (함수 앞에 붙이기)
+//await: 함수 내부 로직 중 HTTP 통신을 하는 비동기 처리 코드 앞에 await를 붙인다
+//주의) 비동기 처리 메서드가 반드시 프로미스 객체를 반환해야 await가 의도한대로 동작한다
+//프로미스란, 자바스크립트 비동기 처리를 위한 객체!
 
 async function init() {
-	var page = 0;
 
+	//API로 넘어온 정보를 담을 변수를 생성
 	var form_data = {
 		apiKey: API_KEY,
 		locale: LOCALE,
@@ -37,76 +45,64 @@ async function init() {
 	};
 
 	await getJejuData(form_data);
-	/*for(var i = 1; i < maxPage; i++) {
-		getJejuData(form_data);
-	}*/
 	await firstDiv();
 }
 
 // 제주비짓 REST API 데이터 받기
+//getJejuData()함수는 프로미스 객체를 반환하는 함수이다.
+//해당 함수 실행시 프로미스가 이행되며 결과값은 form_data
+//즉, 제주 비짓에서 제공하는 API를 받아와서, init함수 안에서 생성한 form_data변수에 담고 반환
 async function getJejuData(form_data) {
 	return new Promise((resolve, reject) => {
 
-		/*form_data.page = form_data.page + 1; */
+		//HTTP요청
 		$.ajax(
 			{
 				url: API_URL,
 				data: form_data,
 				success: (response) => {
-
-					/*maxPage = response.pageCount;*/
-
 					totalResult.push(response);
-
 					resolve(form_data);
 				}
-				
-				/*,beforeSend: function() {
+				//데이터를 다 불러오기 전까지 로딩이미지
+				,beforeSend: function() {
 					$('.wrap-loading').removeClass('display-none');
 				}, complete: function() {
 					$('.wrap-loading').addClass('display-none');
 				}
-				*/
 			}
 		);
-
 	});
-
 }
 
-// 1차지역 라벨이 null 값인 경우를 제외하고 전체 목록에 담는다. 
+// 1차지역 라벨이 null 값인 경우를 제외하고 전체 목록에 담아서 반환
 async function firstDiv() {
-
 	return new Promise((resolve, reject) => {
-
+		
+		//제주비짓에서 받아온 전체 데이터
 		$.each(totalResult, function(index, item) {
-
 			$.each(item.items, (index2, item2) => {
 
 				var str = "";
-
-
+				//1차 지역코드가 없는경우
 				if (item2.region1cd == null) {
-					// 1차 지역 코드가 없는 경우
-					// fdisNull.push(item2);
 					return true;
+				//1차 지역코드가 있는 경우
+				//1. 1차 지역코드를 str에 담아둔다
+				//2. 1차 지역코드가 있는 item2를 배열에 담는다 
 				} else {
 					str = item2.region1cd.label;
 					notNullTotalResult.push(item2);
 				}
-
+				//str에 담아둔 1차 지역코드로 화면 세팅
 				setDivision1(str);
-
 			});
 		});
-
 		resolve();
-
 	});
-
 }
 
-// 중복 값을 제외한 1차 라벨 화면에 셋팅
+//init함수를 통해 가공한 데이터를 중복 값을 제외한 1차 라벨 화면에 셋팅
 function setDivision1(str) {
 	if (firstDivision.length == 0 || !firstDivisionContainStr(firstDivision, str)) {
 		firstDivision.push(str);
@@ -254,7 +250,6 @@ function setCard(arr) {
                             <div class="room-caption text-center">
                                 <h3><a href="#" id="myBtn">${arr.title}</a><input type="hidden" value="${arr.contentsid}"></h3>
 								<div>${selectedFirst} > ${selectedSecond}</div>
-								<div>${"#" + (arr.tag).replaceAll(",", " #")}</div>
 								<div class="mt-3">
 									<button class="genric-btn warning circle" id="button-insert">담기</button>
 									<input type="hidden" value="${arr.contentsid}">
@@ -294,10 +289,18 @@ function pager(total, currentPage, pageSize) {
 	$('#row').empty();
 	$('.category-choice').addClass('display-none');
 	
+	if(currentPage>maxPage){
+		currentPage = maxPage;
+	}
+	
+	
 	var start = (currentPage - 1) * pageSize;
 	var end = currentPage * pageSize;
 	
 	var maxPage = Math.ceil(total / pageSize); 
+	
+	
+	
 	
 	for(var i = start; i < end; i++) {
 	
@@ -481,7 +484,7 @@ function createMap(lat,lon) {
 $(document).on("click", ".close", function(event) {
 	$('#myModal').modal('hide');
 });
-
+                 
 // 모달 창 이외의 곳 클릭시에도 모달창 닫기
 window.onclick = function(event) {
 	if (event.target == modal) {
@@ -502,7 +505,6 @@ $(document).on("click", "#button-insert", function(event) {
 			url: url,
 			data: form_data,
 			success: function(response) {
-				$('#myModal').modal("hide");
 				swal(response);
 			}
 		}

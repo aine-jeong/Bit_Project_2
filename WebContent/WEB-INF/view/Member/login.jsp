@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>로그인</title>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 <!-- CSS here -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
@@ -66,16 +67,16 @@
     <h1 class="h3 mb-3 fw-normal">로그인</h1>
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="이메일 입력">
+      <input type="email" class="form-control" id="floatingInput" name="email" placeholder="이메일 입력" required="required">
       <label for="floatingInput">이메일 계정</label>
     </div>
     <div class="form-floating">
-      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="비밀번호 입력">
+      <input type="password" class="form-control" id="floatingPassword" name="password" placeholder="비밀번호 입력" required="required">
       <label for="floatingPassword">비밀번호</label>
     </div>
 
     <div class="checkbox mb-3"></div>
-    <button class="w-100 btn btn-lg btn-warning" type="submit">로그인</button>
+    <button class="w-100 btn btn-lg btn-warning" id="loginsubmit" type="submit">로그인</button>
     <div class="checkbox mb-3"></div>
     <a href="access_terms.do"><h5>회원가입</h5></a>
     <p class="mt-4 mb-2 text-muted">&copy;Team_4</p>

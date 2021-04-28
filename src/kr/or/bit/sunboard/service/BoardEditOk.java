@@ -20,7 +20,7 @@ public class BoardEditOk implements Action {
 		
 		MultipartRequest multi = FileUpload.getMulti(request);
 		
-		HttpSession session =  request.getSession();
+		//HttpSession session =  request.getSession();
 		
 		String c_number = multi.getParameter("c_number");
 		

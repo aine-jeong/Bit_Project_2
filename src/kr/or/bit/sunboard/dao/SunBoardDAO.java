@@ -294,9 +294,12 @@ public class SunBoardDAO {
 				Connection conn = null;
 				PreparedStatement pstmt = null;
 				boolean result = false;
+				
+				String sql="update sh_board set viewcount = viewcount + 1 where c_number=?";
+
+				
 				try {
 					conn = ds.getConnection();
-					String sql="update sh_board set viewcount = viewcount + 1 where c_number=?";
 					pstmt = conn.prepareStatement(sql);
 					pstmt.setString(1, c_number);
 					
@@ -308,13 +311,6 @@ public class SunBoardDAO {
 					
 				} catch (Exception e) {
 					e.printStackTrace();
-				}finally {
-					try {
-						pstmt.close();
-						conn.close();//반환
-					}catch (Exception e) {
-						
-					}
 				}
 				return result;
 				
@@ -607,68 +603,48 @@ public class SunBoardDAO {
 		}
 		
 		//게시글 수정하기 처리
-		//public int boardEdit(Board boarddata){}
-		
-		public int boardEdit(MultipartRequest boarddata) {
-			
-			String c_number= boarddata.getParameter("c_number");
-			String title= boarddata.getParameter("title");
-			String content= boarddata.getParameter("content");
-			String filename= boarddata.getParameter("filename");
-			String viewcount= boarddata.getParameter("viewcount");
-			String email = boarddata.getParameter("email");
-			String filerealname = boarddata.getParameter("filerealname");
-			String filesize = boarddata.getParameter("filesize");
-			
-			
-			Connection conn = null;
-			PreparedStatement pstmt = null;
-			ResultSet rs = null;
-			int row = 0;
-			
-			try {
-				conn = ds.getConnection();
-				String sql_cNum = "select c_number from sh_board where c_number=?";
-				String sql_udpate = "update sh_board set title=? , content=? , writedate=SYSDATE ,"+
-				                    " filename=? , viewcount=? ,email=? ,filerealname=?, filesize=? where c_number=?";
-				pstmt = conn.prepareStatement(sql_cNum);
-				
-				pstmt.setString(1, c_number);
-				
-				rs = pstmt.executeQuery();
-				
-				//판단 (데이터 있다며 : 수정가능 , 없다면 : 수정불가
-				if(rs.next()) {
-					//경고
-					pstmt.close();
-					//업데이트
-					pstmt = conn.prepareStatement(sql_udpate);
-					pstmt.setString(1, title);
-					pstmt.setString(2, content);
-					pstmt.setString(3, filename);
-					pstmt.setString(4, viewcount);
-					pstmt.setString(5, email);
-					pstmt.setString(6, filerealname);
-					pstmt.setString(7, filesize);
-					pstmt.setString(8, c_number);
-					
-					row = pstmt.executeUpdate();
-					System.out.println("row : " + row);
+				//public int boardEdit(Board boarddata){}
+				public int boardEdit(MultipartRequest boarddata) {
+					String c_number= boarddata.getParameter("c_number");
+					String title= boarddata.getParameter("title");
+					String content= boarddata.getParameter("content");
+					String filename = boarddata.getParameter("filename");
+					/*
+					 * String filename= boarddata.getParameter("filename"); String viewcount=
+					 * boarddata.getParameter("viewcount"); String email =
+					 * boarddata.getParameter("email"); String filerealname =
+					 * boarddata.getParameter("filerealname"); St
+					 ring filesize = boarddata.getParameter("filesize");
+					*/
+					Connection conn = null;
+					PreparedStatement pstmt = null;
+					PreparedStatement pstmt2 = null;
+					ResultSet rs = null;
+					int row = 0;
+					try {
+						conn = ds.getConnection();
+						String sql_cNum = "select c_number from sh_board where c_number=?";
+						String sql_udpate = "update sh_board set title=? , content=?, filename=? where c_number=?";
+						pstmt = conn.prepareStatement(sql_cNum);
+						pstmt2 = conn.prepareStatement(sql_udpate);
+						pstmt.setString(1, c_number);
+						rs = pstmt.executeQuery();
+						//판단 (데이터 있다며 : 수정가능 , 없다면 : 수정불가
+						if(rs.next()) {
+							//업데이트
+							pstmt2 = conn.prepareStatement(sql_udpate);
+							pstmt2.setString(1, title);
+							pstmt2.setString(2, content);
+							pstmt2.setString(3, filename);
+							pstmt2.setString(4, c_number);
+							row = pstmt.executeUpdate();
+							System.out.println("row : " + row);
+						}
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
+					return row;
 				}
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-			}finally {
-				try {
-					pstmt.close();
-					rs.close();
-					conn.close();//반환
-				} catch (Exception e2) {
-					
-				}
-			}
-		
-			return row;
-		}
 
 }
 

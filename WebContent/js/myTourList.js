@@ -32,34 +32,34 @@ function init() {
 		document.querySelector('#test').style.display = "none";
 		return;
 	}
-		
-	for(var index in markerArray) {
 	
+	//해당 유저가 담아둔 관광지의 개수만큼 배열 돌기
+	for(var index in markerArray) {
 		var data = {
 					apiKey: "wuuv42tnk9hazf5h",
 					locale: "kr",
 					cid: markerArray[index]
 				};
 		
+		//JSON데이터를 가져온다
 		$.getJSON(url, data, function(response) {
-			
+			//내 찜목록 배열에 응답 결과 넣기
 			myTourList.push(response);
-			
+			//마커 생성하기 위한 해당 관광지의 위도, 경도값 받아두기
 			var marker = {
 							title: response.items[0].title,
 							latlng: new kakao.maps.LatLng(response.items[0].latitude, response.items[0].longitude)
 						}
-			
+			//마커 배열에 넣기
 			positions.push(marker);
 			
-			//마커 이미지의 이미지 주소입니다
+			//마커 이미지의 이미지 주소
 			var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
-			    
+			
+			//넣어둔 마커 배열의 수만큼 마커 찍기
 			for (var i = 0; i < positions.length; i ++) {
-			    
-			    // 마커 이미지의 이미지 크기 입니다
+			    // 마커 이미지의 이미지 크기
 			    var imageSize = new kakao.maps.Size(24, 35); 
-			    
 			    // 마커 이미지를 생성합니다    
 			    var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
 			    
@@ -77,9 +77,6 @@ function init() {
 	};
 	
 }
-
-// 마커가 표시될 위치입니다 
-//var markerPosition = new kakao.maps.LatLng(33.36159410409114, 126.52920948469817);
 
 // 카드 생성
 function setCard(arr) {

@@ -16,7 +16,6 @@
 		out.print("<hr><a href='board_list.jsp'>목록가지</a>");
 		return;
 	}
-	
 %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -25,7 +24,7 @@
 	<title>게시글 편집창</title>
 	<link rel="icon" type="image/png" href="http://example.com/myicon.png">
 	<link rel="manifest" href="site.webmanifest">
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 

@@ -10,7 +10,8 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class FileUpload {
 	public static MultipartRequest getMulti(HttpServletRequest request) {
 		
-		String uploadpath = request.getSession().getServletContext().getRealPath("upload");
+		//String uploadpath = request.getSession().getServletContext().getRealPath("upload");
+		String uploadpath = "/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload";
 		System.out.println(uploadpath);
 
 		int size = 1024 * 1024 * 10; // (10M)
@@ -31,3 +32,4 @@ public class FileUpload {
 		return multi;
 	}
 }
+

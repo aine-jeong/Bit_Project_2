@@ -23,6 +23,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
    
    <!-- 부트스트랩 start -->
 	<link rel="apple-touch-icon" href="apple-icon.png">
@@ -54,15 +55,9 @@
    
 
    <style type="text/css">
-	@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
-	}
 	
 	*{
-	 font-family: 'S-CoreDream-3Light';
+	 font-family: ''Nanum Gothic', sans-serif';
 	}
 	.note-editable{
 	height:300px;
@@ -111,6 +106,7 @@
 	<c:set var="cpage" value="${requestScope.cp}" />
 	<c:set var="pagesize" value="${requestScope.ps}" />
 	<c:set var="replyList" value="${requestScope.replyList}" />
+	<input type="hidden" id="email" name="email" value="${sessionScope.email}">
 	
 	<hr style="color : gray;">
      <!--   <div class="breadcrumbs">
@@ -166,7 +162,11 @@
 					</tr>
 					<tr>
 						<td colspan="4" align="center"><a
-							href="boardList.sun?cp=${cpage}&ps=${pagesize}">목록가기</a>&nbsp 
+							href="boardList.sun?cp=${cpage}&ps=${pagesize}">목록가기</a>&nbsp
+							<c:if test="${sessionScope.email == 'admin@naver.com'}">
+							<a href="boardEdit.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">수정</a>&nbsp
+							<a href="boardDelete.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">삭제</a>&nbsp
+						</c:if> 
 						
 						<c:if test="${sessionScope.email == board.email}">
 							<a href="boardEdit.sun?c_number=${c_number}&cp=${cpage}&ps=${pagesize}">수정</a>&nbsp 
@@ -226,7 +226,9 @@
 								<form action="ReplyDeleteOk.sun" method="POST" name="replyDel">
 									<input type="hidden" name="cr_number" value="${reply.cr_number}"> 
 									<input type="hidden" name="c_number" value="${c_number}"> 
-									<input type="button" value="삭제" onclick="reply_del(this.form)"/>
+									<c:if test="${sessionScope.email == reply.email}">
+										<input type="button" value="삭제" onclick="reply_del_check(this.form)">
+									</c:if>
 								</form>
 								</td>
 							</tr>

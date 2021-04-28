@@ -22,17 +22,15 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+   
+   
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
    
    <style type="text/css">
-	@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
-	}
 	
 	*{
-	 font-family: 'S-CoreDream-3Light';
+	 font-family: 'Nanum Gothic', sans-serif;
 	}
 	</style>
 	

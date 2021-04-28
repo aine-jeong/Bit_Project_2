@@ -6,12 +6,55 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.5.1.min.js" type="text/javascript"></script>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
+
+	<!-- CSS here -->
+   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+   <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
+   <link rel="stylesheet" href="assets/css/gijgo.css">
+   <link rel="stylesheet" href="assets/css/slicknav.css">
+   <link rel="stylesheet" href="assets/css/animate.min.css">
+   <link rel="stylesheet" href="assets/css/magnific-popup.css">
+   <link rel="stylesheet" href="assets/css/fontawesome-all.min.css">
+   <link rel="stylesheet" href="assets/css/themify-icons.css">
+   <link rel="stylesheet" href="assets/css/slick.css">
+   <link rel="stylesheet" href="assets/css/nice-select.css">
+   <link rel="stylesheet" href="assets/css/style.css">
+   <link rel="stylesheet" href="assets/css/responsive.css">
+   
+   <!-- 부트스트랩 start -->
+	<link rel="apple-touch-icon" href="apple-icon.png">
+	<link rel="shortcut icon" href="favicon.ico">
+	
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/bootstrap/dist/css/bootstrap.min.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/themify-icons/css/themify-icons.css">
+	<link rel="stylesheet"
+	   href="WEB-INF/vendors/flag-icon-css/css/flag-icon.min.css">
+	<link rel="stylesheet" href="WEB-INF/vendors/selectFX/css/cs-skin-elastic.css">
+	<link rel="stylesheet" href="WEB-INF/vendors/jqvmap/dist/jqvmap.min.css">
+	
+	<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
+	crossorigin="anonymous">
+
+
+	<link rel="stylesheet" href="assets/css/style.css">
+	
+	<link
+   href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
+   rel='stylesheet' type='text/css'>
+<!-- 부트스트랩 end  -->
 </head>
 <style>
 
  #content.cols-d { width: 583px; min-width: 583px; margin:auto;}
 
-.f { position: absolute; margin: 0; padding: 0; color: #666; }      
+.f { position: inherit; margin: 0; padding: 0; color: #666; }      
         .f p { width: 100%; margin: 0 0 13px; font-size: 1.3em; text-align:center;margin-top:20px;}
         .f p:after { content: ""; display: block; overflow: hidden; clear: both; height: 0; }    
         .f textarea {
@@ -62,14 +105,17 @@
             });    
         });
     </script>
+      
 <body>
 
+ <jsp:include page="/include/header.jsp"></jsp:include>
+<hr style="color : gray;">
 <article id="content" class="cols-d">
     <div>
         <h1>이용약관</h1>
         <form id="terms_form" class="f" action="Register.do">
             <h3 class="scheme-g">●이용약관</h4>
-            <textarea style="font-size:1em;">
+            <textarea class style="font-size:1em;">
 여러분을 환영합니다.
 JYP 서비스 및 제품(이하 ‘서비스’)을 이용해 주셔서 감사합니다. 본 약관은 다양한 JYP 서비스의 이용과 관련하여 JYP 서비스를 제공하는 JYP 주식회사(이하 ‘JYP’)와 이를 이용하는 JYP 서비스 회원(이하 ‘회원’) 또는 비회원과의 관계를 설명하며, 아울러 여러분의 JYP 서비스 이용에 도움이 될 수 있는 유익한 정보를 포함하고 있습니다.
 
@@ -262,5 +308,7 @@ eXpert 서비스 및 eXpert 센터 가입 등록정보 : 신청일로부터 6개
         </form>
     </div>    
 </article>
+
 </body>
+<jsp:include page="/include/footer.jsp"></jsp:include>
 </html>

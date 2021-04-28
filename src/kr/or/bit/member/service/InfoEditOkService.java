@@ -44,7 +44,7 @@ public class InfoEditOkService implements Action {
 			
 			if(result > 0) {
 				msg="정보수정 완료";
-				url="/JYP_PROJECT/bopage.jsp";
+				url="main.bo";
 				
 			}else {
 				msg="정보수정 실패";

@@ -8,7 +8,7 @@
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="manifest" href="site.webmanifest">
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
@@ -25,15 +25,13 @@
 	<link rel="stylesheet" href="assets/css/nice-select.css">
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/responsive.css">
-	
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 		<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 
 	<!-- include summernote css/js -->
-	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 	<SCRIPT type="text/javascript">
 	
 function check(){
@@ -96,6 +94,34 @@ function check(){
 	#image_uploads{
 	float: left;
 	}
+	
+	.menuClip{	
+	width:80px;
+	background: #FAECCC;
+    border-radius: 5px;
+    text-align: center;
+    padding: 8px;
+    font-weight: bold;
+}
+
+.hrSpace{
+margin: auto; margin-top: 10px; margin-bottom: 30px;
+
+}
+
+a, button {
+    color: #ebb11f;
+    font-weight: 1000;
+}
+
+*{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
+
+a:hover {
+    color: #FAECCC;
+    text-decoration: none;
+}
 	
 	
 	/* 
@@ -219,6 +245,7 @@ function check(){
 		  })
 	});
 	</script>	
-	
+	<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
 </body>
 </html>

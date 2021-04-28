@@ -27,6 +27,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
    
    <!-- 부트스트랩 start -->
 	<link rel="apple-touch-icon" href="apple-icon.png">
@@ -54,17 +55,14 @@
 <link
    href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800'
    rel='stylesheet' type='text/css'>
+   
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+   
 <!-- 부트스트랩 end  -->
    <style type="text/css">
-	@font-face {
-     font-family: 'S-CoreDream-3Light';
-     src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-3Light.woff') format('woff');
-     font-weight: normal;
-     font-style: normal;
-}
 	
 	*{
-	 font-family: 'S-CoreDream-3Light';
+	 font-family: 'Nanum Gothic', sans-serif;
 	}
 	
 	.note-editable{
@@ -92,6 +90,8 @@
 	.col-11{
 		margin-left : 60px;
 	}
+	
+	
 
 	</style>
 
@@ -99,6 +99,7 @@
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
    <!-- include summernote css/js -->
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
@@ -110,10 +111,16 @@
     });
      </script>
 	
-
+	<style type="text/css">
+	*{
+	font-family: 'Nanum Gothic' !important;
+	 }
+	</style>
 </head>
 <body>
     <jsp:include page="/include/header.jsp"></jsp:include>
+    
+    <hr style="color : gray;">
 	
 	<c:set var="pagesize" value="${requestScope.pagesize}" />
 	<c:set var="cpage" value="${requestScope.cpage}" />
@@ -128,6 +135,20 @@
      <div class="col-11">
 	<div id="pagecontainer">
 		<div style="padding-top: 30px; text-align: cetner">
+		<br>
+			<br>
+			<br>
+			<div class="font-back-tittle mb-10 ">
+				<div class="archivment-front">
+					<h3 style="color: #EAAF24; font-size: 50px;">선희 커뮤니티</h3>
+				</div>
+				<h3 class="archivment-back">선희 커뮤니티</h3>
+			</div>
+			<br>
+					<br>
+					<hr width="80%" align="center" class="hrSpace">
+					<br>
+					<br>
 			<table width="80%" border="1" cellspacing="0" align="center">
 				<tr>
 					
@@ -139,6 +160,7 @@
 							>>http://192.168.0.169:8090/WebServlet_5_Board_Model1_Sample/board/board_list.jsp?ps=10					
 						-->
 						 <div class="form-group d-flex align-items-center">
+						 
                     	 <div class="col-sm-2" style="padding-left: 0">
 						<c:set var="list" value="${requestScope.list}"></c:set>
 						<form name="list">
@@ -189,8 +211,8 @@
 							</c:if>
 							<a href="boardContent.sun?c_number=${board.c_number}&cp=${cpage}&ps=${pagesize}">
 								<c:choose>
-									<c:when test="${board.title != null && fn:length(board.title) > 10}">
-										${fn:substring(dto.title,0,10)}...
+									<c:when test="${board.title != null && fn:length(board.title) > 20}">
+										${fn:substring(board.title,0,20)}...
 									</c:when>
 									<c:otherwise>
 										${board.title}
@@ -214,8 +236,8 @@
 					</td>
 					</tbody>
 					
-						<tr border=none>
-						<td colspan="5" align="right">
+						<tr border="none" class="loginMember" >
+						<td colspan="5" align="right" >
 						<input type="button" class="btn btn-warning" value="글쓰기" onclick="location.href='boardWrite.sun'">
 						</td>
 						</tr>
@@ -235,5 +257,13 @@
 		
 	</div>
 	<jsp:include page="/include/footer.jsp"></jsp:include>
+	<script type="text/javascript">
+	$('.loginMember').css("display","none");
+	
+	if('<%=session.getAttribute("email")%>' == ''){
+	} else {
+		$('.loginMember').css("display","");
+	}
+	</script>
 </body>
 </html>

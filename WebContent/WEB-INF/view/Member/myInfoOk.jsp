@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 <meta charset="UTF-8">
 <title>개인정보수정</title>
 <!--  

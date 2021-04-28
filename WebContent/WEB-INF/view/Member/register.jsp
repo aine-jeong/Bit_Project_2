@@ -6,21 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>회원가입</title>
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-<!-- <script type="text/javascript"> 
-	$(document).ready(function(){ 
-		$('#btn1').on('click', function(){ 
-			$.ajax({ type: 'POST', 
-				url: '/mate/checkSignup', 
-				data: { "email" : $('#email').val() }, 
-				success: function(data){ 
-					if($.trim(data) == 0)
-					{ $('#checkMsg').html('<p style="color:blue">사용가능</p>'); 
-					}else{ $('#checkMsg').html('<p style="color:red">사용불가(중복이메일입니다.)</p>'); } } }); //end ajax }); //end on }); </script>
 
-   
- -->	
+
 <!-- CSS here -->
 	<link href="css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
@@ -83,7 +73,40 @@
         	height : 15px;
         }
     </style>
-   
+    
+   <script type="text/javascript"> 
+	$(document).ready(function(){ 
+		$('#btn1').on('click', function(){ 
+			$.ajax({ type: 'POST',
+				url: '${pageContext.request.contextPath}/emailCheck.do',
+				data: { "email" : $('#email').val() }, 
+				success: function(data){ 
+					if($.trim(data) == 0)
+					{ 
+						alert('사용가능한 이메일 입니다.');
+					}else{ 
+						alert('사용불가, 다른 이메일을 입력해주세요.');
+					} 
+					} 
+				}); 
+			}); 
+		
+		$('#btn2').on('click', function(){ 
+			$.ajax({ type: 'POST', 
+				url: '${pageContext.request.contextPath}/nickCheck.do', 
+				data: { "nickname" : $('#nickname').val() }, 
+				success: function(data){ 
+					if($.trim(data) == 0)
+					{ 
+						alert('사용가능한 닉네임 입니다.');
+					}else{ 
+						alert('사용불가, 다른 닉네임을 입력해주세요.');
+					} 
+					} 
+				}); 
+			}); 
+		}); 
+	</script>
 </head>
 <body class="text-center">
 
@@ -102,29 +125,32 @@
     
 
     <div class="form-floating">
-      <input type="email" class="form-control" id="email" name="email" placeholder="이메일 입력">
+      <input type="email" class="form-control" id="email" name="email" placeholder="이메일 입력" required="required">
       <label for="floatingInput">이메일 계정</label>
     </div>
     <div class="tdmail"></div>
-    <!-- <button type="submit" class="w-100 btn btn-lg btn-warning" id="btn1" type="button">중복검사</button>
-	<div id="checkMsg"></div> -->
+      <button class="w-20 btn btn-sm btn-warning" id="btn1" name="btn1" type="button">중복체크</button>
+       <br>
+       <br>
+     
 
 <div class="form-floating">
-      <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임 입력">
+      <input type="text" class="form-control" id="nickname" name="nickname"  placeholder="닉네임 입력" required="required">
       <label for="floatingInput">닉네임</label>
-      <!-- <button type="submit" class="w-100 btn btn-lg btn-warning" id="btn2" type="button">중복검사</button> -->
-      
     </div>
     <div class="tdnn"></div>
+    <button class="w-20 btn btn-sm btn-warning" id="btn2" name="btn2" type="button">중복체크</button>
+       <br>
+       <br>
 
     <div class="form-floating">
-      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
+      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" required="required">
       <label for="floatingPassword">비밀번호</label>
     </div>
 	<div class="tdpw"></div>
 	
 <div class="form-floating">
-      <input type="password" class="form-control" id="password2" name="password" placeholder="비밀번호 입력">
+      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 입력" required="required">
       <label for="floatingPassword">비밀번호 확인</label>
     </div>
     <div class="tdpwch"></div>
@@ -132,7 +158,7 @@
     <div class="checkbox mb-3"></div>
     <button class="w-100 btn btn-lg btn-warning" id="submit" type="submit">회원가입</button>
     <div class="checkbox mb-3"></div>
-    <a href="bopage.jsp"><h5>취소</h5></a>
+    <a href="main.bo"><h5>취소</h5></a>
     <p class="mt-4 mb-2 text-muted">&copy;Team_4</p>
   </form>
   </main>
@@ -243,8 +269,12 @@
 
 		$('#submit').click(function(){
 
-			if(check_pwd() == false) return false; //비밀번호
+			/* if(check_pwd() == false) return false; //비밀번호
 			if(check_pwd2() == false) return false; //비밀번호 확인
+			if(check_email() == false) return false; //이메일
+			if(check_nickname() == false) return false; //닉네임
+			 */
+			if(check_pwd() == false || check_pwd2() == false) return false; //비밀번호
 			if(check_email() == false) return false; //이메일
 			if(check_nickname() == false) return false; //닉네임
 			

@@ -603,9 +603,9 @@ public class NoticeDao {
 		.append("	            from        ( select      content_id, count(*) as cnt 	")
 		.append("	                      from        cartlist 							")
 		.append("	                      group by    content_id 						")
-		.append("	                      order by    cnt           ) a					")
+		.append("	                      order by    cnt  desc          ) a					")
 		.append("	                                                        ) b 		")
-		.append("	where rn between 1 and 3											");
+		.append("	where rn between 1 and 10											");
 		
 		String sql = sqlbuilder.toString();
 		

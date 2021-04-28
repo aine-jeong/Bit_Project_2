@@ -20,7 +20,8 @@ public class AinFileDownload implements Action {
 		String filename = request.getParameter("file_name");
 		
 		// 물리적 경로 얻기
-		String filePath = request.getSession().getServletContext().getRealPath("upload") + "\\" + filename;
+		// String uploadpath = "/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload";
+		String filePath = "/Users/bosungbaek/Desktop/boco/bitcamp/2nd_team/project-workspace/JYP_PROJECT/WebContent/upload"+"/"+filename;
 		
 		// 파일을 읽어서 출력
 		byte[] byteArray = new byte[4096];

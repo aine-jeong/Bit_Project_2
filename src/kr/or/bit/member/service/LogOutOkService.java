@@ -19,7 +19,7 @@ public class LogOutOkService implements Action {
 		
 		System.out.println("로그아웃 오니?");
 		forward.setRedirect(false);
-   		forward.setPath("/bopage.jsp");
+   		forward.setPath("main.bo");
    		return forward;
    		
 		//return new ActionForward();

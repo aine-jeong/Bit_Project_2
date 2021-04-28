@@ -49,27 +49,115 @@
 		    right:0;
 		    top:0;
 		    bottom:0;
-		    background: rgba(0,0,0,0.2); /*not in ie */
+		    background: white; /*not in ie */
 		    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
 		}
 
    		 .wrap-loading div{ /*로딩 이미지*/
-	        position: fixed;
-	        top:50%;
-	        left:50%;
-	        margin-left: -21px;
-	        margin-top: -21px;
+   		  	display: table;
+   		  	position: relative;
+   		  	top: 40%;
+	        
    		 }
 
    		 .display-none{ /*감추기*/
      	   display:none;
    		 }
+   		 
+   		 .room-caption{
+   		height: 230px;
+   		vertical-align: middle;
+   		 }
+   		 
+   		 .table td, .table th {
+ 		vertical-align: middle;
+    	width: 25%;
+		}
    		/***로딩이미지***/
+   		.main-header {
+ 		   z-index: 99999;
+		}
+
+		[class^="ti-"], [class*=" ti-"] {
+			line-height:inherit;
+		}
    </style>
    
 </head>
+
+<header>
+
+<div class="header-area header-sticky">
+			<div class="main-header ">
+				<div class="container">
+					<div class="row align-items-center">
+						<!-- logo -->
+						<div class="col-xl-2 col-lg-2">
+							<div class="logo">
+								<a href="main.bo"><img src="image/headerFinal.png" alt=""></a>
+							</div>
+						</div>
+						<div class="col-xl-8 col-lg-8">
+							<!-- main-menu -->
+							<div class="main-menu f-right d-none d-lg-block">
+								<nav>
+									<ul id="navigation">
+										<li><a href="tourList.tourlist">관광지</a></li>
+										<li><a>커뮤니티</a>
+											<ul class="submenu" style="z-index: 5">
+												<li><a href="boardList.sun">선희 커뮤니티</a></li>
+												<li><a href="boardList.ha">준수 커뮤니티</a></li>
+												<li><a href="boardList.ain">아인 커뮤니티</a></li>
+											</ul></li>
+										<li><a>고객센터</a>
+											<ul class="submenu">
+												<li><a href="boardList.bo">공지사항</a></li>
+												<li><a href="boardList.qna?pageSize=10&currentPage=1">Q&A</a></li>
+												<li><a href="introduce.do">회사소개</a></li>
+												<li><a href="terms.do">이용약관</a></li>
+												<li><a href="personalInfo.do">개인정보처리방침</a></li>
+											</ul></li>
+										<li><a class="notAdmin" href="#">마이페이지</a>
+											<ul class="submenu">
+												<li><a href="InfoEdit.do">내 정보 변경</a>
+												<li><a href="mytourList.tourlist">내 여행지</a></li>
+											</ul></li>
+											<li class="imAdmin"><a class="imAdmin">관리자</a>
+											<ul class="submenu">
+												<li><a href="admin.ain">관리자 페이지</a></li>
+												<li><a href="chart.bo">통계자료</a></li>
+											</ul></li>
+									</ul>
+								</nav>
+							</div>
+						</div>
+						<div class="col-xl-2 col-lg-2">
+							<!-- header-btn -->
+							<div class="header-btn">
+								<a class="btn btn1 d-none d-lg-block"
+								<%
+						if(session.getAttribute("email") != null){
+						out.print("href='LogOutOk.do'>Logout");
+						}else{
+						out.print("href='Login.do'>Login"); 
+						}
+						%> </a>
+							</div>
+						</div>
+						<!-- Mobile Menu -->
+						<div class="col-12">
+							<div class="mobile_menu d-block d-lg-none"></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+</header>
 <body>
-    <jsp:include page="/include/header.jsp" />
+    <br>
+    <br>
+    <br>
+    <br>
     <main>
     	<div class="font-back-tittle mb-45">
 			<div class="archivment-front">
@@ -119,19 +207,19 @@
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"></div>
 	
 	<!-- 로딩이미지용 -->
-  	<!-- <div class="wrap-loading display-none">
-   		 <div><img src="image/tourLoading.svg" /></div>
-   		 <div id="preloader-active">
-		     <div class="preloader d-flex align-items-center justify-content-center">
-		         <div class="preloader-inner position-relative">
-		             <div class="preloader-circle"></div>
-		             <div class="preloader-img pere-text">
-		                 <strong>JYP</b>
-		             </div>
-		         </div>
-		     </div>
- 		</div>
-	</div> -->
+  	<div class="wrap-loading display-none" align="center" style="position: ;">
+   		 <div><img src="image/boLoading.svg"/></div>
+<!--    		 <div id="preloader-active"> -->
+<!-- 		     <div class="preloader d-flex align-items-center justify-content-center"> -->
+<!-- 		         <div class="preloader-inner position-relative"> -->
+<!-- 		             <div class="preloader-circle"></div> -->
+<!-- 		             <div class="preloader-img pere-text"> -->
+<!-- 		                 <strong>JYP</b> -->
+<!-- 		             </div> -->
+<!-- 		         </div> -->
+<!-- 		     </div> -->
+<!--  		</div> -->
+	</div>
 	<div class="dining-area dining-padding-top">
 		</div>
 	<footer>
@@ -178,5 +266,16 @@
         
         
         <script src="js/tourList.js?ver=1"></script>
+        	<script type="text/javascript">
+			var nowEmail= '<%=session.getAttribute("email")%>'
+			$('.notAdmin').css("display","none");
+			$('.imAdmin').css("display","none");
+			console.log(nowEmail+"header");
+			if(nowEmail == 'admin@naver.com'){
+				$('.imAdmin').css("display","");
+				}else{
+				$('.notAdmin').css("display","");
+				}  
+		</script>
         
 </html>

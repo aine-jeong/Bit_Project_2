@@ -23,6 +23,7 @@
 	<link rel="stylesheet" href="assets/css/style.css">
 	<link rel="stylesheet" href="assets/css/responsive.css">
 	<link rel="stylesheet" href="boCss/bopage.css">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 	
 	<!-- include libraries(jQuery, bootstrap) -->
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
@@ -48,6 +49,26 @@
         }
       }
     </style>
+     <script type="text/javascript"> 
+	$(document).ready(function(){ 
+		 
+		
+		$('#btn3').on('click', function(){ 
+			$.ajax({ type: 'POST', 
+				url: '${pageContext.request.contextPath}/nickCheck.do', 
+				data: { "nickname" : $('#nickname').val() }, 
+				success: function(data){ 
+					if($.trim(data) == 0)
+					{ 
+						alert('사용가능한 닉네임 입니다.');
+					}else{ 
+						alert('사용불가, 다른 닉네임을 입력해주세요.');
+					} 
+					} 
+				}); 
+			}); 
+		}); 
+	</script>
 </head>
   
   <body class="text-center">
@@ -70,18 +91,19 @@
     </div>
 
 <div class="form-floating">
-      <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임 입력">
+      <input type="text" class="form-control" id="nickname" name="nickname" placeholder="닉네임 입력" required="required">
       <label for="floatingPassword">닉네임</label>
     <div class="tdnn"></div></div>
+    <button class="w-20 btn btn-sm btn-warning" id="btn3" name="btn3" type="button">중복체크</button>
 
 <div class="form-floating">
-      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력">
+      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 입력" required="required">
       <label for="floatingPassword">비밀번호</label>
     </div>
 	<div class="tdpw"></div>
 
     <div class="form-floating">
-      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호 확인">
+      <input type="password" class="form-control" id="password" name="password2" placeholder="비밀번호 확인" required="required">
       <label for="floatingPassword2">비밀번호 확인</label>
     </div>
 	<div class="tdpwch"></div>
@@ -89,7 +111,7 @@
     <div class="checkbox mb-3"></div>
     <button class="w-100 btn btn-lg btn-warning" type="submit">개인정보수정</button>
     <div class="checkbox mb-3"></div>
-    <a href="bopage.jsp"><h5>취소</h5></a>
+    <a href="main.bo"><h5>취소</h5></a>
     <p class="mt-4 mb-2 text-muted">&copy;Team_4</p>
   </form>
   </main>
@@ -103,7 +125,6 @@
 	$(document).ready(function(){
 		
 	function check_pwd(){
-		console.log("뭐");
 		let password = $('#password').val();
 		let num = password.search(/[0-9]/g);
 		let eng = password.search(/[0-9]/ig);

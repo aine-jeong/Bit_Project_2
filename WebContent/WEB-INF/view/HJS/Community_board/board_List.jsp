@@ -14,7 +14,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>게시판 목록페이지</title>
 <link rel="manifest" href="site.webmanifest">
-<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
+<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
 
@@ -40,6 +40,7 @@
 <body>
 	<!-- 헤더부분 추가하기-->
 	<c:import url="/include/header.jsp" />
+	<br><br><br><br>
 	<div class="font-back-tittle mb-50">
 		<div class="archivment-front">
 			<h1>⌨ Ha-Board</h1>

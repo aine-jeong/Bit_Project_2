@@ -1,6 +1,19 @@
+<%@page import="java.io.FileInputStream"%>
+<%@page import="kr.or.bit.qnaboard.dto.QnaBoard"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<%
+	//다운로드할 파일명 얻기
+	String filename = ((QnaBoard)request.getAttribute("qnaBoard")).getQnaRealFilename();
+	
+	//물리적 경로 얻기
+	String savepath = "upload";
+	String downloadpath = request.getRealPath(savepath);
+	String FilePath = downloadpath + "\\" + filename;
+%>
+<%-- 			        <a href="filedownload.qna?qnaRealFilename=${board.qnaFilename}"> --%>
 <!DOCTYPE html>
 <html class="no-js" lang="zxx">
 
@@ -12,8 +25,8 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 	<!-- <link rel="manifest" href="site.webmanifest"> -->
-	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.png">
 	<!-- Place favicon.ico in the root directory -->
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 	
  <!-- CSS here -->
@@ -48,7 +61,7 @@
     <jsp:include page="/include/header.jsp" />
     
     <c:set var="board" value="${requestScope.qnaBoard }" />
-    
+    <c:set var="filepath" value="${FilePath}" />
     <main>
     	<div class="font-back-tittle mb-45">
 			<div class="archivment-front">
@@ -85,12 +98,22 @@
 		    </section>
 
 		    <section id="bo_v_atc">
-		        <h2 id="bo_v_atc_title">${board.qnaTitle}</h2>
-		        <div id="bo_v_img"></div>
+		        <div class="nofile" align="center">
+		        	<!-- 파일다운로드이미지 및 파일이름 -->
+			        <strong>
+			    <a href="filedownload.qna?qnaRealFilename=${board.qnaFilename}">
+<%-- 			        <a href="upload/${board.qnaFilename}"> --%>
+			        <i class="fas fa-file-archive" aria-hidden="true"></i> ${board.qnaFilename}</a></strong>
+			        <!-- 파일 이미지 -->
+			        <div id="bo_v_img" style="max-width: 50%">
+			        <img src="upload/${board.qnaFilename}">
+			        </div>
+		        </div>
+		        
 
 		        <!-- 본문 내용 시작 { -->
-		        <div id="bo_v_con">
-		        	<p>${board.qnaContent}</p>
+		        <div id="bo_v_con" class="form-group">
+		        	<textarea rows="10" disabled="disabled" class="form-control" style="background-color: white;">${board.qnaContent}</textarea>
 		        </div>
 		        <!-- } 본문 내용 끝 -->
     		</section>
@@ -159,5 +182,11 @@
 		<!-- Jquery Plugins, main Jquery -->	
         <script src="./assets/js/plugins.js"></script>
         <script src="./assets/js/main.js"></script>
+        <script type="text/javascript">
+        if('${board.qnaFilename}'==''){
+			$('.nofile').css("display","none");	
+		}
+        </script>
+        
         
 </html>

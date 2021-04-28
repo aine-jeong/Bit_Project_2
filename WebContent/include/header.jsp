@@ -9,7 +9,19 @@
 .main-header {
     z-index: 99999;
 }
+
+[class^="ti-"], [class*=" ti-"] {
+	line-height:inherit;
+}
+
 </style>
+<div id="preloader-active">
+		<div class="preloader d-flex align-items-center justify-content-center">
+			<div class="preloader-inner position-relative">
+			<img src="image/boLoading.svg"/>
+			</div>
+		</div>
+	</div>
 </head>
 <body>
 <div class="header-area header-sticky">
@@ -19,7 +31,7 @@
 						<!-- logo -->
 						<div class="col-xl-2 col-lg-2">
 							<div class="logo">
-								<a href="bopage.jsp"><img src="image/headerFinal.png" alt=""></a>
+								<a href="main.bo"><img src="image/headerFinal.png" alt=""></a>
 							</div>
 						</div>
 						<div class="col-xl-8 col-lg-8">
@@ -28,7 +40,7 @@
 								<nav>
 									<ul id="navigation">
 										<li><a href="tourList.tourlist">관광지</a></li>
-										<li><a href="">커뮤니티</a>
+										<li><a>커뮤니티</a>
 											<ul class="submenu" style="z-index: 5">
 												<li><a href="boardList.sun">선희 커뮤니티</a></li>
 												<li><a href="boardList.ha">준수 커뮤니티</a></li>

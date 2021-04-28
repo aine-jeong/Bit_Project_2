@@ -19,6 +19,7 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
+   <link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 
 <!-- 폰트 -->
    <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -26,8 +27,13 @@
 
 <style type="text/css">
  * {
- 	font-family: 'Nanum Gothic', sans-serif;
+ 	font-family: 'Nanum Gothic', sans-serif important!;
  }
+ 
+ .preview p{
+	font-family: 'Nanum Gothic', sans-serif;
+	color: #587D4E;
+	}
  
   .genric-btn.success {
 	background: #EAAF24;
@@ -42,6 +48,15 @@ table.aintable, th, td {
     border-top: 1px solid #ccc;
     border-bottom: 1px solid #ccc;
 }
+
+.font-back-tittle .archivment-front h3{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+	
+	.font-back-tittle h3.archivment-back{
+	font-family: 'Nanum Gothic', sans-serif;
+	}
+
 </style>
 	
 <SCRIPT type="text/javascript">
@@ -79,8 +94,8 @@ table.aintable, th, td {
             <form name="bbs" action="boardWriteOk.ain" method="POST" enctype="multipart/form-data">
                 <table class="aintable" width="80%" border="0" align="center">
                     <tr>
-                        <td colspan="2" align="left">
-                        	<input type="text" name="title" placeholder=" 제목을 입력해 주세요." size="100%" style="height: 35px; border: 1px solid #cccccc;">
+                        <td colspan="2" align="center">
+                        	<input type="text" name="title" placeholder=" 제목을 입력해 주세요." style="height: 35px; border: 1px solid #cccccc; font-family: 'Nanum Gothic', sans-serif !important;" size= "200%" >
                         </td>
                     </tr>
                     <tr>

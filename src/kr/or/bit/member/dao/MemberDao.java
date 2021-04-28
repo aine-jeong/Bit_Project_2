@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -167,77 +169,72 @@ public class MemberDao {
 	 * 
 	 * }
 	 */
-	public boolean emailCheck(String email) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try{
-			
-		conn = ds.getConnection();
-		String sql = "select email from member";
-		pstmt = conn.prepareStatement(sql);
-		rs = pstmt.executeQuery();
 
-		while(rs.next()) {
-			if(rs.getString("email").equals(email)) {
-				return true;
-			}
-		}
-		}catch(Exception e) {
+	//회원 이메일검색
+		public List<MemberDto> emailCheck(String email) {
+			List<MemberDto> list = new ArrayList<MemberDto>();
 			
-		e.printStackTrace();
-		
-		}finally{
-		
-			try{
-				rs.close();
-				pstmt.close();
-				conn.close();//반환하기
-			}catch(Exception e2) {
+			String sql =  "select email, password, division, nickname "
+					+ "from member where email like ?";
+			
+			
+			try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 				
-		System.out.println(e2.getMessage());
-			}
-		}
-		return false;
-		}
-	
-	public boolean nickCheck(String nickname) {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null;
-		try{
-			
-		conn = ds.getConnection();
-		String sql = "select * from member where nickname=?";
-		pstmt = conn.prepareStatement(sql);
-		pstmt.setString(1, nickname);
-		rs = pstmt.executeQuery();
-		if(rs.next()) {
+				pstmt.setString(1, "%" + email + "%");
 
-		return false;
-		
-		}
-		else{	//사용가능한 닉네임
-		return true;
-		}
-		}catch(Exception e) {
-			
-		e.printStackTrace();
-		
-		}finally{
-		
-			try{
-				rs.close();
-				pstmt.close();
-				conn.close();//반환하기
-			}catch(Exception e2) {
+				ResultSet rs = pstmt.executeQuery();
 				
-		System.out.println(e2.getMessage());
+				while(rs.next()) {
+					MemberDto dto = new MemberDto();
+					dto.setEmail(rs.getString("email"));
+					dto.setPassword(rs.getString("password"));
+					dto.setDivision(rs.getString("division"));
+					dto.setNickname(rs.getString("nickname"));
+					
+					list.add(dto);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
 			}
+			
+			
+			return list;
 		}
-		return true;
+		
+	//회원 닉네임 검색
+		public List<MemberDto> nickCheck(String nickname) {
+			List<MemberDto> list = new ArrayList<MemberDto>();
+			
+			String sql =  "select email, password, division, nickname "
+					+ "from member where nickname like ?";
+			
+			
+			try(Connection conn = ds.getConnection();
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+				
+				pstmt.setString(1, "%" + nickname + "%");
+
+				ResultSet rs = pstmt.executeQuery();
+				
+				while(rs.next()) {
+					MemberDto dto = new MemberDto();
+					dto.setEmail(rs.getString("email"));
+					dto.setPassword(rs.getString("password"));
+					dto.setDivision(rs.getString("division"));
+					dto.setNickname(rs.getString("nickname"));
+					
+					list.add(dto);
+				}
+				
+			} catch (Exception e) {
+				System.out.println("오류 :" + e.getMessage());
+			}
+			
+			
+			return list;
 		}
-	
 	
 	public int editInfoOk(MemberDto memberdto){
 		
@@ -280,4 +277,5 @@ public class MemberDao {
 		return result;
 		
 	}
+
 }

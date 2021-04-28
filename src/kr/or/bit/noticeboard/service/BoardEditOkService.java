@@ -50,7 +50,7 @@ public class BoardEditOkService implements Action {
 			
 			forward = new ActionForward();
 			forward.setRedirect(false);
-			forward.setPath("/WEB-INF/view/redirect.jsp");
+			forward.setPath("boardList.bo");
 			
 		} catch (NamingException e) {
 			// TODO Auto-generated catch block

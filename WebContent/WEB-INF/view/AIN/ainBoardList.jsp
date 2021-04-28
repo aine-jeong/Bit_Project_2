@@ -28,7 +28,8 @@
    <link rel="stylesheet" href="assets/css/nice-select.css">
    <link rel="stylesheet" href="assets/css/style.css">
    <link rel="stylesheet" href="assets/css/responsive.css">
-
+   <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap" rel="stylesheet">
+	<link rel="shortcut icon" type="image/x-icon" href="assets/img/favicon.ico">
 <%-- <link rel="Stylesheet" href="${pageContext.request.contextPath}/style/default.css" /> --%>
 
 <!-- 폰트 -->
@@ -41,9 +42,9 @@
 
 
 <style type="text/css">
- * {
- 	font-family: 'Nanum Gothic', sans-serif;
- }
+ *{
+	font-family: 'Nanum Gothic', sans-serif !important;
+}
  
  .ainboard-margin {
  	width: 100%;

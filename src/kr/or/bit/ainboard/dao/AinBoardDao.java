@@ -400,31 +400,7 @@ public class AinBoardDao {
 	
 	//게시글 삭제하기
 	public int boardDelete(String cNumber) {
-		
-		/*
-		 * int result = 0; //해당 게시글의 댓글 삭제하기 
-		 * String replyDel_sql = "delete from ain_reply_board where c_Number=?";
-		 * 
-		 * //해당 게시글 삭제하기 String boardDel_sql = "delete from ain_board where c_Number=?";
-		 * 
-		 * try(Connection conn = ds.getConnection(); PreparedStatement replypstmt =
-		 * conn.prepareStatement(replyDel_sql); PreparedStatement boardpstmt =
-		 * conn.prepareStatement(boardDel_sql);) {
-		 * 
-		 * replypstmt.setString(1, cNumber);
-		 * 
-		 * boardpstmt.setString(1, cNumber);
-		 * 
-		 * //댓글삭제 replypstmt.executeUpdate();
-		 * 
-		 * //게시글삭제(원본글, 답글) result = boardpstmt.executeUpdate();
-		 * 
-		 * }catch (Exception e) { e.printStackTrace(); }
-		 * 
-		 * 
-		 * return result;
-		 */
-		
+		//해당 게시글의 글번호, refer, depth, step 조회 쿼리문
 		String sql1 = "select c_number, refer, depth, step from ain_board where c_number = ?";
 		
 		Connection conn = null;
@@ -443,9 +419,13 @@ public class AinBoardDao {
 			
 			rs = pstmt.executeQuery();
 			
+			//삭제하려는 게시글의 들여쓰기
 			int beforeDepth = 0;
+			//삭제하려는 게시글 다음 답글의 들여쓰기
 			int afterDepth = 0;
+			//글의순서
 			int step = 0;
+			//참조 게시글의 값
 			int refer = 0;
 			
 			if(rs.next()) {
@@ -469,6 +449,7 @@ public class AinBoardDao {
 			}
 			
 			do {
+				// 같은 참조값을 가지는 다음 순서 답글의 들여쓰기, 순서, 글번호를 조회
 				String sql2 = " select depth, step, c_number, refer from ain_board where step = ? and refer = ?";
 				
 				PreparedStatement pstmt2 = conn.prepareStatement(sql2);

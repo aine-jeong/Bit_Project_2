@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <!-- Footer Start-->
@@ -15,8 +16,7 @@
 						<div class="single-footer-caption mb-30">
 							<!-- logo -->
 							<div class="footer-logo">
-								<a href="bopage.jsp"><img
-									src="image/footerLogo.png" alt=""></a>
+								<a href="main.bo"><img src="image/footerLogo.png" alt=""></a>
 							</div>
 							<div class="footer-pera">
 								<p>
@@ -47,7 +47,6 @@
 								<h4>고객센터</h4>
 								<ul>
 									<li><a href="boardList.bo">공지사항</a></li>
-									<li><a href="howToUse.do">이용방법</a></li>
 									<li><a href="boardList.qna">Q&A</a></li>
 									<li><a href="introduce.do">회사소개</a></li>
 									<li><a href="terms.do">이용약관</a></li>
